@@ -16,3 +16,4 @@ typedef Layer SnakeLayer;
 
 SnakeLayer* snake_layer_create(GRect frame);
 void snake_layer_destroy(SnakeLayer* snake_layer);
+void snake_layer_animate(SnakeLayer* snake_layer);

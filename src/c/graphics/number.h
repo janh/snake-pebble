@@ -11,6 +11,7 @@
 
 #include <pebble.h>
 #include <inttypes.h>
+#include <stdbool.h>
 
 
 typedef enum {
@@ -28,6 +29,7 @@ typedef struct NumberPointer {
 } NumberPointer;
 
 typedef struct NumberDesc {
+  uint8_t max_length;
   NumberPointer start[3];
   NumberElement el[7][4];
 } NumberDesc;
@@ -46,4 +48,4 @@ NumberDesc NUMBER_8_DESC;
 NumberDesc NUMBER_9_DESC;
 
 
-void graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number);
+bool graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number, uint8_t limit);

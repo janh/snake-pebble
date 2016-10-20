@@ -31,6 +31,9 @@ static void window_load(Window *window) {
                      SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
   s_snake_layer = snake_layer_create(rect);
   layer_add_child(window_layer, s_snake_layer);
+
+static void window_appear(Window *window) {
+  snake_layer_animate(s_snake_layer);
 }
 
 static void window_unload(Window *window) {
@@ -44,6 +47,7 @@ void main_window_push() {
     s_main_window = window_create();
     window_set_window_handlers(s_main_window, (WindowHandlers) {
       .load = window_load,
+      .appear = window_appear,
       .unload = window_unload,
     });
   }

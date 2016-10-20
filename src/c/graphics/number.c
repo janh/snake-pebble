@@ -10,7 +10,7 @@
 #include "snake.h"
 
 
-NumberDesc NUMBER_0_DESC = {{{1,0}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_0_DESC = {18, {{1,0}, {-1,-1}, {-1,-1}},
                             {{EL_DOWN , EL_LEFT , EL_HEAD , EL_LEFT },
                              {EL_DOWN , EL_NONE , EL_NONE , EL_UP   },
                              {EL_DOWN , EL_NONE , EL_NONE , EL_UP   },
@@ -19,7 +19,7 @@ NumberDesc NUMBER_0_DESC = {{{1,0}, {-1,-1}, {-1,-1}},
                              {EL_DOWN , EL_NONE , EL_NONE , EL_UP   },
                              {EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_UP   }}};
 
-NumberDesc NUMBER_1_DESC = {{{2,6}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_1_DESC = {8, {{2,6}, {-1,-1}, {-1,-1}},
                             {{EL_NONE , EL_HEAD , EL_LEFT , EL_NONE },
                              {EL_NONE , EL_NONE , EL_UP   , EL_NONE },
                              {EL_NONE , EL_NONE , EL_UP   , EL_NONE },
@@ -28,7 +28,7 @@ NumberDesc NUMBER_1_DESC = {{{2,6}, {-1,-1}, {-1,-1}},
                              {EL_NONE , EL_NONE , EL_UP   , EL_NONE },
                              {EL_NONE , EL_NONE , EL_UP   , EL_NONE }}};
 
-NumberDesc NUMBER_2_DESC = {{{0,0}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_2_DESC = {16, {{0,0}, {-1,-1}, {-1,-1}},
                             {{EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_DOWN },
                              {EL_NONE , EL_NONE , EL_NONE , EL_DOWN },
                              {EL_NONE , EL_NONE , EL_NONE , EL_DOWN },
@@ -37,7 +37,7 @@ NumberDesc NUMBER_2_DESC = {{{0,0}, {-1,-1}, {-1,-1}},
                              {EL_DOWN , EL_NONE , EL_NONE , EL_NONE },
                              {EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_HEAD }}};
 
-NumberDesc NUMBER_3_DESC = {{{0,0}, {2,3}, {-1,-1}},
+NumberDesc NUMBER_3_DESC = {13, {{0,0}, {2,3}, {-1,-1}},
                             {{EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_DOWN },
                              {EL_NONE , EL_NONE , EL_NONE , EL_DOWN },
                              {EL_NONE , EL_NONE , EL_NONE , EL_DOWN },
@@ -46,7 +46,7 @@ NumberDesc NUMBER_3_DESC = {{{0,0}, {2,3}, {-1,-1}},
                              {EL_NONE , EL_NONE , EL_NONE , EL_DOWN },
                              {EL_HEAD , EL_LEFT , EL_LEFT , EL_LEFT }}};
 
-NumberDesc NUMBER_4_DESC = {{{3,6}, {2,3}, {-1,-1}},
+NumberDesc NUMBER_4_DESC = {7, {{3,6}, {2,3}, {-1,-1}},
                             {{EL_HEAD , EL_NONE , EL_NONE , EL_HEAD },
                              {EL_UP   , EL_NONE , EL_NONE , EL_UP   },
                              {EL_UP   , EL_NONE , EL_NONE , EL_UP   },
@@ -55,7 +55,7 @@ NumberDesc NUMBER_4_DESC = {{{3,6}, {2,3}, {-1,-1}},
                              {EL_NONE , EL_NONE , EL_NONE , EL_UP   },
                              {EL_NONE , EL_NONE , EL_NONE , EL_UP   }}};
 
-NumberDesc NUMBER_5_DESC = {{{0,6}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_5_DESC = {16, {{0,6}, {-1,-1}, {-1,-1}},
                             {{EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_HEAD },
                              {EL_UP   , EL_NONE , EL_NONE , EL_NONE },
                              {EL_UP   , EL_NONE , EL_NONE , EL_NONE },
@@ -64,7 +64,7 @@ NumberDesc NUMBER_5_DESC = {{{0,6}, {-1,-1}, {-1,-1}},
                              {EL_NONE , EL_NONE , EL_NONE , EL_UP   },
                              {EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_UP   }}};
 
-NumberDesc NUMBER_6_DESC = {{{1,3}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_6_DESC = {18, {{1,3}, {-1,-1}, {-1,-1}},
                             {{EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_HEAD },
                              {EL_UP   , EL_NONE , EL_NONE , EL_NONE },
                              {EL_UP   , EL_NONE , EL_NONE , EL_NONE },
@@ -73,7 +73,7 @@ NumberDesc NUMBER_6_DESC = {{{1,3}, {-1,-1}, {-1,-1}},
                              {EL_UP   , EL_NONE , EL_NONE , EL_DOWN },
                              {EL_UP   , EL_LEFT , EL_LEFT , EL_LEFT }}};
 
-NumberDesc NUMBER_7_DESC = {{{3,6}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_7_DESC = {11, {{3,6}, {-1,-1}, {-1,-1}},
                             {{EL_DOWN , EL_LEFT , EL_LEFT , EL_LEFT },
                              {EL_HEAD , EL_NONE , EL_NONE , EL_UP   },
                              {EL_NONE , EL_NONE , EL_NONE , EL_UP   },
@@ -82,7 +82,7 @@ NumberDesc NUMBER_7_DESC = {{{3,6}, {-1,-1}, {-1,-1}},
                              {EL_NONE , EL_NONE , EL_NONE , EL_UP   },
                              {EL_NONE , EL_NONE , EL_NONE , EL_UP   }}};
 
-NumberDesc NUMBER_8_DESC = {{{0,2}, {3,4}, {1,3}},
+NumberDesc NUMBER_8_DESC = {9, {{0,2}, {3,4}, {1,3}},
                             {{EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_DOWN },
                              {EL_UP   , EL_NONE , EL_NONE , EL_DOWN },
                              {EL_UP   , EL_NONE , EL_NONE , EL_DOWN },
@@ -92,7 +92,7 @@ NumberDesc NUMBER_8_DESC = {{{0,2}, {3,4}, {1,3}},
                              {EL_UP   , EL_LEFT , EL_LEFT , EL_LEFT }}};
 
 
-NumberDesc NUMBER_9_DESC = {{{2,3}, {-1,-1}, {-1,-1}},
+NumberDesc NUMBER_9_DESC = {18, {{2,3}, {-1,-1}, {-1,-1}},
                             {{EL_RIGHT, EL_RIGHT, EL_RIGHT, EL_DOWN },
                              {EL_UP   , EL_NONE , EL_NONE , EL_DOWN },
                              {EL_UP   , EL_NONE , EL_NONE , EL_DOWN },
@@ -122,18 +122,29 @@ static NumberPointer next_pointer(NumberPointer pointer, NumberElement element) 
   return pointer;
 }
 
-void graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number) {
+bool graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number, uint8_t limit) {
+  bool limited = false;
+
   for (int i = 0; i < 3; i++) {
     NumberPointer pointer = number.start[i];
     if (pointer.x < 0 || pointer.y < 0) {
       continue;
     }
 
+    int count = 0;
     bool end = false;
     NumberElement last, current = EL_NONE;
     while (!end) {
       last = current;
       current = number.el[pointer.y][pointer.x];
+
+      count++;
+      if (limit >= 2 && count == limit) {
+        if (current != EL_HEAD) {
+          limited = true;
+          current = EL_HEAD;
+        }
+      }
 
       SnakeElement element;
       bool mirror;
@@ -175,4 +186,6 @@ void graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number) {
       }
     }
   }
+
+  return !limited;
 }
