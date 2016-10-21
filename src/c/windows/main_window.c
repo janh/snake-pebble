@@ -32,8 +32,30 @@ static void window_load(Window *window) {
   s_snake_layer = snake_layer_create(rect);
   layer_add_child(window_layer, s_snake_layer);
 
+}
+
+static int format_hour(int hour) {
+  if (!clock_is_24h_style()) {
+    hour = hour % 12;
+    if (hour == 0) {
+      hour = 12;
+    }
+  }
+  return hour;
+}
+
+static void tick_handler(tm *tick_time, TimeUnits units_changed) {
+  snake_layer_set_time(s_snake_layer, format_hour(tick_time->tm_hour), tick_time->tm_min);
+}
+
 static void window_appear(Window *window) {
+  time_t timestamp = time(NULL);
+  tm *timeinfo = localtime(&timestamp);
+
+  snake_layer_set_time(s_snake_layer, format_hour(timeinfo->tm_hour), timeinfo->tm_min);
   snake_layer_animate(s_snake_layer);
+
+  tick_timer_service_subscribe(HOUR_UNIT | MINUTE_UNIT, tick_handler);
 }
 
 static void window_unload(Window *window) {
