@@ -17,3 +17,4 @@ typedef Layer SnakeLayer;
 SnakeLayer* snake_layer_create(GRect frame);
 void snake_layer_destroy(SnakeLayer* snake_layer);
 void snake_layer_animate(SnakeLayer* snake_layer);
+void snake_layer_set_time(SnakeLayer* snake_layer, uint8_t hour, uint8_t minute);
