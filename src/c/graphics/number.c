@@ -102,6 +102,18 @@ const NumberDesc NUMBER_9_DESC = {18, {{2,3}, {-1,-1}, {-1,-1}},
                                    {EL_HEAD , EL_LEFT , EL_LEFT , EL_LEFT }}};
 
 
+const NumberDesc *NUMBER_DESCS[10] = {&NUMBER_0_DESC,
+                                      &NUMBER_1_DESC,
+                                      &NUMBER_2_DESC,
+                                      &NUMBER_3_DESC,
+                                      &NUMBER_4_DESC,
+                                      &NUMBER_5_DESC,
+                                      &NUMBER_6_DESC,
+                                      &NUMBER_7_DESC,
+                                      &NUMBER_8_DESC,
+                                      &NUMBER_9_DESC};
+
+
 static NumberPointer next_pointer(NumberPointer pointer, NumberElement element) {
   switch (element) {
   case EL_UP:

@@ -47,5 +47,7 @@ extern const NumberDesc NUMBER_7_DESC;
 extern const NumberDesc NUMBER_8_DESC;
 extern const NumberDesc NUMBER_9_DESC;
 
+extern const NumberDesc *NUMBER_DESCS[10];
+
 
 bool graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number, uint8_t limit);
