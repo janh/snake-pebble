@@ -21,11 +21,11 @@ typedef enum {
 typedef struct SnakeElement { SnakePixel a[4][4]; } SnakeElement;
 
 
-SnakeElement SNAKE_LINE;
-SnakeElement SNAKE_HEAD;
-SnakeElement SNAKE_TAIL;
-SnakeElement SNAKE_EDGE;
-SnakeElement SNAKE_FOOD;
+extern const SnakeElement SNAKE_LINE;
+extern const SnakeElement SNAKE_HEAD;
+extern const SnakeElement SNAKE_TAIL;
+extern const SnakeElement SNAKE_EDGE;
+extern const SnakeElement SNAKE_FOOD;
 
 
 typedef enum {

@@ -36,16 +36,16 @@ typedef struct NumberDesc {
 
 
 
-NumberDesc NUMBER_0_DESC;
-NumberDesc NUMBER_1_DESC;
-NumberDesc NUMBER_2_DESC;
-NumberDesc NUMBER_3_DESC;
-NumberDesc NUMBER_4_DESC;
-NumberDesc NUMBER_5_DESC;
-NumberDesc NUMBER_6_DESC;
-NumberDesc NUMBER_7_DESC;
-NumberDesc NUMBER_8_DESC;
-NumberDesc NUMBER_9_DESC;
+extern const NumberDesc NUMBER_0_DESC;
+extern const NumberDesc NUMBER_1_DESC;
+extern const NumberDesc NUMBER_2_DESC;
+extern const NumberDesc NUMBER_3_DESC;
+extern const NumberDesc NUMBER_4_DESC;
+extern const NumberDesc NUMBER_5_DESC;
+extern const NumberDesc NUMBER_6_DESC;
+extern const NumberDesc NUMBER_7_DESC;
+extern const NumberDesc NUMBER_8_DESC;
+extern const NumberDesc NUMBER_9_DESC;
 
 
 bool graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number, uint8_t limit);

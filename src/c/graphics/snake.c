@@ -10,30 +10,30 @@
 #include "../lib/sizes.h"
 
 
-SnakeElement SNAKE_LINE = {{{ZERO, ZERO, ZERO, ZERO},
-                            {ONE , ONE , ZERO, ONE },
-                            {ONE , ZERO, ONE , ONE },
-                            {ZERO, ZERO, ZERO, ZERO}}};
+const SnakeElement SNAKE_LINE = {{{ZERO, ZERO, ZERO, ZERO},
+                                  {ONE , ONE , ZERO, ONE },
+                                  {ONE , ZERO, ONE , ONE },
+                                  {ZERO, ZERO, ZERO, ZERO}}};
 
-SnakeElement SNAKE_HEAD = {{{ONE , ZERO, ZERO, ZERO},
-                            {ZERO, ONE , ONE , ZERO},
-                            {ONE , ONE , ONE , ZERO},
-                            {ZERO, ZERO, ZERO, ZERO}}};
+const SnakeElement SNAKE_HEAD = {{{ONE , ZERO, ZERO, ZERO},
+                                  {ZERO, ONE , ONE , ZERO},
+                                  {ONE , ONE , ONE , ZERO},
+                                  {ZERO, ZERO, ZERO, ZERO}}};
 
-SnakeElement SNAKE_TAIL = {{{ZERO, ZERO, ZERO, ZERO},
-                            {ZERO, ZERO, ONE , ONE },
-                            {ONE , ONE , ONE , ONE },
-                            {ZERO, ZERO, ZERO, ZERO}}};
+const SnakeElement SNAKE_TAIL = {{{ZERO, ZERO, ZERO, ZERO},
+                                  {ZERO, ZERO, ONE , ONE },
+                                  {ONE , ONE , ONE , ONE },
+                                  {ZERO, ZERO, ZERO, ZERO}}};
 
-SnakeElement SNAKE_EDGE = {{{ZERO, ZERO, ZERO, ZERO},
-                            {ZERO, ZERO, ONE , ONE },
-                            {ZERO, ONE , ZERO, ONE },
-                            {ZERO, ONE , ONE , ZERO}}};
+const SnakeElement SNAKE_EDGE = {{{ZERO, ZERO, ZERO, ZERO},
+                                  {ZERO, ZERO, ONE , ONE },
+                                  {ZERO, ONE , ZERO, ONE },
+                                  {ZERO, ONE , ONE , ZERO}}};
 
-SnakeElement SNAKE_FOOD = {{{ZERO, ONE , ZERO, ZERO},
-                            {ONE , ZERO, ONE , ZERO},
-                            {ZERO, ONE , ZERO, ZERO},
-                            {ZERO, ZERO, ZERO, ZERO}}};
+const SnakeElement SNAKE_FOOD = {{{ZERO, ONE , ZERO, ZERO},
+                                  {ONE , ZERO, ONE , ZERO},
+                                  {ZERO, ONE , ZERO, ZERO},
+                                  {ZERO, ZERO, ZERO, ZERO}}};
 
 
 static GPoint mirror_coordinates(GPoint coords, bool mirror) {
