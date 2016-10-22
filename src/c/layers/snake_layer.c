@@ -17,6 +17,7 @@ typedef struct {
   uint8_t minute;
   uint8_t limit;
   AppTimer *timer;
+  SnakeLayerAnimationComplete callback;
 } SnakeLayerData;
 
 
@@ -87,7 +88,12 @@ static void snake_layer_update_proc(Layer *layer, GContext *ctx) {
 
   if (complete) {
     data->limit = 0;
-    snake_layer_timer_cancel(snake_layer);
+    if (data->timer != NULL) {
+      snake_layer_timer_cancel(snake_layer);
+      if (data->callback != NULL) {
+        data->callback();
+      }
+    }
   }
 }
 
@@ -122,9 +128,10 @@ static void snake_layer_callback(void *context) {
   snake_layer_timer_register(snake_layer);
 }
 
-void snake_layer_animate(SnakeLayer* snake_layer) {
+void snake_layer_animate(SnakeLayer* snake_layer, SnakeLayerAnimationComplete callback) {
   SnakeLayerData *data = (SnakeLayerData *)layer_get_data(snake_layer);
 
+  data->callback = callback;
   data->limit = 2;
   layer_mark_dirty(snake_layer);
 
