@@ -48,14 +48,17 @@ static void tick_handler(tm *tick_time, TimeUnits units_changed) {
   snake_layer_set_time(s_snake_layer, format_hour(tick_time->tm_hour), tick_time->tm_min);
 }
 
+static void animation_complete() {
+  tick_timer_service_subscribe(HOUR_UNIT | MINUTE_UNIT, tick_handler);
+}
+
 static void window_appear(Window *window) {
-  time_t timestamp = time(NULL);
+  // prefer showing next minute a bit early over an update at the moment the animation completes
+  time_t timestamp = time(NULL) + 2;
   tm *timeinfo = localtime(&timestamp);
 
   snake_layer_set_time(s_snake_layer, format_hour(timeinfo->tm_hour), timeinfo->tm_min);
-  snake_layer_animate(s_snake_layer);
-
-  tick_timer_service_subscribe(HOUR_UNIT | MINUTE_UNIT, tick_handler);
+  snake_layer_animate(s_snake_layer, animation_complete);
 }
 
 static void window_unload(Window *window) {
