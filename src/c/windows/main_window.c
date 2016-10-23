@@ -8,6 +8,7 @@
 
 #include "main_window.h"
 #include "../layers/snake_layer.h"
+#include "../layers/date_layer.h"
 #include "../lib/sizes.h"
 
 #include <pebble.h>
@@ -17,6 +18,7 @@
 
 static Window *s_main_window;
 static Layer *s_snake_layer;
+static Layer *s_date_layer;
 
 
 static void window_load(Window *window) {
@@ -25,13 +27,19 @@ static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  GRect rect = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH) / 2,
-                     (bounds.size.h - SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT) / 2,
-                     SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH,
-                     SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
-  s_snake_layer = snake_layer_create(rect);
+  GRect rect_snake = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH) / 2,
+                           (bounds.size.h - SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT) / 2,
+                           SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH,
+                           SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
+  s_snake_layer = snake_layer_create(rect_snake);
   layer_add_child(window_layer, s_snake_layer);
 
+  GRect rect_date = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH) / 2,
+                          (rect_snake.origin.y - SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT) / 2,
+                          SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH,
+                          SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT);
+  s_date_layer = date_layer_create(rect_date);
+  layer_add_child(window_layer, s_date_layer);
 }
 
 static int format_hour(int hour) {
@@ -46,10 +54,11 @@ static int format_hour(int hour) {
 
 static void tick_handler(tm *tick_time, TimeUnits units_changed) {
   snake_layer_set_time(s_snake_layer, format_hour(tick_time->tm_hour), tick_time->tm_min);
+  date_layer_set_date(s_date_layer, 1900 + tick_time->tm_year, tick_time->tm_mon + 1, tick_time->tm_mday);
 }
 
 static void animation_complete() {
-  tick_timer_service_subscribe(HOUR_UNIT | MINUTE_UNIT, tick_handler);
+  tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
 }
 
 static void window_appear(Window *window) {
@@ -59,10 +68,13 @@ static void window_appear(Window *window) {
 
   snake_layer_set_time(s_snake_layer, format_hour(timeinfo->tm_hour), timeinfo->tm_min);
   snake_layer_animate(s_snake_layer, animation_complete);
+
+  date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday);
 }
 
 static void window_unload(Window *window) {
   snake_layer_destroy(s_snake_layer);
+  date_layer_destroy(s_date_layer);
   window_destroy(s_main_window);
   s_main_window = NULL;
 }
