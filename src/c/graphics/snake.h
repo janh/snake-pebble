@@ -8,17 +8,15 @@
 
 #pragma once
 
+#include "common.h"
 
 #include <pebble.h>
 #include <inttypes.h>
 
 
-typedef enum {
-  ZERO = 0,
-  ONE
-} SnakePixel;
-
-typedef struct SnakeElement { SnakePixel a[4][4]; } SnakeElement;
+typedef struct SnakeElement {
+  Pixel a[4][4];
+} SnakeElement;
 
 
 extern const SnakeElement SNAKE_LINE;
