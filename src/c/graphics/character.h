@@ -31,6 +31,8 @@ extern const Character CHARACTER_7;
 extern const Character CHARACTER_8;
 extern const Character CHARACTER_9;
 
+extern const Character *CHARACTER_NUMBERS[10];
+
 extern const Character CHARACTER_HYPHEN;
 extern const Character CHARACTER_DOT;
 

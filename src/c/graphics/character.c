@@ -111,6 +111,18 @@ const Character CHARACTER_9 = {5, {{ZERO, ONE , ONE , ONE , ZERO},
                                    {ZERO, ONE , ONE , ONE , ZERO}}};
 
 
+const Character *CHARACTER_NUMBERS[10] = {&CHARACTER_0,
+                                          &CHARACTER_1,
+                                          &CHARACTER_2,
+                                          &CHARACTER_3,
+                                          &CHARACTER_4,
+                                          &CHARACTER_5,
+                                          &CHARACTER_6,
+                                          &CHARACTER_7,
+                                          &CHARACTER_8,
+                                          &CHARACTER_9};
+
+
 const Character CHARACTER_HYPHEN = {3, {{ZERO, ZERO, ZERO, ZERO, ZERO},
                                         {ZERO, ZERO, ZERO, ZERO, ZERO},
                                         {ZERO, ZERO, ZERO, ZERO, ZERO},
