@@ -21,25 +21,44 @@ static Layer *s_snake_layer;
 static Layer *s_date_layer;
 
 
-static void window_load(Window *window) {
-  window_set_background_color(window, GColorWhite);
-
-  Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
+static void update_layout() {
+  Layer *window_layer = window_get_root_layer(s_main_window);
+  GRect bounds = layer_get_unobstructed_bounds(window_layer);
 
   GRect rect_snake = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH) / 2,
                            (bounds.size.h - SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT) / 2,
                            SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH,
                            SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
-  s_snake_layer = snake_layer_create(rect_snake);
-  layer_add_child(window_layer, s_snake_layer);
 
   GRect rect_date = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH) / 2,
                           (rect_snake.origin.y - SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT) / 2,
                           SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH,
                           SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT);
-  s_date_layer = date_layer_create(rect_date);
+
+  layer_set_frame(s_snake_layer, rect_snake);
+  layer_set_frame(s_date_layer, rect_date);
+}
+
+static void unobstracted_area_changed(AnimationProgress progress, void *context) {
+  update_layout();
+}
+
+static void window_load(Window *window) {
+  window_set_background_color(window, GColorWhite);
+
+  Layer *window_layer = window_get_root_layer(s_main_window);
+
+  s_snake_layer = snake_layer_create(GRect(0, 0, 0, 0));
+  layer_add_child(window_layer, s_snake_layer);
+
+  s_date_layer = date_layer_create(GRect(0, 0, 0, 0));
   layer_add_child(window_layer, s_date_layer);
+
+  update_layout();
+
+  unobstructed_area_service_subscribe((UnobstructedAreaHandlers) {
+    .change = unobstracted_area_changed
+  }, NULL);
 }
 
 static int format_hour(int hour) {
