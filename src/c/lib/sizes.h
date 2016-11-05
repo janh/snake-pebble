@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <pebble.h>
+
 
 #ifdef PBL_PLATFORM_EMERY
   #define SIZE_SCALE_FACTOR 3
@@ -15,12 +17,14 @@
   #define SIZE_SCALE_FACTOR 2
 #endif
 
-#ifdef PBL_PLATFORM_EMERY
-  #define SIZE_TIME_WIDTH 67
-#else
-  #define SIZE_TIME_WIDTH 68
-#endif
+#define SIZE_TIME_WIDTH 68
 #define SIZE_TIME_HEIGHT 28
+
+#ifdef PBL_PLATFORM_EMERY
+  #define SIZE_GRID_OFFSET GPoint(1, 0)
+#else
+  #define SIZE_GRID_OFFSET GPoint(0, 0)
+#endif
 
 #define SIZE_TIME_DIGIT_POSITION_1 GPoint(0, 0)
 #define SIZE_TIME_DIGIT_POSITION_2 GPoint(16, 0)

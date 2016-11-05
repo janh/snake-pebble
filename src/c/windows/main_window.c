@@ -25,13 +25,19 @@ static void update_layout() {
   Layer *window_layer = window_get_root_layer(s_main_window);
   GRect bounds = layer_get_unobstructed_bounds(window_layer);
 
-  GRect rect_snake = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH) / 2,
-                           (bounds.size.h - SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT) / 2,
+  int16_t width = (bounds.size.w - SIZE_GRID_OFFSET.x) / SIZE_SCALE_FACTOR;
+  int16_t height = (bounds.size.h - SIZE_GRID_OFFSET.y) / SIZE_SCALE_FACTOR;
+
+  int16_t snake_top = (height - SIZE_TIME_HEIGHT) / 2;
+
+  GRect rect_snake = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_TIME_WIDTH) / 2),
+                           SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * snake_top,
                            SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH,
                            SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
 
-  GRect rect_date = GRect((bounds.size.w - SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH) / 2,
-                          (rect_snake.origin.y - SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT) / 2,
+  int16_t date_offset = (snake_top - SIZE_DATE_HEIGHT) / 2;
+  GRect rect_date = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_DATE_WIDTH) / 2),
+                          SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_top - SIZE_DATE_HEIGHT - date_offset),
                           SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH,
                           SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT);
 
