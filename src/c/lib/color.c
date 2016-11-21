@@ -10,9 +10,9 @@
 
 
 GColor color_get_background() {
-  return GColorWhite;
+  return GColorBlack;
 }
 
 GColor color_get_foreground() {
-  return GColorBlack;
+  return GColorWhite;
 }
