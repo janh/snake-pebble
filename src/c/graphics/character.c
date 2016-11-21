@@ -7,6 +7,7 @@
  */
 
 #include "character.h"
+#include "../lib/color.h"
 #include "../lib/sizes.h"
 
 
@@ -145,6 +146,7 @@ const Character CHARACTER_DOT = {3, {{ZERO, ZERO, ZERO, ZERO, ZERO},
 
 
 void graphics_draw_character(GContext *ctx, GPoint pos, Character data) {
+  graphics_context_set_fill_color(ctx, color_get_foreground());
   for (int i = 0; i < data.width; i++) {
     for (int j = 0; j < 9; j++) {
       if (data.a[j][i] == ONE) {

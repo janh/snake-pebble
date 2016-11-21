@@ -7,6 +7,7 @@
  */
 
 #include "snake.h"
+#include "../lib/color.h"
 #include "../lib/sizes.h"
 
 
@@ -67,6 +68,7 @@ static GPoint rotate_coordinates(GPoint coords, SnakeRotation rotation) {
 }
 
 void graphics_draw_snake_element(GContext *ctx, GPoint pos, SnakeElement data, bool mirror, SnakeRotation rotation) {
+  graphics_context_set_fill_color(ctx, color_get_foreground());
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
       if (data.a[j][i] == ONE) {

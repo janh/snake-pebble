@@ -9,6 +9,7 @@
 #include "main_window.h"
 #include "../layers/snake_layer.h"
 #include "../layers/date_layer.h"
+#include "../lib/color.h"
 #include "../lib/sizes.h"
 
 #include <pebble.h>
@@ -50,7 +51,7 @@ static void unobstracted_area_changed(AnimationProgress progress, void *context)
 }
 
 static void window_load(Window *window) {
-  window_set_background_color(window, GColorWhite);
+  window_set_background_color(window, color_get_background());
 
   Layer *window_layer = window_get_root_layer(s_main_window);
 
