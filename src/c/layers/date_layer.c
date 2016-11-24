@@ -32,8 +32,6 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
   DateLayer *date_layer = (DateLayer *)layer;
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
-  graphics_context_set_fill_color(ctx, GColorBlack);
-
   size_t length = 10;
   Character characters[10] = {*CHARACTER_NUMBERS[data->year / 1000],
                               *CHARACTER_NUMBERS[(data->year / 100) % 10],
