@@ -9,6 +9,7 @@
 #include "main_window.h"
 #include "../layers/snake_layer.h"
 #include "../layers/date_layer.h"
+#include "../layers/health_layer.h"
 #include "../lib/color.h"
 #include "../lib/sizes.h"
 
@@ -20,6 +21,7 @@
 static Window *s_main_window;
 static Layer *s_snake_layer;
 static Layer *s_date_layer;
+static Layer *s_health_layer;
 
 
 static void update_layout() {
@@ -29,21 +31,28 @@ static void update_layout() {
   int16_t width = (bounds.size.w - SIZE_GRID_OFFSET.x) / SIZE_SCALE_FACTOR;
   int16_t height = (bounds.size.h - SIZE_GRID_OFFSET.y) / SIZE_SCALE_FACTOR;
 
-  int16_t snake_top = (height - SIZE_TIME_HEIGHT) / 2;
+  int16_t snake_margin = (height - SIZE_TIME_HEIGHT) / 2;
 
   GRect rect_snake = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_TIME_WIDTH) / 2),
-                           SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * snake_top,
+                           SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * snake_margin,
                            SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH,
                            SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
 
-  int16_t date_offset = (snake_top - SIZE_DATE_HEIGHT) / 2;
+  int16_t date_offset = (snake_margin - SIZE_DATE_HEIGHT) / 2;
   GRect rect_date = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_DATE_WIDTH) / 2),
-                          SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_top - SIZE_DATE_HEIGHT - date_offset),
+                          SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_margin - SIZE_DATE_HEIGHT - date_offset),
                           SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH,
                           SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT);
 
+  int16_t health_offset = (snake_margin - SIZE_HEALTH_HEIGHT) / 2;
+  GRect rect_health = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_HEALTH_WIDTH) / 2),
+                            SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_margin + SIZE_TIME_HEIGHT + health_offset),
+                            SIZE_SCALE_FACTOR * SIZE_HEALTH_WIDTH,
+                            SIZE_SCALE_FACTOR * SIZE_HEALTH_HEIGHT);
+
   layer_set_frame(s_snake_layer, rect_snake);
   layer_set_frame(s_date_layer, rect_date);
+  layer_set_frame(s_health_layer, rect_health);
 }
 
 static void unobstracted_area_changed(AnimationProgress progress, void *context) {
@@ -60,6 +69,9 @@ static void window_load(Window *window) {
 
   s_date_layer = date_layer_create(GRect(0, 0, 0, 0));
   layer_add_child(window_layer, s_date_layer);
+
+  s_health_layer = health_layer_create(GRect(0, 0, 0, 0));
+  layer_add_child(window_layer, s_health_layer);
 
   update_layout();
 
@@ -96,11 +108,14 @@ static void window_appear(Window *window) {
   snake_layer_animate(s_snake_layer, animation_complete);
 
   date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday);
+
+  health_layer_set_data(s_health_layer, 0, 0);
 }
 
 static void window_unload(Window *window) {
   snake_layer_destroy(s_snake_layer);
   date_layer_destroy(s_date_layer);
+  health_layer_destroy(s_health_layer);
   window_destroy(s_main_window);
   s_main_window = NULL;
 }
