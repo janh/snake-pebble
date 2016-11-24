@@ -35,7 +35,12 @@ extern const Character *CHARACTER_NUMBERS[10];
 
 extern const Character CHARACTER_HYPHEN;
 extern const Character CHARACTER_DOT;
+extern const Character CHARACTER_DOT_NARROW;
 
+extern const Character CHARACTER_K;
+
+extern const Character CHARACTER_HEART;
+extern const Character CHARACTER_FOOT;
 
 void graphics_draw_character(GContext *ctx, GPoint pos, Character data);
 void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length);

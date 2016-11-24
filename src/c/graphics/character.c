@@ -144,6 +144,48 @@ const Character CHARACTER_DOT = {3, {{ZERO, ZERO, ZERO, ZERO, ZERO},
                                      {ZERO, ZERO, ZERO, ZERO, ZERO},
                                      {ONE , ZERO, ZERO, ZERO, ZERO}}};
 
+const Character CHARACTER_DOT_NARROW = {1, {{ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                            {ONE , ZERO, ZERO, ZERO, ZERO}}};
+
+
+const Character CHARACTER_K = {4, {{ONE , ZERO, ZERO, ZERO, ZERO},
+                                   {ONE , ZERO, ZERO, ZERO, ZERO},
+                                   {ONE , ZERO, ZERO, ZERO, ZERO},
+                                   {ONE , ZERO, ZERO, ONE , ZERO},
+                                   {ONE , ZERO, ONE , ZERO, ZERO},
+                                   {ONE , ONE , ZERO, ZERO, ZERO},
+                                   {ONE , ONE , ZERO, ZERO, ZERO},
+                                   {ONE , ZERO, ONE , ZERO, ZERO},
+                                   {ONE , ZERO, ZERO, ONE , ZERO}}};
+
+
+const Character CHARACTER_HEART = {5, {{ZERO, ZERO, ZERO, ZERO, ZERO},
+                                       {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                       {ZERO, ONE , ZERO, ONE , ZERO},
+                                       {ONE , ZERO, ONE , ZERO, ONE },
+                                       {ONE , ZERO, ZERO, ZERO, ONE },
+                                       {ZERO, ONE , ZERO, ONE , ZERO},
+                                       {ZERO, ZERO, ONE , ZERO, ZERO},
+                                       {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                       {ZERO, ZERO, ZERO, ZERO, ZERO}}};
+
+const Character CHARACTER_FOOT = {5, {{ZERO, ZERO, ZERO, ZERO, ZERO},
+                                      {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                      {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                      {ONE , ZERO, ONE , ZERO, ZERO},
+                                      {ONE , ONE , ONE , ONE , ZERO},
+                                      {ONE , ZERO, ZERO, ZERO, ONE },
+                                      {ONE , ONE , ONE , ONE , ONE },
+                                      {ZERO, ZERO, ZERO, ZERO, ZERO},
+                                      {ZERO, ZERO, ZERO, ZERO, ZERO}}};
+
 
 void graphics_draw_character(GContext *ctx, GPoint pos, Character data) {
   graphics_context_set_fill_color(ctx, color_get_foreground());
