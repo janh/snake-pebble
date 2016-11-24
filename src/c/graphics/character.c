@@ -208,3 +208,21 @@ void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, s
     pos.x += character.width + 2;
   }
 }
+
+void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length) {
+  for (size_t i = length; i > 0; i--) {
+    Character character = data[i-1];
+    pos.x -= character.width;
+    graphics_draw_character(ctx, pos, character);
+    pos.x -= 2;
+  }
+}
+
+int16_t graphics_get_character_array_width(Character *data, size_t length) {
+  int16_t width = (length - 1) * 2;
+  for (size_t i = 0; i < length; i++) {
+    Character character = data[i];
+    width += character.width;
+  }
+  return width;
+}
