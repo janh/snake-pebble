@@ -38,13 +38,13 @@ static void update_layout() {
                            SIZE_SCALE_FACTOR * SIZE_TIME_WIDTH,
                            SIZE_SCALE_FACTOR * SIZE_TIME_HEIGHT);
 
-  int16_t date_offset = (snake_margin - SIZE_DATE_HEIGHT) / 2;
+  int16_t date_offset = PBL_IF_ROUND_ELSE(3, (snake_margin - SIZE_DATE_HEIGHT) / 2);
   GRect rect_date = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_DATE_WIDTH) / 2),
                           SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_margin - SIZE_DATE_HEIGHT - date_offset),
                           SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH,
                           SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT);
 
-  int16_t health_offset = (snake_margin - SIZE_HEALTH_HEIGHT) / 2;
+  int16_t health_offset = PBL_IF_ROUND_ELSE(3, (snake_margin - SIZE_HEALTH_HEIGHT) / 2);
   GRect rect_health = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_HEALTH_WIDTH) / 2),
                             SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_margin + SIZE_TIME_HEIGHT + health_offset),
                             SIZE_SCALE_FACTOR * SIZE_HEALTH_WIDTH,
