@@ -12,55 +12,63 @@
 
 
 typedef struct {
-  uint32_t steps;
-  uint8_t heart_rate;
+  int32_t steps;
+  int16_t heart_rate;
 } HealthLayerData;
 
 
-void health_layer_set_data(HealthLayer* health_layer, uint32_t steps, uint8_t heart_rate) {
+void health_layer_set_data(HealthLayer* health_layer, int32_t steps, int16_t heart_rate) {
   HealthLayerData *data = (HealthLayerData *)layer_get_data(health_layer);
   data->steps = steps;
   data->heart_rate = heart_rate;
   layer_mark_dirty(health_layer);
 }
 
-static void health_layer_get_steps_characters(Character *buffer, size_t *length, uint32_t steps) {
+static void health_layer_get_steps_characters(Character *buffer, size_t *length, int32_t steps) {
   *length = 0;
   buffer[(*length)++] = CHARACTER_FOOT;
-  if (steps >= 10000) {
-    if (steps >= 100000) {
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100000) % 10];
-    }
-    buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 10000) % 10];
-    buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 1000) % 10];
-    if (steps < 100000) {
-      buffer[(*length)++] = CHARACTER_DOT_NARROW;
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
-    }
-    buffer[(*length)++] = CHARACTER_K;
+  if (steps < 0) {
+    buffer[(*length)++] = CHARACTER_HYPHEN;
   } else {
-    if (steps >= 1000) {
-      buffer[(*length)++] = *CHARACTER_NUMBERS[steps / 1000];
+    if (steps >= 10000) {
+      if (steps >= 100000) {
+        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100000) % 10];
+      }
+      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 10000) % 10];
+      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 1000) % 10];
+      if (steps < 100000) {
+        buffer[(*length)++] = CHARACTER_DOT_NARROW;
+        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
+      }
+      buffer[(*length)++] = CHARACTER_K;
+    } else {
+      if (steps >= 1000) {
+        buffer[(*length)++] = *CHARACTER_NUMBERS[steps / 1000];
+      }
+      if (steps >= 100) {
+        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
+      }
+      if (steps >= 10) {
+        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 10) % 10];
+      }
+      buffer[(*length)++] = *CHARACTER_NUMBERS[steps % 10];
     }
-    if (steps >= 100) {
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
-    }
-    if (steps >= 10) {
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 10) % 10];
-    }
-    buffer[(*length)++] = *CHARACTER_NUMBERS[steps % 10];
   }
 }
 
-static void health_layer_get_heart_rate_characters(Character *buffer, size_t *length, uint32_t heart_rate) {
+static void health_layer_get_heart_rate_characters(Character *buffer, size_t *length, int16_t heart_rate) {
   *length = 0;
-  if (heart_rate >= 100) {
-    buffer[(*length)++] = *CHARACTER_NUMBERS[(heart_rate / 100) % 10];
+  if (heart_rate < 0) {
+    buffer[(*length)++] = CHARACTER_HYPHEN;
+  } else {
+    if (heart_rate >= 100) {
+      buffer[(*length)++] = *CHARACTER_NUMBERS[(heart_rate / 100) % 10];
+    }
+    if (heart_rate >= 10) {
+      buffer[(*length)++] = *CHARACTER_NUMBERS[(heart_rate / 10) % 10];
+    }
+    buffer[(*length)++] = *CHARACTER_NUMBERS[heart_rate % 10];
   }
-  if (heart_rate >= 10) {
-    buffer[(*length)++] = *CHARACTER_NUMBERS[(heart_rate / 10) % 10];
-  }
-  buffer[(*length)++] = *CHARACTER_NUMBERS[heart_rate % 10];
   buffer[(*length)++] = CHARACTER_HEART;
 }
 
