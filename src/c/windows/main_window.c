@@ -12,6 +12,7 @@
 #include "../layers/health_layer.h"
 #include "../lib/color.h"
 #include "../lib/sizes.h"
+#include "../lib/health.h"
 
 #include <pebble.h>
 #include <stdbool.h>
@@ -95,6 +96,12 @@ static void tick_handler(tm *tick_time, TimeUnits units_changed) {
   date_layer_set_date(s_date_layer, 1900 + tick_time->tm_year, tick_time->tm_mon + 1, tick_time->tm_mday);
 }
 
+static void health_data_changed() {
+  int32_t steps = health_get_steps();
+  int16_t heart_rate = health_get_heart_rate();
+  health_layer_set_data(s_health_layer, steps, heart_rate);
+}
+
 static void animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
 }
@@ -109,7 +116,8 @@ static void window_appear(Window *window) {
 
   date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday);
 
-  health_layer_set_data(s_health_layer, 0, 0);
+  health_layer_set_data(s_health_layer, -1, -1);
+  health_init(health_data_changed);
 }
 
 static void window_unload(Window *window) {
