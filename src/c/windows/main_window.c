@@ -116,7 +116,7 @@ static void window_appear(Window *window) {
 
   date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday);
 
-  health_layer_set_data(s_health_layer, -1, -1);
+  health_layer_set_data(s_health_layer, health_get_steps(), health_get_heart_rate());
   health_init(health_data_changed);
 }
 
