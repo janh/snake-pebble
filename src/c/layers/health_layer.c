@@ -14,6 +14,7 @@
 typedef struct {
   int32_t steps;
   int16_t heart_rate;
+  int16_t anim_state;
 } HealthLayerData;
 
 
@@ -83,10 +84,10 @@ static void health_layer_update_proc(Layer *layer, GContext *ctx) {
   Character characters[6];
 
   health_layer_get_steps_characters(characters, &length, data->steps);
-  graphics_draw_character_array(ctx, GPoint(0, 0), characters, length);
+  graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 0, data->anim_state);
 
   health_layer_get_heart_rate_characters(characters, &length, data->heart_rate);
-  graphics_draw_character_array_right(ctx, GPoint(right, 0), characters, length);
+  graphics_draw_character_array_right(ctx, GPoint(right, 0), characters, length, 0, data->anim_state);
 }
 
 HealthLayer* health_layer_create(GRect frame) {
@@ -100,4 +101,10 @@ void health_layer_destroy(HealthLayer* health_layer) {
   if (health_layer) {
     layer_destroy(health_layer);
   }
+}
+
+void health_layer_set_anim_state(HealthLayer* health_layer, int16_t anim_state) {
+  HealthLayerData *data = (HealthLayerData *)layer_get_data(health_layer);
+  data->anim_state = anim_state;
+  layer_mark_dirty(health_layer);
 }

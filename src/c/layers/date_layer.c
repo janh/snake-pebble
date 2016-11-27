@@ -15,6 +15,7 @@ typedef struct {
   uint16_t year;
   uint8_t month;
   uint8_t day;
+  int16_t anim_state;
 } DateLayerData;
 
 
@@ -44,7 +45,7 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
                               *CHARACTER_NUMBERS[data->day / 10],
                               *CHARACTER_NUMBERS[data->day % 10]};
 
-  graphics_draw_character_array(ctx, GPoint(0, 0), characters, length);
+  graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 9 - data->anim_state, 9);
 }
 
 DateLayer* date_layer_create(GRect frame) {
@@ -58,4 +59,10 @@ void date_layer_destroy(DateLayer* date_layer) {
   if (date_layer) {
     layer_destroy(date_layer);
   }
+}
+
+void date_layer_set_anim_state(DateLayer* date_layer, int16_t anim_state) {
+  DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
+  data->anim_state = anim_state;
+  layer_mark_dirty(date_layer);
 }

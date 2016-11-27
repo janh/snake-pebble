@@ -42,7 +42,7 @@ extern const Character CHARACTER_K;
 extern const Character CHARACTER_HEART;
 extern const Character CHARACTER_FOOT;
 
-void graphics_draw_character(GContext *ctx, GPoint pos, Character data);
-void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length);
-void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length);
+void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t min, int16_t max);
+void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max);
+void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max);
 int16_t graphics_get_character_array_width(Character *data, size_t length);

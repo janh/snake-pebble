@@ -187,11 +187,13 @@ const Character CHARACTER_FOOT = {5, {{ZERO, ZERO, ZERO, ZERO, ZERO},
                                       {ZERO, ZERO, ZERO, ZERO, ZERO}}};
 
 
-void graphics_draw_character(GContext *ctx, GPoint pos, Character data) {
+void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t min, int16_t max) {
+  if (min < 0) { min = 0; }
+  if (max < 0) { max = 9; }
   graphics_context_set_fill_color(ctx, color_get_foreground());
   for (int i = 0; i < data.width; i++) {
     for (int j = 0; j < 9; j++) {
-      if (data.a[j][i] == ONE) {
+      if (data.a[j][i] == ONE && j >= min && j < max) {
         GPoint coords = GPoint(i, j);
         GRect rect = GRect(SIZE_SCALE_FACTOR * (pos.x + coords.x), SIZE_SCALE_FACTOR * (pos.y + coords.y),
                            SIZE_SCALE_FACTOR, SIZE_SCALE_FACTOR);
@@ -201,19 +203,19 @@ void graphics_draw_character(GContext *ctx, GPoint pos, Character data) {
   }
 }
 
-void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length) {
+void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max) {
   for (size_t i = 0; i < length; i++) {
     Character character = data[i];
-    graphics_draw_character(ctx, pos, character);
+    graphics_draw_character(ctx, pos, character, min, max);
     pos.x += character.width + 2;
   }
 }
 
-void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length) {
+void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max) {
   for (size_t i = length; i > 0; i--) {
     Character character = data[i-1];
     pos.x -= character.width;
-    graphics_draw_character(ctx, pos, character);
+    graphics_draw_character(ctx, pos, character, min, max);
     pos.x -= 2;
   }
 }
