@@ -10,6 +10,7 @@
 #include "../layers/snake_layer.h"
 #include "../layers/date_layer.h"
 #include "../layers/health_layer.h"
+#include "../layers/animation.h"
 #include "../lib/color.h"
 #include "../lib/sizes.h"
 #include "../lib/health.h"
@@ -102,8 +103,13 @@ static void health_data_changed() {
   health_layer_set_data(s_health_layer, steps, heart_rate);
 }
 
-static void animation_complete() {
+static void date_health_animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
+  health_init(health_data_changed);
+}
+
+static void snake_animation_complete() {
+  date_health_layers_animate(s_date_layer, s_health_layer, date_health_animation_complete);
 }
 
 static void window_appear(Window *window) {
@@ -112,12 +118,10 @@ static void window_appear(Window *window) {
   tm *timeinfo = localtime(&timestamp);
 
   snake_layer_set_time(s_snake_layer, format_hour(timeinfo->tm_hour), timeinfo->tm_min);
-  snake_layer_animate(s_snake_layer, animation_complete);
-
   date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday);
-
   health_layer_set_data(s_health_layer, health_get_steps(), health_get_heart_rate());
-  health_init(health_data_changed);
+
+  snake_layer_animate(s_snake_layer, snake_animation_complete);
 }
 
 static void window_unload(Window *window) {
