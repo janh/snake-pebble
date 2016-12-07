@@ -32,13 +32,13 @@ static void date_health_layers_timer_register() {
 }
 
 static void date_health_layers_callback(void *context) {
+  s_timer = NULL;
   if (s_progress < 9) {
     s_progress += 2;
     date_layer_set_anim_state(s_date_layer, s_progress);
     health_layer_set_anim_state(s_health_layer, s_progress);
     date_health_layers_timer_register();
   } else {
-    date_health_layers_timer_cancel();
     if (s_callback != NULL) {
       s_callback();
     }
