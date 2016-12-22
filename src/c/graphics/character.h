@@ -8,15 +8,15 @@
 
 #pragma once
 
-#include "common.h"
-
 #include <pebble.h>
 #include <inttypes.h>
 
 
+typedef uint8_t CharacterRow;
+
 typedef struct Character {
   uint8_t width;
-  Pixel a[9][5];
+  CharacterRow a[9];
 } Character;
 
 
