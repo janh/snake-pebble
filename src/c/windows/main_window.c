@@ -11,7 +11,7 @@
 #include "../layers/date_layer.h"
 #include "../layers/health_layer.h"
 #include "../layers/animation.h"
-#include "../lib/color.h"
+#include "../lib/settings.h"
 #include "../lib/sizes.h"
 #include "../lib/health.h"
 
@@ -62,7 +62,7 @@ static void unobstracted_area_changed(AnimationProgress progress, void *context)
 }
 
 static void window_load(Window *window) {
-  window_set_background_color(window, color_get_background());
+  window_set_background_color(window, settings_get_color_background());
 
   Layer *window_layer = window_get_root_layer(s_main_window);
 

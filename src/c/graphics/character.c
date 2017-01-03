@@ -7,7 +7,7 @@
  */
 
 #include "character.h"
-#include "../lib/color.h"
+#include "../lib/settings.h"
 #include "../lib/sizes.h"
 
 
@@ -194,7 +194,7 @@ const Character CHARACTER_FOOT = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
 void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t min, int16_t max) {
   if (min < 0) { min = 0; }
   if (max < 0) { max = 9; }
-  graphics_context_set_fill_color(ctx, color_get_text());
+  graphics_context_set_fill_color(ctx, settings_get_color_text());
   for (int j = 0; j < 9; j++) {
     if (j >= min && j < max) {
       CharacterRow row = data.a[j];

@@ -6,17 +6,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "color.h"
+#include "settings.h"
 
 
-GColor color_get_background() {
+GColor settings_get_color_background() {
   return GColorBlack;
 }
 
-GColor color_get_snake() {
+GColor settings_get_color_snake() {
   return GColorWhite;
 }
 
-GColor color_get_text() {
-  return PBL_IF_COLOR_ELSE(GColorLightGray, color_get_snake());
+GColor settings_get_color_text() {
+  return PBL_IF_COLOR_ELSE(GColorLightGray, settings_get_color_snake());
 }

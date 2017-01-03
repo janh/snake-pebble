@@ -11,6 +11,6 @@
 #include <pebble.h>
 
 
-GColor color_get_background();
-GColor color_get_snake();
-GColor color_get_text();
+GColor settings_get_color_background();
+GColor settings_get_color_snake();
+GColor settings_get_color_text();
