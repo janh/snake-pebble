@@ -6,12 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "lib/settings.h"
 #include "windows/main_window.h"
 
 #include <pebble.h>
 
 
 static void init(void) {
+  settings_init();
   main_window_push();
 }
 
