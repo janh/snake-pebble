@@ -1,0 +1,38 @@
+[
+  {
+    "type": "heading",
+    "defaultValue": "Snake configuration"
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Color"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorBackground",
+        "defaultValue": "000000",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorSnake",
+        "defaultValue": "ffffff",
+        "label": "Time"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorText",
+        "defaultValue": "aaaaaa",
+        "label": "Text",
+        "capabilities": ["COLOR"]
+      }
+    ]
+  },
+  {
+    "type": "submit",
+    "defaultValue": "Save changes"
+  }
+]
