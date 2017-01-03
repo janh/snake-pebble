@@ -67,8 +67,6 @@ static void snake_layer_update_proc(Layer *layer, GContext *ctx) {
 
   NumberDesc number;
 
-  graphics_context_set_fill_color(ctx, GColorBlack);
-
   number = *NUMBER_DESCS[data->hour / 10];
   complete &= graphics_draw_number(ctx, SIZE_TIME_DIGIT_POSITION_1, number,
                                    snake_layer_get_limit(snake_layer, number.max_length));

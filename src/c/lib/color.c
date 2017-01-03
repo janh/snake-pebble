@@ -13,6 +13,10 @@ GColor color_get_background() {
   return GColorBlack;
 }
 
-GColor color_get_foreground() {
+GColor color_get_snake() {
   return GColorWhite;
+}
+
+GColor color_get_text() {
+  return PBL_IF_COLOR_ELSE(GColorLightGray, color_get_snake());
 }

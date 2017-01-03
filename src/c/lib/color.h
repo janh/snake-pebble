@@ -12,4 +12,5 @@
 
 
 GColor color_get_background();
-GColor color_get_foreground();
+GColor color_get_snake();
+GColor color_get_text();
