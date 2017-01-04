@@ -33,8 +33,8 @@ static void date_health_layers_timer_register() {
 
 static void date_health_layers_callback(void *context) {
   s_timer = NULL;
-  if (s_progress < 9) {
-    s_progress += 2;
+  if (s_progress < 11) {
+    s_progress += (s_progress < 8) ? 2 : 3;
     date_layer_set_anim_state(s_date_layer, s_progress);
     health_layer_set_anim_state(s_health_layer, s_progress);
     date_health_layers_timer_register();
@@ -48,7 +48,7 @@ static void date_health_layers_callback(void *context) {
 void date_health_layers_animate(DateLayer* date_layer, HealthLayer* health_layer, DateHealthLayersAnimationComplete callback) {
   s_date_layer = date_layer;
   s_health_layer = health_layer;
-  s_progress = 1;
+  s_progress = 2;
   s_callback = callback;
 
   date_layer_set_anim_state(s_date_layer, s_progress);

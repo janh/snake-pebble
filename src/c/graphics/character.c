@@ -23,7 +23,8 @@ const Character CHARACTER_0 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_1 = {5, {CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 1, 1, 0, 0, 0, 0),
@@ -33,7 +34,8 @@ const Character CHARACTER_1 = {5, {CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_2 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
@@ -43,7 +45,8 @@ const Character CHARACTER_2 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0)}};
+                                   CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_3 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
@@ -53,7 +56,8 @@ const Character CHARACTER_3 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_4 = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 1, 1, 0, 0, 0),
@@ -63,7 +67,8 @@ const Character CHARACTER_4 = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_5 = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
@@ -73,7 +78,8 @@ const Character CHARACTER_5 = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_6 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
@@ -83,7 +89,8 @@ const Character CHARACTER_6 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_7 = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
@@ -93,7 +100,8 @@ const Character CHARACTER_7 = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_8 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
@@ -103,7 +111,8 @@ const Character CHARACTER_8 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_9 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
@@ -113,7 +122,8 @@ const Character CHARACTER_9 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 
 const Character *CHARACTER_NUMBERS[10] = {&CHARACTER_0,
@@ -136,6 +146,7 @@ const Character CHARACTER_HYPHEN = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                         CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                         CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                         CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                         CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_DOT = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -146,7 +157,8 @@ const Character CHARACTER_DOT = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
+                                     CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_DOT_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -156,7 +168,8 @@ const Character CHARACTER_DOT_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
+                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_SLASH = {3, {CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
@@ -166,7 +179,8 @@ const Character CHARACTER_SLASH = {3, {CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
+                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 
 const Character CHARACTER_K = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
@@ -177,7 +191,8 @@ const Character CHARACTER_K = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0)}};
+                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 
 const Character CHARACTER_HEART = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -187,6 +202,7 @@ const Character CHARACTER_HEART = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                        CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
@@ -198,20 +214,21 @@ const Character CHARACTER_FOOT = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                       CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                       CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 
 void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t min, int16_t max) {
-  if (min < 0) { min = 0; }
-  if (max < 0) { max = 9; }
+  if (min < 0) { min = 0; } else { min--; }
+  if (max < 0) { max = 10; } else { max--; }
   graphics_context_set_fill_color(ctx, settings_get_color_text());
-  for (int j = 0; j < 9; j++) {
+  for (int j = 0; j < 10; j++) {
     if (j >= min && j < max) {
       CharacterRow row = data.a[j];
       for (uint8_t i = 0; i < data.width; i++) {
         if (CHARACTER_ROW_ITEM(row, i)) {
           GPoint coords = GPoint(i, j);
-          GRect rect = GRect(SIZE_SCALE_FACTOR * (pos.x + coords.x), SIZE_SCALE_FACTOR * (pos.y + coords.y),
+          GRect rect = GRect(SIZE_SCALE_FACTOR * (pos.x + coords.x), SIZE_SCALE_FACTOR * (1 + pos.y + coords.y),
                              SIZE_SCALE_FACTOR, SIZE_SCALE_FACTOR);
           graphics_fill_rect(ctx, rect, 0, GCornerNone);
         }

@@ -16,7 +16,7 @@ typedef uint8_t CharacterRow;
 
 typedef struct Character {
   uint8_t width;
-  CharacterRow a[9];
+  CharacterRow a[10];
 } Character;
 
 

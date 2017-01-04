@@ -85,7 +85,7 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
 
   }
 
-  graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 9 - data->anim_state, 9);
+  graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 11 - data->anim_state, 11);
 }
 
 DateLayer* date_layer_create(GRect frame) {
