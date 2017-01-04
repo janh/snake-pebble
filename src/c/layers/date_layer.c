@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Jan Hoffmann
+ * Copyright (c) 2016-2017 Jan Hoffmann
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,21 +29,30 @@ void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, ui
   }
 }
 
+static void write_digits_4(Character* buffer, uint16_t value) {
+  buffer[0] = *CHARACTER_NUMBERS[value / 1000];
+  buffer[1] = *CHARACTER_NUMBERS[(value / 100) % 10];
+  buffer[2] = *CHARACTER_NUMBERS[(value / 10) % 10];
+  buffer[3] = *CHARACTER_NUMBERS[value % 10];
+}
+
+static void write_digits_2(Character* buffer, uint8_t value) {
+  buffer[0] = *CHARACTER_NUMBERS[value / 10];
+  buffer[1] = *CHARACTER_NUMBERS[value % 10];
+}
+
 static void date_layer_update_proc(Layer *layer, GContext *ctx) {
   DateLayer *date_layer = (DateLayer *)layer;
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
   size_t length = 10;
-  Character characters[10] = {*CHARACTER_NUMBERS[data->year / 1000],
-                              *CHARACTER_NUMBERS[(data->year / 100) % 10],
-                              *CHARACTER_NUMBERS[(data->year / 10) % 10],
-                              *CHARACTER_NUMBERS[data->year % 10],
-                              CHARACTER_HYPHEN,
-                              *CHARACTER_NUMBERS[data->month / 10],
-                              *CHARACTER_NUMBERS[data->month % 10],
-                              CHARACTER_HYPHEN,
-                              *CHARACTER_NUMBERS[data->day / 10],
-                              *CHARACTER_NUMBERS[data->day % 10]};
+  Character characters[10];
+
+  write_digits_4(&characters[0], data->year);
+  characters[4] = CHARACTER_HYPHEN;
+  write_digits_2(&characters[5], data->month);
+  characters[7] = CHARACTER_HYPHEN;
+  write_digits_2(&characters[8], data->day);
 
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 9 - data->anim_state, 9);
 }
