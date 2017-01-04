@@ -8,6 +8,7 @@
 
 #include "date_layer.h"
 #include "../graphics/character.h"
+#include "../lib/settings.h"
 #include "../lib/sizes.h"
 
 
@@ -48,11 +49,41 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
   size_t length = 10;
   Character characters[10];
 
-  write_digits_4(&characters[0], data->year);
-  characters[4] = CHARACTER_HYPHEN;
-  write_digits_2(&characters[5], data->month);
-  characters[7] = CHARACTER_HYPHEN;
-  write_digits_2(&characters[8], data->day);
+  switch (settings_get_date_format()) {
+
+  case DATE_FORMAT_YYYY_MM_DD_HYPHEN:
+    write_digits_4(&characters[0], data->year);
+    characters[4] = CHARACTER_HYPHEN;
+    write_digits_2(&characters[5], data->month);
+    characters[7] = CHARACTER_HYPHEN;
+    write_digits_2(&characters[8], data->day);
+    break;
+
+  case DATE_FORMAT_DD_MM_YYYY_DOT:
+    write_digits_2(&characters[0], data->day);
+    characters[2] = CHARACTER_DOT;
+    write_digits_2(&characters[3], data->month);
+    characters[5] = CHARACTER_DOT;
+    write_digits_4(&characters[6], data->year);
+    break;
+
+  case DATE_FORMAT_DD_MM_YYYY_SLASH:
+    write_digits_2(&characters[0], data->day);
+    characters[2] = CHARACTER_SLASH;
+    write_digits_2(&characters[3], data->month);
+    characters[5] = CHARACTER_SLASH;
+    write_digits_4(&characters[6], data->year);
+    break;
+
+  case DATE_FORMAT_MM_DD_YYYY_SLASH:
+    write_digits_2(&characters[0], data->month);
+    characters[2] = CHARACTER_SLASH;
+    write_digits_2(&characters[3], data->day);
+    characters[5] = CHARACTER_SLASH;
+    write_digits_4(&characters[6], data->year);
+    break;
+
+  }
 
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 9 - data->anim_state, 9);
 }
