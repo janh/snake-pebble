@@ -25,7 +25,8 @@
     "messageKeys": {
       "ColorBackground": 10001,
       "ColorSnake": 10002,
-      "ColorText": 10003
+      "ColorText": 10003,
+      "DateFormat": 10004
     },
     "resources": {
       "media": []

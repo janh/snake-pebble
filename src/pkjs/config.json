@@ -32,6 +32,39 @@
     ]
   },
   {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Content"
+      },
+      {
+        "type": "select",
+        "messageKey": "DateFormat",
+        "defaultValue": "0",
+        "label": "Date format",
+        "options": [
+          {
+            "label": "YYYY-MM-DD",
+            "value": "0"
+          },
+          {
+            "label": "DD.MM.YYYY",
+            "value": "1"
+          },
+          {
+            "label": "DD/MM/YYYY",
+            "value": "2"
+          },
+          {
+            "label": "MM/DD/YYYY",
+            "value": "3"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "type": "submit",
     "defaultValue": "Save changes"
   }
