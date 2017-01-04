@@ -37,8 +37,37 @@ extern const Character CHARACTER_HYPHEN;
 extern const Character CHARACTER_DOT;
 extern const Character CHARACTER_DOT_NARROW;
 extern const Character CHARACTER_SLASH;
+extern const Character CHARACTER_SPACE;
 
+extern const Character CHARACTER_A;
+extern const Character CHARACTER_B;
+extern const Character CHARACTER_C;
+extern const Character CHARACTER_D;
+extern const Character CHARACTER_E;
+extern const Character CHARACTER_G;
+extern const Character CHARACTER_H;
+extern const Character CHARACTER_I;
 extern const Character CHARACTER_K;
+extern const Character CHARACTER_L;
+extern const Character CHARACTER_N;
+extern const Character CHARACTER_O;
+extern const Character CHARACTER_P;
+extern const Character CHARACTER_R;
+extern const Character CHARACTER_T;
+extern const Character CHARACTER_U;
+extern const Character CHARACTER_V;
+extern const Character CHARACTER_Y;
+
+extern const Character CHARACTER_CAPITAL_A;
+extern const Character CHARACTER_CAPITAL_D;
+extern const Character CHARACTER_CAPITAL_F;
+extern const Character CHARACTER_CAPITAL_J;
+extern const Character CHARACTER_CAPITAL_M;
+extern const Character CHARACTER_CAPITAL_N;
+extern const Character CHARACTER_CAPITAL_O;
+extern const Character CHARACTER_CAPITAL_S;
+extern const Character CHARACTER_CAPITAL_T;
+extern const Character CHARACTER_CAPITAL_W;
 
 extern const Character CHARACTER_HEART;
 extern const Character CHARACTER_FOOT;
