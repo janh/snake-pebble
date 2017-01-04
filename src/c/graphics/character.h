@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Jan Hoffmann
+ * Copyright (c) 2016-2017 Jan Hoffmann
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -36,6 +36,7 @@ extern const Character *CHARACTER_NUMBERS[10];
 extern const Character CHARACTER_HYPHEN;
 extern const Character CHARACTER_DOT;
 extern const Character CHARACTER_DOT_NARROW;
+extern const Character CHARACTER_SLASH;
 
 extern const Character CHARACTER_K;
 

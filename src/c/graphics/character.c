@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Jan Hoffmann
+ * Copyright (c) 2016-2017 Jan Hoffmann
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -157,6 +157,16 @@ const Character CHARACTER_DOT_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                             CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_SLASH = {3, {CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
 
 
 const Character CHARACTER_K = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
