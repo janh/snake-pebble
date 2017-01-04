@@ -9,6 +9,8 @@
 #include "settings.h"
 
 
+static SettingsChanged s_callback;
+
 static int32_t s_color_background;
 static int32_t s_color_snake;
 static int32_t s_color_text;
@@ -65,8 +67,16 @@ static void inbox_received_handler(DictionaryIterator *iterator, void *context) 
   }
 
   save();
+
+  if (s_callback != NULL) {
+    s_callback();
+  }
 }
 
+
+void settings_set_callback(SettingsChanged callback) {
+  s_callback = callback;
+}
 
 void settings_init() {
   load();

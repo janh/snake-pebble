@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Jan Hoffmann
+ * Copyright (c) 2016-2017 Jan Hoffmann
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -103,6 +103,12 @@ static void health_data_changed() {
   health_layer_set_data(s_health_layer, steps, heart_rate);
 }
 
+static void settings_changed() {
+  window_set_background_color(s_main_window, settings_get_color_background());
+  Layer *window_layer = window_get_root_layer(s_main_window);
+  layer_mark_dirty(window_layer);
+}
+
 static void date_health_animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
   health_init(health_data_changed);
@@ -113,6 +119,8 @@ static void snake_animation_complete() {
 }
 
 static void window_appear(Window *window) {
+  settings_set_callback(settings_changed);
+
   // prefer showing next minute a bit early over an update at the moment the animation completes
   time_t timestamp = time(NULL) + 2;
   tm *timeinfo = localtime(&timestamp);
@@ -122,6 +130,10 @@ static void window_appear(Window *window) {
   health_layer_set_data(s_health_layer, health_get_steps(), health_get_heart_rate());
 
   snake_layer_animate(s_snake_layer, snake_animation_complete);
+}
+
+static void window_disappear(Window *window) {
+  settings_set_callback(NULL);
 }
 
 static void window_unload(Window *window) {
@@ -138,6 +150,7 @@ void main_window_push() {
     window_set_window_handlers(s_main_window, (WindowHandlers) {
       .load = window_load,
       .appear = window_appear,
+      .disappear = window_disappear,
       .unload = window_unload,
     });
   }

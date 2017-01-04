@@ -11,7 +11,11 @@
 #include <pebble.h>
 
 
+typedef void (*SettingsChanged)();
+
 GColor settings_get_color_background();
 GColor settings_get_color_snake();
 GColor settings_get_color_text();
+
+void settings_set_callback(SettingsChanged callback);
 void settings_init();
