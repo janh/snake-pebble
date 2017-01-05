@@ -426,7 +426,7 @@ const Character CHARACTER_CAPITAL_F = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0)
                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
-const Character CHARACTER_CAPITAL_J = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
+const Character CHARACTER_CAPITAL_J = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
