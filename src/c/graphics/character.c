@@ -260,6 +260,17 @@ const Character CHARACTER_E = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_F = {4, {CHARACTER_ROW(0, 0, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_G = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -293,6 +304,17 @@ const Character CHARACTER_I = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_J = {2, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_K = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
@@ -313,6 +335,17 @@ const Character CHARACTER_L = {2, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_M = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_N = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -348,6 +381,17 @@ const Character CHARACTER_P = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_Q = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0)}};
+
 const Character CHARACTER_R = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -357,6 +401,17 @@ const Character CHARACTER_R = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_S = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_T = {4, {CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
@@ -392,6 +447,28 @@ const Character CHARACTER_V = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_W = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_X = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_Y = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
@@ -403,33 +480,44 @@ const Character CHARACTER_Y = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
                                    CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_Z = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 
 const Character *CHARACTER_LETTERS[26] = {&CHARACTER_A,
                                           &CHARACTER_B,
                                           &CHARACTER_C,
                                           &CHARACTER_D,
                                           &CHARACTER_E,
-                                          NULL,
+                                          &CHARACTER_F,
                                           &CHARACTER_G,
                                           &CHARACTER_H,
                                           &CHARACTER_I,
-                                          NULL,
+                                          &CHARACTER_J,
                                           &CHARACTER_K,
                                           &CHARACTER_L,
-                                          NULL,
+                                          &CHARACTER_M,
                                           &CHARACTER_N,
                                           &CHARACTER_O,
                                           &CHARACTER_P,
-                                          NULL,
+                                          &CHARACTER_Q,
                                           &CHARACTER_R,
-                                          NULL,
+                                          &CHARACTER_S,
                                           &CHARACTER_T,
                                           &CHARACTER_U,
                                           &CHARACTER_V,
-                                          NULL,
-                                          NULL,
+                                          &CHARACTER_W,
+                                          &CHARACTER_X,
                                           &CHARACTER_Y,
-                                          NULL};
+                                          &CHARACTER_Z};
 
 
 const Character CHARACTER_CAPITAL_A = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
@@ -443,6 +531,28 @@ const Character CHARACTER_CAPITAL_A = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_CAPITAL_B = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_C = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_CAPITAL_D = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
@@ -452,6 +562,17 @@ const Character CHARACTER_CAPITAL_D = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0)
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_E = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_CAPITAL_F = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
@@ -465,6 +586,39 @@ const Character CHARACTER_CAPITAL_F = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0)
                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_CAPITAL_G = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 1, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 1, 1, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_H = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_I = {3, {CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_CAPITAL_J = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
@@ -474,6 +628,28 @@ const Character CHARACTER_CAPITAL_J = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0)
                                            CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_K = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_L = {5, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 const Character CHARACTER_CAPITAL_M = {7, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
@@ -509,6 +685,39 @@ const Character CHARACTER_CAPITAL_O = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0)
                                            CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_CAPITAL_P = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_Q = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_R = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_CAPITAL_S = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
@@ -531,6 +740,28 @@ const Character CHARACTER_CAPITAL_T = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0)
                                            CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_CAPITAL_U = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_V = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_CAPITAL_W = {7, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
@@ -542,33 +773,66 @@ const Character CHARACTER_CAPITAL_W = {7, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0)
                                            CHARACTER_ROW(0, 1, 0, 0, 0, 1, 0, 0),
                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_CAPITAL_X = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_Y = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
+const Character CHARACTER_CAPITAL_Z = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
+                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 
 const Character *CHARACTER_CAPITAL_LETTERS[26] = {&CHARACTER_CAPITAL_A,
-                                                  NULL,
-                                                  NULL,
+                                                  &CHARACTER_CAPITAL_B,
+                                                  &CHARACTER_CAPITAL_C,
                                                   &CHARACTER_CAPITAL_D,
-                                                  NULL,
+                                                  &CHARACTER_CAPITAL_E,
                                                   &CHARACTER_CAPITAL_F,
-                                                  NULL,
-                                                  NULL,
-                                                  NULL,
+                                                  &CHARACTER_CAPITAL_G,
+                                                  &CHARACTER_CAPITAL_H,
+                                                  &CHARACTER_CAPITAL_I,
                                                   &CHARACTER_CAPITAL_J,
-                                                  NULL,
-                                                  NULL,
+                                                  &CHARACTER_CAPITAL_K,
+                                                  &CHARACTER_CAPITAL_L,
                                                   &CHARACTER_CAPITAL_M,
                                                   &CHARACTER_CAPITAL_N,
                                                   &CHARACTER_CAPITAL_O,
-                                                  NULL,
-                                                  NULL,
-                                                  NULL,
+                                                  &CHARACTER_CAPITAL_P,
+                                                  &CHARACTER_CAPITAL_Q,
+                                                  &CHARACTER_CAPITAL_R,
                                                   &CHARACTER_CAPITAL_S,
                                                   &CHARACTER_CAPITAL_T,
-                                                  NULL,
-                                                  NULL,
+                                                  &CHARACTER_CAPITAL_U,
+                                                  &CHARACTER_CAPITAL_V,
                                                   &CHARACTER_CAPITAL_W,
-                                                  NULL,
-                                                  NULL,
-                                                  NULL};
+                                                  &CHARACTER_CAPITAL_X,
+                                                  &CHARACTER_CAPITAL_Y,
+                                                  &CHARACTER_CAPITAL_Z};
 
 
 const Character CHARACTER_HEART = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
