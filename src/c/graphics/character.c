@@ -193,6 +193,17 @@ const Character CHARACTER_SPACE = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_SPACE_NARROW = {2, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 
 const Character CHARACTER_A = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                    CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
