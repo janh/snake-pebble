@@ -10,6 +10,7 @@
 #include "../graphics/character.h"
 #include "../lib/settings.h"
 #include "../lib/sizes.h"
+#include "../lib/strings.h"
 
 
 typedef struct {
@@ -32,7 +33,15 @@ void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, ui
   }
 }
 
-static void date_layer_get_characters(DateLayer *date_layer, Character *buffer, size_t *length) {
+static size_t date_layer_get_month_characters(Character *buffer, uint8_t month) {
+  return graphics_get_character_array_from_text(buffer, 3, STRING_MONTHS[month-1]);
+}
+
+static size_t date_layer_get_weekday_characters(Character *buffer, uint8_t weekday) {
+  return graphics_get_character_array_from_text(buffer, 3, STRING_WEEKDAYS[weekday]);
+}
+
+static void date_layer_get_left_characters(DateLayer *date_layer, Character *buffer, size_t *length) {
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
   *length = 0;
@@ -71,6 +80,40 @@ static void date_layer_get_characters(DateLayer *date_layer, Character *buffer, 
     *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
+  case DATE_FORMAT_DAY_DD_MON_SPACE:
+  case DATE_FORMAT_DAY_DD_MON_DOT:
+  case DATE_FORMAT_DAY_MON_DD_SPACE:
+    *length = date_layer_get_weekday_characters(buffer, data->weekday);
+    break;
+
+  }
+}
+
+static void date_layer_get_right_characters(DateLayer *date_layer, Character *buffer, size_t *length) {
+  DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
+
+  *length = 0;
+
+  switch (settings_get_date_format()) {
+
+  case DATE_FORMAT_DAY_DD_MON_SPACE:
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
+    buffer[(*length)++] = CHARACTER_SPACE_NARROW;
+    *length += date_layer_get_month_characters(&buffer[*length], data->month);
+    break;
+
+  case DATE_FORMAT_DAY_DD_MON_DOT:
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
+    buffer[(*length)++] = CHARACTER_DOT;
+    *length += date_layer_get_month_characters(&buffer[*length], data->month);
+    break;
+
+  case DATE_FORMAT_DAY_MON_DD_SPACE:
+    *length += date_layer_get_month_characters(&buffer[*length], data->month);
+    buffer[(*length)++] = CHARACTER_SPACE_NARROW;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
+    break;
+
   default:
     break;
 
@@ -87,8 +130,11 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
   size_t length;
   Character characters[10];
 
-  date_layer_get_characters(date_layer, characters, &length);
+  date_layer_get_left_characters(date_layer, characters, &length);
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 11 - data->anim_state, 11);
+
+  date_layer_get_right_characters(date_layer, characters, &length);
+  graphics_draw_character_array_right(ctx, GPoint(right, 0), characters, length, 11 - data->anim_state, 11);
 }
 
 DateLayer* date_layer_create(GRect frame) {
