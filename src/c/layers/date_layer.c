@@ -32,52 +32,62 @@ void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, ui
   }
 }
 
-static void date_layer_update_proc(Layer *layer, GContext *ctx) {
-  DateLayer *date_layer = (DateLayer *)layer;
+static void date_layer_get_characters(DateLayer *date_layer, Character *buffer, size_t *length) {
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
-  size_t length = 0;
-  Character characters[10];
+  *length = 0;
 
   switch (settings_get_date_format()) {
 
   case DATE_FORMAT_YYYY_MM_DD_HYPHEN:
-    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
-    characters[length++] = CHARACTER_HYPHEN;
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
-    characters[length++] = CHARACTER_HYPHEN;
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
+    buffer[(*length)++] = CHARACTER_HYPHEN;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
+    buffer[(*length)++] = CHARACTER_HYPHEN;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
     break;
 
   case DATE_FORMAT_DD_MM_YYYY_DOT:
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
-    characters[length++] = CHARACTER_DOT;
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
-    characters[length++] = CHARACTER_DOT;
-    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
+    buffer[(*length)++] = CHARACTER_DOT;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
+    buffer[(*length)++] = CHARACTER_DOT;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
   case DATE_FORMAT_DD_MM_YYYY_SLASH:
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
-    characters[length++] = CHARACTER_SLASH;
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
-    characters[length++] = CHARACTER_SLASH;
-    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
+    buffer[(*length)++] = CHARACTER_SLASH;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
+    buffer[(*length)++] = CHARACTER_SLASH;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
   case DATE_FORMAT_MM_DD_YYYY_SLASH:
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
-    characters[length++] = CHARACTER_SLASH;
-    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
-    characters[length++] = CHARACTER_SLASH;
-    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
+    buffer[(*length)++] = CHARACTER_SLASH;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
+    buffer[(*length)++] = CHARACTER_SLASH;
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
   default:
     break;
 
   }
+}
 
+static void date_layer_update_proc(Layer *layer, GContext *ctx) {
+  DateLayer *date_layer = (DateLayer *)layer;
+  DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
+
+  GRect rect = layer_get_bounds(date_layer);
+  int16_t right = rect.size.w / SIZE_SCALE_FACTOR;
+
+  size_t length;
+  Character characters[10];
+
+  date_layer_get_characters(date_layer, characters, &length);
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 11 - data->anim_state, 11);
 }
 
