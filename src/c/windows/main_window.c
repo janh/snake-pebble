@@ -94,7 +94,7 @@ static int format_hour(int hour) {
 
 static void tick_handler(tm *tick_time, TimeUnits units_changed) {
   snake_layer_set_time(s_snake_layer, format_hour(tick_time->tm_hour), tick_time->tm_min);
-  date_layer_set_date(s_date_layer, 1900 + tick_time->tm_year, tick_time->tm_mon + 1, tick_time->tm_mday);
+  date_layer_set_date(s_date_layer, 1900 + tick_time->tm_year, tick_time->tm_mon + 1, tick_time->tm_mday, tick_time->tm_wday);
 }
 
 static void health_data_changed() {
@@ -126,7 +126,7 @@ static void window_appear(Window *window) {
   tm *timeinfo = localtime(&timestamp);
 
   snake_layer_set_time(s_snake_layer, format_hour(timeinfo->tm_hour), timeinfo->tm_min);
-  date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday);
+  date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_wday);
   health_layer_set_data(s_health_layer, health_get_steps(), health_get_heart_rate());
 
   snake_layer_animate(s_snake_layer, snake_animation_complete);

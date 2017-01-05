@@ -16,16 +16,18 @@ typedef struct {
   uint16_t year;
   uint8_t month;
   uint8_t day;
+  uint8_t weekday;
   int16_t anim_state;
 } DateLayerData;
 
 
-void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, uint8_t day) {
+void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, uint8_t day, uint8_t weekday) {
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
   if (year <= 9999 && month <= 12 && day <= 31) {
     data->year = year;
     data->month = month;
     data->day = day;
+    data->weekday = weekday;
     layer_mark_dirty(date_layer);
   }
 }
