@@ -59,6 +59,18 @@
           {
             "label": "MM/DD/YYYY",
             "value": "3"
+          },
+          {
+            "label": "Day DD Mon",
+            "value": "4"
+          },
+          {
+            "label": "Day DD. Mon",
+            "value": "5"
+          },
+          {
+            "label": "Day Mon DD",
+            "value": "6"
           }
         ]
       }

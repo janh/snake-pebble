@@ -71,6 +71,9 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
     length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
     break;
 
+  default:
+    break;
+
   }
 
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 11 - data->anim_state, 11);
