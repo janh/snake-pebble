@@ -80,3 +80,5 @@ void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t 
 void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max);
 void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max);
 int16_t graphics_get_character_array_width(Character *data, size_t length);
+size_t graphics_get_character_array_from_text(Character *buffer, size_t length, const char *text);
+size_t graphics_get_character_array_from_integer(Character *buffer, size_t length, bool padding, uint32_t integer);

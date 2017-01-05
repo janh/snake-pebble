@@ -627,3 +627,53 @@ int16_t graphics_get_character_array_width(Character *data, size_t length) {
   }
   return width;
 }
+
+size_t graphics_get_character_array_from_text(Character *buffer, size_t length, const char *text) {
+  for (size_t i = 0; i < length; i++) {
+    char c = text[i];
+    if (c == '\0') {
+      return i;
+      break;
+    }
+
+    const Character *character = NULL;
+
+    if (c >= 'A' && c <= 'Z') {
+      character = CHARACTER_CAPITAL_LETTERS[c - 'A'];
+    } else if (c >= 'a' && c <= 'z') {
+      character = CHARACTER_LETTERS[c - 'a'];
+    } else if (c >= '0' && c <= '9') {
+      character = CHARACTER_NUMBERS[c - '0'];
+    }
+
+    if (character != NULL) {
+      buffer[i] = *character;
+    } else {
+      buffer[i] = CHARACTER_DOT_NARROW;
+    }
+  }
+
+  return length;
+}
+
+size_t graphics_get_character_array_from_integer(Character *buffer, size_t length, bool padding, uint32_t integer) {
+  if (!padding) {
+    size_t count = 1;
+    uint32_t value = integer / 10;
+    while (count < length) {
+      if (value == 0) {
+        break;
+      }
+      value /= 10;
+      count++;
+    }
+    length = count;
+  }
+
+  for (size_t i = length; i > 0; i--) {
+    buffer[i-1] = *CHARACTER_NUMBERS[integer % 10];
+    integer /= 10;
+  }
+
+  return length;
+}
