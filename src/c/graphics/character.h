@@ -58,6 +58,8 @@ extern const Character CHARACTER_U;
 extern const Character CHARACTER_V;
 extern const Character CHARACTER_Y;
 
+extern const Character *CHARACTER_LETTERS[26];
+
 extern const Character CHARACTER_CAPITAL_A;
 extern const Character CHARACTER_CAPITAL_D;
 extern const Character CHARACTER_CAPITAL_F;
@@ -68,6 +70,8 @@ extern const Character CHARACTER_CAPITAL_O;
 extern const Character CHARACTER_CAPITAL_S;
 extern const Character CHARACTER_CAPITAL_T;
 extern const Character CHARACTER_CAPITAL_W;
+
+extern const Character *CHARACTER_CAPITAL_LETTERS[26];
 
 extern const Character CHARACTER_HEART;
 extern const Character CHARACTER_FOOT;
