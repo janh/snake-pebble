@@ -30,57 +30,45 @@ void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, ui
   }
 }
 
-static void write_digits_4(Character* buffer, uint16_t value) {
-  buffer[0] = *CHARACTER_NUMBERS[value / 1000];
-  buffer[1] = *CHARACTER_NUMBERS[(value / 100) % 10];
-  buffer[2] = *CHARACTER_NUMBERS[(value / 10) % 10];
-  buffer[3] = *CHARACTER_NUMBERS[value % 10];
-}
-
-static void write_digits_2(Character* buffer, uint8_t value) {
-  buffer[0] = *CHARACTER_NUMBERS[value / 10];
-  buffer[1] = *CHARACTER_NUMBERS[value % 10];
-}
-
 static void date_layer_update_proc(Layer *layer, GContext *ctx) {
   DateLayer *date_layer = (DateLayer *)layer;
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
-  size_t length = 10;
+  size_t length = 0;
   Character characters[10];
 
   switch (settings_get_date_format()) {
 
   case DATE_FORMAT_YYYY_MM_DD_HYPHEN:
-    write_digits_4(&characters[0], data->year);
-    characters[4] = CHARACTER_HYPHEN;
-    write_digits_2(&characters[5], data->month);
-    characters[7] = CHARACTER_HYPHEN;
-    write_digits_2(&characters[8], data->day);
+    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
+    characters[length++] = CHARACTER_HYPHEN;
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
+    characters[length++] = CHARACTER_HYPHEN;
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
     break;
 
   case DATE_FORMAT_DD_MM_YYYY_DOT:
-    write_digits_2(&characters[0], data->day);
-    characters[2] = CHARACTER_DOT;
-    write_digits_2(&characters[3], data->month);
-    characters[5] = CHARACTER_DOT;
-    write_digits_4(&characters[6], data->year);
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
+    characters[length++] = CHARACTER_DOT;
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
+    characters[length++] = CHARACTER_DOT;
+    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
     break;
 
   case DATE_FORMAT_DD_MM_YYYY_SLASH:
-    write_digits_2(&characters[0], data->day);
-    characters[2] = CHARACTER_SLASH;
-    write_digits_2(&characters[3], data->month);
-    characters[5] = CHARACTER_SLASH;
-    write_digits_4(&characters[6], data->year);
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
+    characters[length++] = CHARACTER_SLASH;
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
+    characters[length++] = CHARACTER_SLASH;
+    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
     break;
 
   case DATE_FORMAT_MM_DD_YYYY_SLASH:
-    write_digits_2(&characters[0], data->month);
-    characters[2] = CHARACTER_SLASH;
-    write_digits_2(&characters[3], data->day);
-    characters[5] = CHARACTER_SLASH;
-    write_digits_4(&characters[6], data->year);
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->month);
+    characters[length++] = CHARACTER_SLASH;
+    length += graphics_get_character_array_from_integer(&characters[length], 2, true, data->day);
+    characters[length++] = CHARACTER_SLASH;
+    length += graphics_get_character_array_from_integer(&characters[length], 4, true, data->year);
     break;
 
   }
