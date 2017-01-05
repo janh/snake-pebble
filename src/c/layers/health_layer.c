@@ -32,27 +32,14 @@ static void health_layer_get_steps_characters(Character *buffer, size_t *length,
     buffer[(*length)++] = CHARACTER_HYPHEN;
   } else {
     if (steps >= 10000) {
-      if (steps >= 100000) {
-        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100000) % 10];
-      }
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 10000) % 10];
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 1000) % 10];
+      *length += graphics_get_character_array_from_integer(&buffer[*length], 3, false, steps / 1000);
       if (steps < 100000) {
         buffer[(*length)++] = CHARACTER_DOT_NARROW;
         buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
       }
       buffer[(*length)++] = CHARACTER_K;
     } else {
-      if (steps >= 1000) {
-        buffer[(*length)++] = *CHARACTER_NUMBERS[steps / 1000];
-      }
-      if (steps >= 100) {
-        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
-      }
-      if (steps >= 10) {
-        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 10) % 10];
-      }
-      buffer[(*length)++] = *CHARACTER_NUMBERS[steps % 10];
+      *length += graphics_get_character_array_from_integer(&buffer[*length], 4, false, steps);
     }
   }
 }
@@ -62,13 +49,7 @@ static void health_layer_get_heart_rate_characters(Character *buffer, size_t *le
   if (heart_rate < 0) {
     buffer[(*length)++] = CHARACTER_HYPHEN;
   } else {
-    if (heart_rate >= 100) {
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(heart_rate / 100) % 10];
-    }
-    if (heart_rate >= 10) {
-      buffer[(*length)++] = *CHARACTER_NUMBERS[(heart_rate / 10) % 10];
-    }
-    buffer[(*length)++] = *CHARACTER_NUMBERS[heart_rate % 10];
+    *length += graphics_get_character_array_from_integer(&buffer[*length], 3, false, heart_rate);
   }
   buffer[(*length)++] = CHARACTER_HEART;
 }
