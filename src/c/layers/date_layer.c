@@ -41,6 +41,10 @@ static size_t date_layer_get_weekday_characters(ExtendedCharacter *buffer, uint8
   return graphics_get_character_array_from_text(buffer, 3, strings_get_localized_array_item(STRING_WEEKDAYS, weekday));
 }
 
+static size_t date_layer_get_weekday_length(uint8_t weekday) {
+  return strlen(strings_get_localized_array_item(STRING_WEEKDAYS, weekday));
+}
+
 static void date_layer_get_left_characters(DateLayer *date_layer, ExtendedCharacter *buffer, size_t *length) {
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
@@ -98,23 +102,25 @@ static void date_layer_get_right_characters(DateLayer *date_layer, ExtendedChara
 
   *length = 0;
 
+  bool savespace = date_layer_get_weekday_length(data->weekday) >= 3;
+
   switch (settings_get_date_format()) {
 
   case DATE_FORMAT_DAY_DD_MON_SPACE:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SPACE_NARROW, DIACRITIC_NONE};
+    buffer[(*length)++] = (ExtendedCharacter) {(savespace) ? &CHARACTER_SPACE_NARROW : &CHARACTER_SPACE, DIACRITIC_NONE};
     *length += date_layer_get_month_characters(&buffer[*length], data->month);
     break;
 
   case DATE_FORMAT_DAY_DD_MON_DOT:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_DOT, DIACRITIC_NONE};
+    buffer[(*length)++] = (ExtendedCharacter) {(savespace) ? &CHARACTER_DOT : &CHARACTER_DOT_WIDE, DIACRITIC_NONE};
     *length += date_layer_get_month_characters(&buffer[*length], data->month);
     break;
 
   case DATE_FORMAT_DAY_MON_DD_SPACE:
     *length += date_layer_get_month_characters(&buffer[*length], data->month);
-    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SPACE_NARROW, DIACRITIC_NONE};
+    buffer[(*length)++] = (ExtendedCharacter) {(savespace) ? &CHARACTER_SPACE_NARROW : &CHARACTER_SPACE, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
     break;
 

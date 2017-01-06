@@ -171,6 +171,17 @@ const Character CHARACTER_DOT_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0
                                             CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
                                             CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
+const Character CHARACTER_DOT_WIDE = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
+                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+
 const Character CHARACTER_COMMA_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                               CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                               CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
