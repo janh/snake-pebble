@@ -81,9 +81,13 @@ static void date_layer_get_left_characters(DateLayer *date_layer, ExtendedCharac
     break;
 
   case DATE_FORMAT_DAY_DD_MON_SPACE:
-  case DATE_FORMAT_DAY_DD_MON_DOT:
   case DATE_FORMAT_DAY_MON_DD_SPACE:
     *length = date_layer_get_weekday_characters(buffer, data->weekday);
+    break;
+
+  case DATE_FORMAT_DAY_DD_MON_DOT:
+    *length = date_layer_get_weekday_characters(buffer, data->weekday);
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_COMMA_NARROW, DIACRITIC_NONE};
     break;
 
   }
