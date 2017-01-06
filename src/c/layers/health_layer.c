@@ -25,33 +25,33 @@ void health_layer_set_data(HealthLayer* health_layer, int32_t steps, int16_t hea
   layer_mark_dirty(health_layer);
 }
 
-static void health_layer_get_steps_characters(Character *buffer, size_t *length, int32_t steps) {
+static void health_layer_get_steps_characters(ExtendedCharacter *buffer, size_t *length, int32_t steps) {
   *length = 0;
-  buffer[(*length)++] = CHARACTER_FOOT;
+  buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_FOOT, DIACRITIC_NONE};
   if (steps < 0) {
-    buffer[(*length)++] = CHARACTER_HYPHEN;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_HYPHEN, DIACRITIC_NONE};
   } else {
     if (steps >= 10000) {
       *length += graphics_get_character_array_from_integer(&buffer[*length], 3, false, steps / 1000);
       if (steps < 100000) {
-        buffer[(*length)++] = CHARACTER_DOT_NARROW;
-        buffer[(*length)++] = *CHARACTER_NUMBERS[(steps / 100) % 10];
+        buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_DOT_NARROW, DIACRITIC_NONE};
+        buffer[(*length)++] = (ExtendedCharacter) {CHARACTER_NUMBERS[(steps / 100) % 10], DIACRITIC_NONE};
       }
-      buffer[(*length)++] = CHARACTER_K;
+      buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_K, DIACRITIC_NONE};
     } else {
       *length += graphics_get_character_array_from_integer(&buffer[*length], 4, false, steps);
     }
   }
 }
 
-static void health_layer_get_heart_rate_characters(Character *buffer, size_t *length, int16_t heart_rate) {
+static void health_layer_get_heart_rate_characters(ExtendedCharacter *buffer, size_t *length, int16_t heart_rate) {
   *length = 0;
   if (heart_rate < 0) {
-    buffer[(*length)++] = CHARACTER_HYPHEN;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_HYPHEN, DIACRITIC_NONE};
   } else {
     *length += graphics_get_character_array_from_integer(&buffer[*length], 3, false, heart_rate);
   }
-  buffer[(*length)++] = CHARACTER_HEART;
+  buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_HEART, DIACRITIC_NONE};
 }
 
 static void health_layer_update_proc(Layer *layer, GContext *ctx) {
@@ -62,7 +62,7 @@ static void health_layer_update_proc(Layer *layer, GContext *ctx) {
   int16_t right = rect.size.w / SIZE_SCALE_FACTOR;
 
   size_t length;
-  Character characters[6];
+  ExtendedCharacter characters[6];
 
   health_layer_get_steps_characters(characters, &length, data->steps);
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 0, data->anim_state);

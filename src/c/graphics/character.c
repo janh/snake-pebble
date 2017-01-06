@@ -858,80 +858,120 @@ const Character CHARACTER_FOOT = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
 
-void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t min, int16_t max) {
-  if (min < 0) { min = 0; } else { min--; }
-  if (max < 0) { max = 10; } else { max--; }
+static void graphics_draw_scaled_rect(GContext *ctx, GPoint pos, GPoint coords) {
+  GRect rect = GRect(SIZE_SCALE_FACTOR * (pos.x + coords.x), SIZE_SCALE_FACTOR * (pos.y + coords.y),
+                     SIZE_SCALE_FACTOR, SIZE_SCALE_FACTOR);
+  graphics_fill_rect(ctx, rect, 0, GCornerNone);
+}
+
+void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, int16_t min, int16_t max) {
+  if (min < 0) { min = 0; }
+  if (max < 0) { max = 11; }
+
   graphics_context_set_fill_color(ctx, settings_get_color_text());
-  for (int j = 0; j < 10; j++) {
+
+  const Character *character = data.character;
+  Diacritic diacritic = data.diacritic;
+  int diacritics_line = (character->a[0] == 0) ? 2 : 0;
+
+  for (int j = 0; j < 11; j++) {
     if (j >= min && j < max) {
-      CharacterRow row = data.a[j];
-      for (uint8_t i = 0; i < data.width; i++) {
-        if (CHARACTER_ROW_ITEM(row, i)) {
-          GPoint coords = GPoint(i, j);
-          GRect rect = GRect(SIZE_SCALE_FACTOR * (pos.x + coords.x), SIZE_SCALE_FACTOR * (1 + pos.y + coords.y),
-                             SIZE_SCALE_FACTOR, SIZE_SCALE_FACTOR);
-          graphics_fill_rect(ctx, rect, 0, GCornerNone);
+      GPoint coords = GPoint(0, j);
+
+      if (j == diacritics_line && diacritic != DIACRITIC_NONE) {
+        if (diacritic == DIACRITIC_DIAERESIS_UMLAUT) {
+          int inset = (character->width - 1) / 2 - 1;
+          coords.x = 0 + inset;
+          graphics_draw_scaled_rect(ctx, pos, coords);
+          coords.x = character->width - 1 - inset;
+          graphics_draw_scaled_rect(ctx, pos, coords);
+        }
+      } else if (j > 0) {
+        CharacterRow row = character->a[j-1];
+        for (uint8_t i = 0; i < character->width; i++) {
+          if (CHARACTER_ROW_ITEM(row, i)) {
+            coords.x = i;
+            graphics_draw_scaled_rect(ctx, pos, coords);
+          }
         }
       }
+
     }
   }
 }
 
-void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max) {
+void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max) {
   for (size_t i = 0; i < length; i++) {
-    Character character = data[i];
-    graphics_draw_character(ctx, pos, character, min, max);
-    pos.x += character.width + 2;
+    ExtendedCharacter item = data[i];
+    graphics_draw_character(ctx, pos, item, min, max);
+    pos.x += item.character->width + 2;
   }
 }
 
-void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max) {
+void graphics_draw_character_array_right(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max) {
   for (size_t i = length; i > 0; i--) {
-    Character character = data[i-1];
-    pos.x -= character.width;
-    graphics_draw_character(ctx, pos, character, min, max);
+    ExtendedCharacter item = data[i-1];
+    pos.x -= item.character->width;
+    graphics_draw_character(ctx, pos, item, min, max);
     pos.x -= 2;
   }
 }
 
-int16_t graphics_get_character_array_width(Character *data, size_t length) {
+int16_t graphics_get_character_array_width(ExtendedCharacter *data, size_t length) {
   int16_t width = (length - 1) * 2;
   for (size_t i = 0; i < length; i++) {
-    Character character = data[i];
-    width += character.width;
+    const Character *character = data[i].character;
+    width += character->width;
   }
   return width;
 }
 
-size_t graphics_get_character_array_from_text(Character *buffer, size_t length, const char *text) {
-  for (size_t i = 0; i < length; i++) {
-    char c = text[i];
+size_t graphics_get_character_array_from_text(ExtendedCharacter *buffer, size_t length, const char *text) {
+  size_t pos_src = 0;
+  size_t pos_dst = 0;
+  bool search_diacritic = false;
+
+  while (pos_dst < length) {
+    char c = text[pos_src];
+    pos_src++;
+
+    if (search_diacritic) {
+      search_diacritic = false;
+      if (c == '\x01') {
+        buffer[pos_dst].diacritic = DIACRITIC_DIAERESIS_UMLAUT;
+      }
+      pos_dst++;
+    }
+
     if (c == '\0') {
-      return i;
-      break;
+      return pos_dst;
     }
 
-    const Character *character = NULL;
+    if (c >= '\x20' && c <= '\x7F') {
+      const Character *character = NULL;
 
-    if (c >= 'A' && c <= 'Z') {
-      character = CHARACTER_CAPITAL_LETTERS[c - 'A'];
-    } else if (c >= 'a' && c <= 'z') {
-      character = CHARACTER_LETTERS[c - 'a'];
-    } else if (c >= '0' && c <= '9') {
-      character = CHARACTER_NUMBERS[c - '0'];
-    }
+      if (c >= 'A' && c <= 'Z') {
+        character = CHARACTER_CAPITAL_LETTERS[c - 'A'];
+      } else if (c >= 'a' && c <= 'z') {
+        character = CHARACTER_LETTERS[c - 'a'];
+      } else if (c >= '0' && c <= '9') {
+        character = CHARACTER_NUMBERS[c - '0'];
+      }
 
-    if (character != NULL) {
-      buffer[i] = *character;
-    } else {
-      buffer[i] = CHARACTER_DOT_NARROW;
+      if (character != NULL) {
+        buffer[pos_dst] = (ExtendedCharacter) {character, DIACRITIC_NONE};
+      } else {
+        buffer[pos_dst] = (ExtendedCharacter) {&CHARACTER_DOT_NARROW, DIACRITIC_NONE};
+      }
+
+      search_diacritic = true;
     }
   }
 
   return length;
 }
 
-size_t graphics_get_character_array_from_integer(Character *buffer, size_t length, bool padding, uint32_t integer) {
+size_t graphics_get_character_array_from_integer(ExtendedCharacter *buffer, size_t length, bool padding, uint32_t integer) {
   if (!padding) {
     size_t count = 1;
     uint32_t value = integer / 10;
@@ -946,7 +986,7 @@ size_t graphics_get_character_array_from_integer(Character *buffer, size_t lengt
   }
 
   for (size_t i = length; i > 0; i--) {
-    buffer[i-1] = *CHARACTER_NUMBERS[integer % 10];
+    buffer[i-1] = (ExtendedCharacter) {CHARACTER_NUMBERS[integer % 10], DIACRITIC_NONE};
     integer /= 10;
   }
 

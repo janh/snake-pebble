@@ -33,15 +33,15 @@ void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, ui
   }
 }
 
-static size_t date_layer_get_month_characters(Character *buffer, uint8_t month) {
+static size_t date_layer_get_month_characters(ExtendedCharacter *buffer, uint8_t month) {
   return graphics_get_character_array_from_text(buffer, 3, STRING_MONTHS[month-1]);
 }
 
-static size_t date_layer_get_weekday_characters(Character *buffer, uint8_t weekday) {
+static size_t date_layer_get_weekday_characters(ExtendedCharacter *buffer, uint8_t weekday) {
   return graphics_get_character_array_from_text(buffer, 3, STRING_WEEKDAYS[weekday]);
 }
 
-static void date_layer_get_left_characters(DateLayer *date_layer, Character *buffer, size_t *length) {
+static void date_layer_get_left_characters(DateLayer *date_layer, ExtendedCharacter *buffer, size_t *length) {
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
   *length = 0;
@@ -50,33 +50,33 @@ static void date_layer_get_left_characters(DateLayer *date_layer, Character *buf
 
   case DATE_FORMAT_YYYY_MM_DD_HYPHEN:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
-    buffer[(*length)++] = CHARACTER_HYPHEN;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_HYPHEN, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
-    buffer[(*length)++] = CHARACTER_HYPHEN;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_HYPHEN, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
     break;
 
   case DATE_FORMAT_DD_MM_YYYY_DOT:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = CHARACTER_DOT;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_DOT, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
-    buffer[(*length)++] = CHARACTER_DOT;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_DOT, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
   case DATE_FORMAT_DD_MM_YYYY_SLASH:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = CHARACTER_SLASH;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SLASH, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
-    buffer[(*length)++] = CHARACTER_SLASH;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SLASH, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
   case DATE_FORMAT_MM_DD_YYYY_SLASH:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->month);
-    buffer[(*length)++] = CHARACTER_SLASH;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SLASH, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = CHARACTER_SLASH;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SLASH, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 4, true, data->year);
     break;
 
@@ -89,7 +89,7 @@ static void date_layer_get_left_characters(DateLayer *date_layer, Character *buf
   }
 }
 
-static void date_layer_get_right_characters(DateLayer *date_layer, Character *buffer, size_t *length) {
+static void date_layer_get_right_characters(DateLayer *date_layer, ExtendedCharacter *buffer, size_t *length) {
   DateLayerData *data = (DateLayerData *)layer_get_data(date_layer);
 
   *length = 0;
@@ -98,19 +98,19 @@ static void date_layer_get_right_characters(DateLayer *date_layer, Character *bu
 
   case DATE_FORMAT_DAY_DD_MON_SPACE:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = CHARACTER_SPACE_NARROW;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SPACE_NARROW, DIACRITIC_NONE};
     *length += date_layer_get_month_characters(&buffer[*length], data->month);
     break;
 
   case DATE_FORMAT_DAY_DD_MON_DOT:
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
-    buffer[(*length)++] = CHARACTER_DOT;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_DOT, DIACRITIC_NONE};
     *length += date_layer_get_month_characters(&buffer[*length], data->month);
     break;
 
   case DATE_FORMAT_DAY_MON_DD_SPACE:
     *length += date_layer_get_month_characters(&buffer[*length], data->month);
-    buffer[(*length)++] = CHARACTER_SPACE_NARROW;
+    buffer[(*length)++] = (ExtendedCharacter) {&CHARACTER_SPACE_NARROW, DIACRITIC_NONE};
     *length += graphics_get_character_array_from_integer(&buffer[*length], 2, true, data->day);
     break;
 
@@ -128,7 +128,7 @@ static void date_layer_update_proc(Layer *layer, GContext *ctx) {
   int16_t right = rect.size.w / SIZE_SCALE_FACTOR;
 
   size_t length;
-  Character characters[10];
+  ExtendedCharacter characters[10];
 
   date_layer_get_left_characters(date_layer, characters, &length);
   graphics_draw_character_array(ctx, GPoint(0, 0), characters, length, 11 - data->anim_state, 11);

@@ -20,6 +20,17 @@ typedef struct Character {
 } Character;
 
 
+typedef enum {
+  DIACRITIC_NONE = 0,
+  DIACRITIC_DIAERESIS_UMLAUT,
+} Diacritic;
+
+typedef struct ExtendedCharacter {
+  const Character *character;
+  Diacritic diacritic;
+} ExtendedCharacter;
+
+
 extern const Character CHARACTER_0;
 extern const Character CHARACTER_1;
 extern const Character CHARACTER_2;
@@ -101,9 +112,9 @@ extern const Character *CHARACTER_CAPITAL_LETTERS[26];
 extern const Character CHARACTER_HEART;
 extern const Character CHARACTER_FOOT;
 
-void graphics_draw_character(GContext *ctx, GPoint pos, Character data, int16_t min, int16_t max);
-void graphics_draw_character_array(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max);
-void graphics_draw_character_array_right(GContext *ctx, GPoint pos, Character *data, size_t length, int16_t min, int16_t max);
-int16_t graphics_get_character_array_width(Character *data, size_t length);
-size_t graphics_get_character_array_from_text(Character *buffer, size_t length, const char *text);
-size_t graphics_get_character_array_from_integer(Character *buffer, size_t length, bool padding, uint32_t integer);
+void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, int16_t min, int16_t max);
+void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max);
+void graphics_draw_character_array_right(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max);
+int16_t graphics_get_character_array_width(ExtendedCharacter *data, size_t length);
+size_t graphics_get_character_array_from_text(ExtendedCharacter *buffer, size_t length, const char *text);
+size_t graphics_get_character_array_from_integer(ExtendedCharacter *buffer, size_t length, bool padding, uint32_t integer);
