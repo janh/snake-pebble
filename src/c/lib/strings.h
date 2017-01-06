@@ -8,6 +8,11 @@
 
 #pragma once
 
+#include<stdlib.h>
 
-extern const char *STRING_MONTHS[12];
-extern const char *STRING_WEEKDAYS[7];
+
+extern const char *STRING_MONTHS[12][2];
+extern const char *STRING_WEEKDAYS[7][2];
+
+
+const char* strings_get_localized_array_item(const char * (*string)[2], size_t index);

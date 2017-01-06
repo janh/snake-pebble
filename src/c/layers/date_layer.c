@@ -34,11 +34,11 @@ void date_layer_set_date(DateLayer* date_layer, uint16_t year, uint8_t month, ui
 }
 
 static size_t date_layer_get_month_characters(ExtendedCharacter *buffer, uint8_t month) {
-  return graphics_get_character_array_from_text(buffer, 3, STRING_MONTHS[month-1]);
+  return graphics_get_character_array_from_text(buffer, 3, strings_get_localized_array_item(STRING_MONTHS, month-1));
 }
 
 static size_t date_layer_get_weekday_characters(ExtendedCharacter *buffer, uint8_t weekday) {
-  return graphics_get_character_array_from_text(buffer, 3, STRING_WEEKDAYS[weekday]);
+  return graphics_get_character_array_from_text(buffer, 3, strings_get_localized_array_item(STRING_WEEKDAYS, weekday));
 }
 
 static void date_layer_get_left_characters(DateLayer *date_layer, ExtendedCharacter *buffer, size_t *length) {
