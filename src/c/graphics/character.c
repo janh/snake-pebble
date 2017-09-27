@@ -6,125 +6,39 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <stdbool.h>
+
 #include "character.h"
 #include "../lib/settings.h"
 #include "../lib/sizes.h"
 
 
-#define CHARACTER_ROW(a,b,c,d,e,f,g,h) 1*a + 2*b + 4*c + 8*d + 16*e + 32*f + 64*g + 128*h
-#define CHARACTER_ROW_ITEM(row,i) row & (1 << i)
+#define CHARACTER(length,index) {length, &s_character_data[index]}
+
+#define CHARACTER_ROW_ITEM(row,i) row & (1 << (7 - i))
 
 
-const Character CHARACTER_0 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+static bool s_loaded = false;
+static CharacterData s_character_data[69];
 
-const Character CHARACTER_1 = {5, {CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
-const Character CHARACTER_2 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+#define INDEX_NUMBERS_START 0
+#define INDEX_LETTERS_CAPITAL_START 10
+#define INDEX_LETTERS_START 36
+#define INDEX_PUNCTUATION_START 62
+#define INDEX_ICONS_START 67
 
-const Character CHARACTER_3 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
 
-const Character CHARACTER_4 = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_5 = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_6 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_7 = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_8 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_9 = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
+const Character CHARACTER_0 = CHARACTER(5, INDEX_NUMBERS_START + 0);
+const Character CHARACTER_1 = CHARACTER(5, INDEX_NUMBERS_START + 1);
+const Character CHARACTER_2 = CHARACTER(5, INDEX_NUMBERS_START + 2);
+const Character CHARACTER_3 = CHARACTER(5, INDEX_NUMBERS_START + 3);
+const Character CHARACTER_4 = CHARACTER(5, INDEX_NUMBERS_START + 4);
+const Character CHARACTER_5 = CHARACTER(5, INDEX_NUMBERS_START + 5);
+const Character CHARACTER_6 = CHARACTER(5, INDEX_NUMBERS_START + 6);
+const Character CHARACTER_7 = CHARACTER(5, INDEX_NUMBERS_START + 7);
+const Character CHARACTER_8 = CHARACTER(5, INDEX_NUMBERS_START + 8);
+const Character CHARACTER_9 = CHARACTER(5, INDEX_NUMBERS_START + 9);
 
 const Character *CHARACTER_NUMBERS[10] = {&CHARACTER_0,
                                           &CHARACTER_1,
@@ -138,381 +52,46 @@ const Character *CHARACTER_NUMBERS[10] = {&CHARACTER_0,
                                           &CHARACTER_9};
 
 
-const Character CHARACTER_HYPHEN = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                        CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_HYPHEN = CHARACTER(3, INDEX_PUNCTUATION_START + 0);
 
-const Character CHARACTER_DOT = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                     CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_DOT = CHARACTER(3, INDEX_PUNCTUATION_START + 1);
+const Character CHARACTER_DOT_NARROW = CHARACTER(1, INDEX_PUNCTUATION_START + 1);
+const Character CHARACTER_DOT_WIDE = CHARACTER(5, INDEX_PUNCTUATION_START + 1);
 
-const Character CHARACTER_DOT_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                            CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_COMMA_NARROW = CHARACTER(1, INDEX_PUNCTUATION_START + 2);
 
-const Character CHARACTER_DOT_WIDE = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                          CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_SLASH = CHARACTER(3, INDEX_PUNCTUATION_START + 3);
 
-const Character CHARACTER_COMMA_NARROW = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_SLASH = {3, {CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_SPACE = {3, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_SPACE_NARROW = {2, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                              CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_SPACE = CHARACTER(3, INDEX_PUNCTUATION_START + 4);
+const Character CHARACTER_SPACE_NARROW = CHARACTER(2, INDEX_PUNCTUATION_START + 4);
 
 
-const Character CHARACTER_A = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_B = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_C = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_D = {4, {CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_E = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_F = {4, {CHARACTER_ROW(0, 0, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_G = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_H = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_I = {1, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_J = {2, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_K = {4, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_L = {2, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_M = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_N = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_O = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_P = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_Q = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0)}};
-
-const Character CHARACTER_R = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_S = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_T = {4, {CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_U = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_V = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_W = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_X = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_Y = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_Z = {4, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                   CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                   CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
+const Character CHARACTER_A = CHARACTER(4, INDEX_LETTERS_START + 0);
+const Character CHARACTER_B = CHARACTER(4, INDEX_LETTERS_START + 1);
+const Character CHARACTER_C = CHARACTER(4, INDEX_LETTERS_START + 2);
+const Character CHARACTER_D = CHARACTER(4, INDEX_LETTERS_START + 3);
+const Character CHARACTER_E = CHARACTER(4, INDEX_LETTERS_START + 4);
+const Character CHARACTER_F = CHARACTER(4, INDEX_LETTERS_START + 5);
+const Character CHARACTER_G = CHARACTER(4, INDEX_LETTERS_START + 6);
+const Character CHARACTER_H = CHARACTER(4, INDEX_LETTERS_START + 7);
+const Character CHARACTER_I = CHARACTER(1, INDEX_LETTERS_START + 8);
+const Character CHARACTER_J = CHARACTER(2, INDEX_LETTERS_START + 9);
+const Character CHARACTER_K = CHARACTER(4, INDEX_LETTERS_START + 10);
+const Character CHARACTER_L = CHARACTER(2, INDEX_LETTERS_START + 11);
+const Character CHARACTER_M = CHARACTER(5, INDEX_LETTERS_START + 12);
+const Character CHARACTER_N = CHARACTER(4, INDEX_LETTERS_START + 13);
+const Character CHARACTER_O = CHARACTER(4, INDEX_LETTERS_START + 14);
+const Character CHARACTER_P = CHARACTER(4, INDEX_LETTERS_START + 15);
+const Character CHARACTER_Q = CHARACTER(4, INDEX_LETTERS_START + 16);
+const Character CHARACTER_R = CHARACTER(4, INDEX_LETTERS_START + 17);
+const Character CHARACTER_S = CHARACTER(4, INDEX_LETTERS_START + 18);
+const Character CHARACTER_T = CHARACTER(4, INDEX_LETTERS_START + 19);
+const Character CHARACTER_U = CHARACTER(4, INDEX_LETTERS_START + 20);
+const Character CHARACTER_V = CHARACTER(5, INDEX_LETTERS_START + 21);
+const Character CHARACTER_W = CHARACTER(5, INDEX_LETTERS_START + 22);
+const Character CHARACTER_X = CHARACTER(5, INDEX_LETTERS_START + 23);
+const Character CHARACTER_Y = CHARACTER(4, INDEX_LETTERS_START + 24);
+const Character CHARACTER_Z = CHARACTER(4, INDEX_LETTERS_START + 25);
 
 const Character *CHARACTER_LETTERS[26] = {&CHARACTER_A,
                                           &CHARACTER_B,
@@ -542,292 +121,32 @@ const Character *CHARACTER_LETTERS[26] = {&CHARACTER_A,
                                           &CHARACTER_Z};
 
 
-const Character CHARACTER_CAPITAL_A = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_B = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_C = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_D = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_E = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_F = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_G = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_H = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_I = {3, {CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_J = {5, {CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_K = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_L = {5, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_M = {7, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 1, 0, 0, 0, 1, 1, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 1, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 1, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_N = {6, {CHARACTER_ROW(1, 0, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 1, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_O = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_P = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_Q = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_R = {5, {CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_S = {5, {CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_T = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_U = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 1, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_V = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_W = {7, {CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 0, 1, 0, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 1, 0, 1, 0),
-                                           CHARACTER_ROW(1, 0, 1, 0, 1, 0, 1, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 1, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_X = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_Y = {5, {CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
-const Character CHARACTER_CAPITAL_Z = {5, {CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 1, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(0, 1, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 0, 0, 0, 0, 0, 0, 0),
-                                           CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                           CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
-
+const Character CHARACTER_CAPITAL_A = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 0);
+const Character CHARACTER_CAPITAL_B = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 1);
+const Character CHARACTER_CAPITAL_C = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 2);
+const Character CHARACTER_CAPITAL_D = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 3);
+const Character CHARACTER_CAPITAL_E = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 4);
+const Character CHARACTER_CAPITAL_F = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 5);
+const Character CHARACTER_CAPITAL_G = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 6);
+const Character CHARACTER_CAPITAL_H = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 7);
+const Character CHARACTER_CAPITAL_I = CHARACTER(3, INDEX_LETTERS_CAPITAL_START + 8);
+const Character CHARACTER_CAPITAL_J = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 9);
+const Character CHARACTER_CAPITAL_K = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 10);
+const Character CHARACTER_CAPITAL_L = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 11);
+const Character CHARACTER_CAPITAL_M = CHARACTER(7, INDEX_LETTERS_CAPITAL_START + 12);
+const Character CHARACTER_CAPITAL_N = CHARACTER(6, INDEX_LETTERS_CAPITAL_START + 13);
+const Character CHARACTER_CAPITAL_O = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 14);
+const Character CHARACTER_CAPITAL_P = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 15);
+const Character CHARACTER_CAPITAL_Q = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 16);
+const Character CHARACTER_CAPITAL_R = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 17);
+const Character CHARACTER_CAPITAL_S = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 18);
+const Character CHARACTER_CAPITAL_T = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 19);
+const Character CHARACTER_CAPITAL_U = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 20);
+const Character CHARACTER_CAPITAL_V = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 21);
+const Character CHARACTER_CAPITAL_W = CHARACTER(7, INDEX_LETTERS_CAPITAL_START + 22);
+const Character CHARACTER_CAPITAL_X = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 23);
+const Character CHARACTER_CAPITAL_Y = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 24);
+const Character CHARACTER_CAPITAL_Z = CHARACTER(5, INDEX_LETTERS_CAPITAL_START + 25);
 
 const Character *CHARACTER_CAPITAL_LETTERS[26] = {&CHARACTER_CAPITAL_A,
                                                   &CHARACTER_CAPITAL_B,
@@ -857,27 +176,23 @@ const Character *CHARACTER_CAPITAL_LETTERS[26] = {&CHARACTER_CAPITAL_A,
                                                   &CHARACTER_CAPITAL_Z};
 
 
-const Character CHARACTER_HEART = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                       CHARACTER_ROW(1, 0, 1, 0, 1, 0, 0, 0),
-                                       CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                       CHARACTER_ROW(0, 1, 0, 1, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 1, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                       CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_HEART = CHARACTER(5, INDEX_ICONS_START + 0);
 
-const Character CHARACTER_FOOT = {5, {CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                      CHARACTER_ROW(1, 0, 1, 0, 0, 0, 0, 0),
-                                      CHARACTER_ROW(1, 1, 1, 1, 0, 0, 0, 0),
-                                      CHARACTER_ROW(1, 0, 0, 0, 1, 0, 0, 0),
-                                      CHARACTER_ROW(1, 1, 1, 1, 1, 0, 0, 0),
-                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0),
-                                      CHARACTER_ROW(0, 0, 0, 0, 0, 0, 0, 0)}};
+const Character CHARACTER_FOOT = CHARACTER(5, INDEX_ICONS_START + 1);
+
+
+static void load_resource(uint32_t id, uint8_t *buffer, size_t length) {
+  ResHandle handle = resource_get_handle(id);
+  size_t size = resource_size(handle);
+  if (length < size) {
+    resource_load_byte_range(handle, size - length, buffer, size);
+  }
+}
+
+static void load_character_data() {
+  load_resource(RESOURCE_ID_CHARACTERS, (uint8_t *)s_character_data, sizeof(s_character_data));
+  s_loaded = true;
+}
 
 
 static void graphics_draw_scaled_rect(GContext *ctx, GPoint pos, GPoint coords) {
@@ -887,6 +202,10 @@ static void graphics_draw_scaled_rect(GContext *ctx, GPoint pos, GPoint coords) 
 }
 
 void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, int16_t min, int16_t max) {
+  if (!s_loaded) {
+    load_character_data();
+  }
+
   if (min < 0) { min = 0; }
   if (max < 0) { max = 11; }
 
@@ -894,7 +213,7 @@ void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, 
 
   const Character *character = data.character;
   Diacritic diacritic = data.diacritic;
-  int diacritics_line = (character->a[0] == 0) ? 2 : 0;
+  int diacritics_line = (character->a->r[0] == 0) ? 2 : 0;
 
   for (int j = 0; j < 11; j++) {
     if (j >= min && j < max) {
@@ -909,7 +228,7 @@ void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, 
           graphics_draw_scaled_rect(ctx, pos, coords);
         }
       } else if (j > 0) {
-        CharacterRow row = character->a[j-1];
+        CharacterRow row = character->a->r[j-1];
         for (uint8_t i = 0; i < character->width; i++) {
           if (CHARACTER_ROW_ITEM(row, i)) {
             coords.x = i;

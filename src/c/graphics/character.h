@@ -13,10 +13,13 @@
 
 
 typedef uint8_t CharacterRow;
+typedef struct CharacterData {
+  CharacterRow r[10];
+} CharacterData;
 
 typedef struct Character {
   uint8_t width;
-  CharacterRow a[10];
+  CharacterData *a;
 } Character;
 
 

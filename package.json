@@ -30,7 +30,13 @@
       "GraphicsHighResolution": 10005
     },
     "resources": {
-      "media": []
+      "media": [
+        {
+          "type": "raw",
+          "name": "CHARACTERS",
+          "file": "characters.pbm"
+        }
+      ]
     },
     "capabilities": [
       "health"
