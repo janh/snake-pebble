@@ -9,6 +9,8 @@
 #pragma once
 
 #include <pebble.h>
+#include <stdbool.h>
+#include <inttypes.h>
 
 
 typedef enum {
@@ -28,6 +30,7 @@ GColor settings_get_color_background();
 GColor settings_get_color_snake();
 GColor settings_get_color_text();
 DateFormat settings_get_date_format();
+bool settings_get_graphics_high_resolution();
 
 void settings_set_callback(SettingsChanged callback);
 void settings_init();

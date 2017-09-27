@@ -17,6 +17,8 @@ static int32_t s_color_text;
 
 static int32_t s_date_format;
 
+static bool s_graphics_high_resolution;
+
 
 GColor settings_get_color_background() {
   return GColorFromHEX(s_color_background);
@@ -34,12 +36,17 @@ DateFormat settings_get_date_format() {
   return s_date_format;
 }
 
+bool settings_get_graphics_high_resolution() {
+  return s_graphics_high_resolution;
+}
+
 
 static void save() {
   persist_write_int(MESSAGE_KEY_ColorBackground, s_color_background);
   persist_write_int(MESSAGE_KEY_ColorSnake, s_color_snake);
   persist_write_int(MESSAGE_KEY_ColorText, s_color_text);
   persist_write_int(MESSAGE_KEY_DateFormat, s_date_format);
+  persist_write_bool(MESSAGE_KEY_GraphicsHighResolution, s_graphics_high_resolution);
 }
 
 static int read_int(uint32_t key, int32_t fallback) {
@@ -50,11 +57,20 @@ static int read_int(uint32_t key, int32_t fallback) {
   }
 }
 
+static int read_bool(uint32_t key, bool fallback) {
+  if (persist_exists(key)) {
+    return persist_read_bool(key);
+  } else {
+    return fallback;
+  }
+}
+
 static void load() {
   s_color_background = read_int(MESSAGE_KEY_ColorBackground, 0x000000);
   s_color_snake = read_int(MESSAGE_KEY_ColorSnake, 0xffffff);
   s_color_text = read_int(MESSAGE_KEY_ColorText, 0xaaaaaa);
   s_date_format = read_int(MESSAGE_KEY_DateFormat, DATE_FORMAT_YYYY_MM_DD_HYPHEN);
+  s_graphics_high_resolution = read_bool(MESSAGE_KEY_GraphicsHighResolution, false);
 }
 
 
@@ -77,6 +93,11 @@ static void inbox_received_handler(DictionaryIterator *iterator, void *context) 
   Tuple *date_format_tuple = dict_find(iterator, MESSAGE_KEY_DateFormat);
   if (date_format_tuple) {
     s_date_format = date_format_tuple->value->int32;
+  }
+
+  Tuple *graphics_high_resolution_tuple = dict_find(iterator, MESSAGE_KEY_GraphicsHighResolution);
+  if (graphics_high_resolution_tuple) {
+    s_graphics_high_resolution = (graphics_high_resolution_tuple->value->int16 > 0);
   }
 
   save();

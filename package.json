@@ -26,7 +26,8 @@
       "ColorBackground": 10001,
       "ColorSnake": 10002,
       "ColorText": 10003,
-      "DateFormat": 10004
+      "DateFormat": 10004,
+      "GraphicsHighResolution": 10005
     },
     "resources": {
       "media": []

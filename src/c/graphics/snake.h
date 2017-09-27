@@ -16,6 +16,7 @@
 
 typedef struct SnakeElement {
   Pixel a[4][4];
+  Pixel b[8][8];
 } SnakeElement;
 
 

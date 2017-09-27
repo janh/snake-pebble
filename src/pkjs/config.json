@@ -8,7 +8,14 @@
     "items": [
       {
         "type": "heading",
-        "defaultValue": "Color"
+        "defaultValue": "Appearance"
+      },
+      {
+        "type": "toggle",
+        "messageKey": "GraphicsHighResolution",
+        "label": "High resolution graphics",
+        "defaultValue": false,
+        "capabilities": ["NOT_PLATFORM_EMERY"]
       },
       {
         "type": "color",

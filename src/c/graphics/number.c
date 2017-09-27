@@ -177,14 +177,17 @@ bool graphics_draw_number(GContext *ctx, GPoint pos, NumberDesc number, uint8_t 
 
       if (current != last && current != EL_HEAD && current != EL_NONE) {
         element = SNAKE_EDGE;
-        mirror = false;
-        if ((current == EL_RIGHT && last == EL_UP) || (current == EL_DOWN && last == EL_LEFT)) {
+        if (last == EL_UP) {
+          mirror = (current == EL_LEFT);
           rotation = ROTATION_0;
-        } else if ((current == EL_UP && last == EL_LEFT) || (current == EL_RIGHT && last == EL_DOWN)) {
+        } else if (last == EL_LEFT) {
+          mirror = current == EL_DOWN;
           rotation = ROTATION_90;
-        } else if ((current == EL_LEFT && last == EL_DOWN) || (current == EL_UP && last == EL_RIGHT)) {
+        } else if (last == EL_DOWN) {
+          mirror = current == EL_RIGHT;
           rotation = ROTATION_180;
-        } else if ((current == EL_DOWN && last == EL_RIGHT) || (current == EL_LEFT && last == EL_UP)) {
+        } else if (last == EL_RIGHT) {
+          mirror = current == EL_UP;
           rotation = ROTATION_270;
         }
       }
