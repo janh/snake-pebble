@@ -13,20 +13,23 @@
 #include "../lib/sizes.h"
 
 
-#define CHARACTER(length,index) {length, &s_character_data[index]}
+#define CHARACTER(length,index) {length, &s_character_data[index], &s_character_data_2x[index]}
 
 #define CHARACTER_ROW_ITEM(row,i) row & (1 << (7 - i))
+#define CHARACTER_ROW_ITEM_2X(row,i) row & (1 << ((i < 8) ? 7-i : 8+15-i))
 
 
-static bool s_loaded = false;
-static CharacterData s_character_data[69];
-
-
+#define CHARACTER_COUNT 69
 #define INDEX_NUMBERS_START 0
 #define INDEX_LETTERS_CAPITAL_START 10
 #define INDEX_LETTERS_START 36
 #define INDEX_PUNCTUATION_START 62
 #define INDEX_ICONS_START 67
+
+
+static bool s_loaded = false;
+static CharacterData s_character_data[CHARACTER_COUNT];
+static CharacterData2X s_character_data_2x[CHARACTER_COUNT];
 
 
 const Character CHARACTER_0 = CHARACTER(5, INDEX_NUMBERS_START + 0);
@@ -191,6 +194,7 @@ static void load_resource(uint32_t id, uint8_t *buffer, size_t length) {
 
 static void load_character_data() {
   load_resource(RESOURCE_ID_CHARACTERS, (uint8_t *)s_character_data, sizeof(s_character_data));
+  load_resource(RESOURCE_ID_CHARACTERS_2X, (uint8_t *)s_character_data_2x, sizeof(s_character_data_2x));
   s_loaded = true;
 }
 
@@ -210,6 +214,7 @@ void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, 
   if (max < 0) { max = 11; }
 
   graphics_context_set_fill_color(ctx, settings_get_color_text());
+  graphics_context_set_stroke_color(ctx, settings_get_color_text());
 
   const Character *character = data.character;
   Diacritic diacritic = data.diacritic;
@@ -228,11 +233,23 @@ void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, 
           graphics_draw_scaled_rect(ctx, pos, coords);
         }
       } else if (j > 0) {
-        CharacterRow row = character->a->r[j-1];
-        for (uint8_t i = 0; i < character->width; i++) {
-          if (CHARACTER_ROW_ITEM(row, i)) {
-            coords.x = i;
-            graphics_draw_scaled_rect(ctx, pos, coords);
+        if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
+          for (int k = 0; k < 2; k++) {
+            CharacterRow2X row = character->b->r[SIZE_SCALE_FACTOR * (j-1) + k];
+            for (uint16_t i = 0; i < SIZE_SCALE_FACTOR * character->width; i++) {
+              if (CHARACTER_ROW_ITEM_2X(row, i)) {
+                GPoint point = GPoint(SIZE_SCALE_FACTOR * pos.x + i, SIZE_SCALE_FACTOR * (pos.y + coords.y) + k);
+                graphics_draw_pixel(ctx, point);
+              }
+            }
+          }
+        } else {
+          CharacterRow row = character->a->r[j-1];
+          for (uint8_t i = 0; i < character->width; i++) {
+            if (CHARACTER_ROW_ITEM(row, i)) {
+              coords.x = i;
+              graphics_draw_scaled_rect(ctx, pos, coords);
+            }
           }
         }
       }

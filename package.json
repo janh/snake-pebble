@@ -35,6 +35,11 @@
           "type": "raw",
           "name": "CHARACTERS",
           "file": "characters.pbm"
+        },
+        {
+          "type": "raw",
+          "name": "CHARACTERS_2X",
+          "file": "characters-2x.pbm"
         }
       ]
     },

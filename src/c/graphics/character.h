@@ -17,9 +17,15 @@ typedef struct CharacterData {
   CharacterRow r[10];
 } CharacterData;
 
+typedef uint16_t CharacterRow2X;
+typedef struct CharacterData2X {
+  CharacterRow2X r[20];
+} CharacterData2X;
+
 typedef struct Character {
   uint8_t width;
   CharacterData *a;
+  CharacterData2X *b;
 } Character;
 
 
