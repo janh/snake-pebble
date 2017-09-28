@@ -70,7 +70,7 @@ static void load() {
   s_color_snake = read_int(MESSAGE_KEY_ColorSnake, 0xffffff);
   s_color_text = read_int(MESSAGE_KEY_ColorText, 0xaaaaaa);
   s_date_format = read_int(MESSAGE_KEY_DateFormat, DATE_FORMAT_YYYY_MM_DD_HYPHEN);
-  s_graphics_high_resolution = read_bool(MESSAGE_KEY_GraphicsHighResolution, false);
+  s_graphics_high_resolution = read_bool(MESSAGE_KEY_GraphicsHighResolution, true);
 }
 
 
