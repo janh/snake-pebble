@@ -7,9 +7,10 @@
  */
 
 #include "main_window.h"
+#include "../graphics/character.h"
 #include "../layers/snake_layer.h"
+#include "../layers/content_layer.h"
 #include "../layers/date_layer.h"
-#include "../layers/health_layer.h"
 #include "../layers/animation.h"
 #include "../lib/settings.h"
 #include "../lib/sizes.h"
@@ -23,7 +24,7 @@
 static Window *s_main_window;
 static Layer *s_snake_layer;
 static Layer *s_date_layer;
-static Layer *s_health_layer;
+static Layer *s_content_layer;
 
 
 static void update_layout() {
@@ -46,15 +47,36 @@ static void update_layout() {
                           SIZE_SCALE_FACTOR * SIZE_DATE_WIDTH,
                           SIZE_SCALE_FACTOR * SIZE_DATE_HEIGHT);
 
-  int16_t health_offset = PBL_IF_ROUND_ELSE(3, (snake_margin - SIZE_HEALTH_HEIGHT) / 2);
-  GRect rect_health = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_HEALTH_WIDTH) / 2),
-                            SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_margin + SIZE_TIME_HEIGHT + health_offset),
-                            SIZE_SCALE_FACTOR * SIZE_HEALTH_WIDTH,
-                            SIZE_SCALE_FACTOR * SIZE_HEALTH_HEIGHT);
+  int16_t content_offset = PBL_IF_ROUND_ELSE(3, (snake_margin - SIZE_CONTENT_HEIGHT) / 2);
+  GRect rect_content = GRect(SIZE_GRID_OFFSET.x + SIZE_SCALE_FACTOR * ((width - SIZE_CONTENT_WIDTH) / 2),
+                            SIZE_GRID_OFFSET.y + SIZE_SCALE_FACTOR * (snake_margin + SIZE_TIME_HEIGHT + content_offset),
+                            SIZE_SCALE_FACTOR * SIZE_CONTENT_WIDTH,
+                            SIZE_SCALE_FACTOR * SIZE_CONTENT_HEIGHT);
 
   layer_set_frame(s_snake_layer, rect_snake);
   layer_set_frame(s_date_layer, rect_date);
-  layer_set_frame(s_health_layer, rect_health);
+  layer_set_frame(s_content_layer, rect_content);
+}
+
+static int format_hour(int hour) {
+  if (!clock_is_24h_style()) {
+    hour = hour % 12;
+    if (hour == 0) {
+      hour = 12;
+    }
+  }
+  return hour;
+}
+
+static void update_date_layer(tm *time) {
+  snake_layer_set_time(s_snake_layer, format_hour(time->tm_hour), time->tm_min);
+  date_layer_set_date(s_date_layer, 1900 + time->tm_year, time->tm_mon + 1, time->tm_mday, time->tm_wday);
+}
+
+static void update_content_layer() {
+  ContentLayerItem left = { &CHARACTER_FOOT, health_get_steps() };
+  ContentLayerItem right = { &CHARACTER_HEART, health_get_heart_rate() };
+  content_layer_set_data(s_content_layer, left, right);
 }
 
 static void unobstracted_area_changed(AnimationProgress progress, void *context) {
@@ -72,8 +94,8 @@ static void window_load(Window *window) {
   s_date_layer = date_layer_create(GRect(0, 0, 0, 0));
   layer_add_child(window_layer, s_date_layer);
 
-  s_health_layer = health_layer_create(GRect(0, 0, 0, 0));
-  layer_add_child(window_layer, s_health_layer);
+  s_content_layer = content_layer_create(GRect(0, 0, 0, 0));
+  layer_add_child(window_layer, s_content_layer);
 
   update_layout();
 
@@ -82,25 +104,12 @@ static void window_load(Window *window) {
   }, NULL);
 }
 
-static int format_hour(int hour) {
-  if (!clock_is_24h_style()) {
-    hour = hour % 12;
-    if (hour == 0) {
-      hour = 12;
-    }
-  }
-  return hour;
-}
-
 static void tick_handler(tm *tick_time, TimeUnits units_changed) {
-  snake_layer_set_time(s_snake_layer, format_hour(tick_time->tm_hour), tick_time->tm_min);
-  date_layer_set_date(s_date_layer, 1900 + tick_time->tm_year, tick_time->tm_mon + 1, tick_time->tm_mday, tick_time->tm_wday);
+  update_date_layer(tick_time);
 }
 
 static void health_data_changed() {
-  int32_t steps = health_get_steps();
-  int16_t heart_rate = health_get_heart_rate();
-  health_layer_set_data(s_health_layer, steps, heart_rate);
+  update_content_layer();
 }
 
 static void settings_changed() {
@@ -109,13 +118,13 @@ static void settings_changed() {
   layer_mark_dirty(window_layer);
 }
 
-static void date_health_animation_complete() {
+static void date_content_animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
   health_init(health_data_changed);
 }
 
 static void snake_animation_complete() {
-  date_health_layers_animate(s_date_layer, s_health_layer, date_health_animation_complete);
+  date_content_layers_animate(s_date_layer, s_content_layer, date_content_animation_complete);
 }
 
 static void window_appear(Window *window) {
@@ -125,9 +134,8 @@ static void window_appear(Window *window) {
   time_t timestamp = time(NULL) + 2;
   tm *timeinfo = localtime(&timestamp);
 
-  snake_layer_set_time(s_snake_layer, format_hour(timeinfo->tm_hour), timeinfo->tm_min);
-  date_layer_set_date(s_date_layer, 1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_wday);
-  health_layer_set_data(s_health_layer, health_get_steps(), health_get_heart_rate());
+  update_date_layer(timeinfo);
+  update_content_layer();
 
   snake_layer_animate(s_snake_layer, snake_animation_complete);
 }
@@ -139,7 +147,7 @@ static void window_disappear(Window *window) {
 static void window_unload(Window *window) {
   snake_layer_destroy(s_snake_layer);
   date_layer_destroy(s_date_layer);
-  health_layer_destroy(s_health_layer);
+  content_layer_destroy(s_content_layer);
   window_destroy(s_main_window);
   s_main_window = NULL;
 }

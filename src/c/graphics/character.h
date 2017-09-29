@@ -54,13 +54,17 @@ extern const Character CHARACTER_9;
 extern const Character *CHARACTER_NUMBERS[10];
 
 extern const Character CHARACTER_HYPHEN;
+
 extern const Character CHARACTER_DOT;
 extern const Character CHARACTER_DOT_NARROW;
 extern const Character CHARACTER_DOT_WIDE;
+
 extern const Character CHARACTER_COMMA_NARROW;
 extern const Character CHARACTER_SLASH;
+
 extern const Character CHARACTER_SPACE;
 extern const Character CHARACTER_SPACE_NARROW;
+extern const Character CHARACTER_SPACE_WIDE;
 
 extern const Character CHARACTER_A;
 extern const Character CHARACTER_B;

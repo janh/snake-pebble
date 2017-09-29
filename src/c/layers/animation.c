@@ -12,32 +12,32 @@
 
 
 static DateLayer *s_date_layer;
-static HealthLayer *s_health_layer;
+static ContentLayer *s_content_layer;
 static int16_t s_progress;
 static AppTimer *s_timer;
-static DateHealthLayersAnimationComplete s_callback;
+static DateContentLayersAnimationComplete s_callback;
 
 
-static void date_health_layers_timer_cancel() {
+static void date_content_layers_timer_cancel() {
   if (s_timer) {
     app_timer_cancel(s_timer);
     s_timer = NULL;
   }
 }
 
-static void date_health_layers_callback(void *context);
+static void date_content_layers_callback(void *context);
 
-static void date_health_layers_timer_register() {
-  s_timer = app_timer_register(33, date_health_layers_callback, NULL);
+static void date_content_layers_timer_register() {
+  s_timer = app_timer_register(33, date_content_layers_callback, NULL);
 }
 
-static void date_health_layers_callback(void *context) {
+static void date_content_layers_callback(void *context) {
   s_timer = NULL;
   if (s_progress < 11) {
     s_progress += (s_progress < 8) ? 2 : 3;
     date_layer_set_anim_state(s_date_layer, s_progress);
-    health_layer_set_anim_state(s_health_layer, s_progress);
-    date_health_layers_timer_register();
+    content_layer_set_anim_state(s_content_layer, s_progress);
+    date_content_layers_timer_register();
   } else {
     if (s_callback != NULL) {
       s_callback();
@@ -45,15 +45,15 @@ static void date_health_layers_callback(void *context) {
   }
 }
 
-void date_health_layers_animate(DateLayer* date_layer, HealthLayer* health_layer, DateHealthLayersAnimationComplete callback) {
+void date_content_layers_animate(DateLayer* date_layer, ContentLayer* content_layer, DateContentLayersAnimationComplete callback) {
   s_date_layer = date_layer;
-  s_health_layer = health_layer;
+  s_content_layer = content_layer;
   s_progress = 2;
   s_callback = callback;
 
   date_layer_set_anim_state(s_date_layer, s_progress);
-  health_layer_set_anim_state(s_health_layer, s_progress);
+  content_layer_set_anim_state(s_content_layer, s_progress);
 
-  date_health_layers_timer_cancel();
-  date_health_layers_timer_register();
+  date_content_layers_timer_cancel();
+  date_content_layers_timer_register();
 }

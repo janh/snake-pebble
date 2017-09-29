@@ -10,9 +10,9 @@
 
 
 #include "date_layer.h"
-#include "health_layer.h"
+#include "content_layer.h"
 
 
-typedef void (*DateHealthLayersAnimationComplete)(void);
+typedef void (*DateContentLayersAnimationComplete)(void);
 
-void date_health_layers_animate(DateLayer* date_layer, HealthLayer* health_layer, DateHealthLayersAnimationComplete callback);
+void date_content_layers_animate(DateLayer* date_layer, ContentLayer* content_layer, DateContentLayersAnimationComplete callback);
