@@ -4,9 +4,7 @@
   "version": "0.1.0",
   "keywords": ["pebble-watchface"],
   "private": true,
-  "dependencies": {
-    "pebble-clay": "^1.0.4"
-  },
+  "dependencies": {},
   "pebble": {
     "displayName": "Snake",
     "uuid": "efb749ee-8147-4813-bad8-cf6ea29055aa",
@@ -44,6 +42,7 @@
       ]
     },
     "capabilities": [
+      "configurable",
       "health"
     ]
   }

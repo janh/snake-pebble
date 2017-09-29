@@ -4,6 +4,8 @@
 # Feel free to customize this to your needs.
 #
 import os.path
+import json
+import re
 
 top = '.'
 out = 'build'
@@ -24,6 +26,8 @@ def configure(ctx):
 
 
 def build(ctx):
+    ctx(rule=generate_html, source=ctx.path.ant_glob('src/html/**/*.html'), target='js/html.js')
+
     ctx.load('pebble_sdk')
 
     build_worker = os.path.exists('worker_src')
@@ -50,5 +54,27 @@ def build(ctx):
     ctx.pbl_bundle(binaries=binaries,
                    js=ctx.path.ant_glob(['src/pkjs/**/*.js',
                                          'src/pkjs/**/*.json',
-                                         'src/common/**/*.js']),
+                                         'src/common/**/*.js',
+                                         'build/js/html.js']),
                    js_entry_file='src/pkjs/index.js')
+
+
+def generate_html(task):
+    target = task.outputs[0].abspath()
+
+    exports = {}
+
+    for src in task.inputs:
+        path = src.abspath()
+        name = os.path.splitext(os.path.basename(src.abspath()))[0]
+
+        with file(path) as f:
+            content = f.read()
+
+        content = re.sub(r'\s*\n\s*', '\n', content, flags = re.MULTILINE)
+        content = re.sub(r'[ \t\r\f\v]+', ' ', content, flags = re.MULTILINE)
+
+        exports[name] = content
+
+    with open(target, 'w') as f:
+            f.write('module.exports = ' + json.dumps(exports) + ';\n')

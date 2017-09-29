@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2017 Jan Hoffmann
+
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<html>
+    <head>
+        <title>Snake</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            * {
+                color: #fff;
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+                padding: 0;
+                line-height: 1.5em;
+                outline: none;
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+            html, body {
+                background: #333;
+                font-size: 12pt;
+            }
+            body {
+                padding: 1em;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            body.overlaid {
+                overflow-y: hidden;
+            }
+            h1 {
+                font-size: 1.8em;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin: 0;
+            }
+            form div {
+                background: #484848;
+                border-radius: .25em;
+                box-shadow: 0 .1em .5em #303030;
+            }
+            form div > *:first-child {
+                border-radius: .25rem .25rem 0 0;
+            }
+            form div > *:last-child {
+                border-radius: 0 0 .25rem .25rem;
+            }
+            form div > ul:last-child > li:last-child {
+                border-radius: 0 0 .25rem .25rem;
+            }
+            form div > ul:last-child > li:last-child label {
+                border-radius: 0 0 .25rem .25rem;
+            }
+            h2 {
+                font-size: 1.3em;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin: 1em 0 0 0;
+                padding: .6rem .8rem;
+                background: #414141;
+            }
+            ul {
+                margin: 0;
+            }
+            li {
+                list-style-type: none;
+                background: linear-gradient(90deg, #484848 .6rem, #666 .6rem, #666 calc(100% - .6rem), #484848 calc(100% - .6rem));
+                padding-top: 1px;
+            }
+            li:first-child {
+                padding-top: 0;
+            }
+            li label {
+                display: block;
+                text-decoration: none;
+                padding: .6rem .8rem;
+                background: #484848;
+                min-height: 1.5em;
+                cursor: pointer;
+            }
+            li label:active {
+                background: #595959;
+            }
+            label.checkbox:before {
+                content: " ";
+                text-align: center;
+                display: block;
+                float: right;
+                margin: .15rem 0 0 .7rem;
+                vertical-align: center;
+                font-size: 1.2em;
+                line-height: 1rem;
+                width: 1rem;
+                height: 1rem;
+                border-radius: .25rem;
+                border: .1rem solid #888;
+            }
+            label.checkbox.checked:before {
+                content: "✓";
+                background: #ff4500;
+                border-color: #ff4500;
+            }
+            label.checkbox input {
+                display: none;
+            }
+            label.color span {
+                float: right;
+                width: 2.4rem;
+                height: 1.2rem;
+                border-radius: .6rem;
+                background: #000;
+            }
+            label.select {
+                position: relative;
+            }
+            label.select span {
+                float: right;
+            }
+            label.select span:after {
+                content: " ▾";
+                color: #ff4500;
+            }
+            label.select select {
+                position: absolute;
+                display: block;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                opacity: 0;
+                width: 100%;
+                border: none;
+                margin: 0;
+                padding: 0;
+                cursor: pointer;
+            }
+            label.select select option {
+                background: #fff;
+                color: #000;
+            }
+            p {
+                margin: 1.3em 0 0 0;
+                text-align: center;
+            }
+            input[type=button] {
+                box-sizing: content-box;
+                background: #ff4500;
+                padding: .6rem 1.6rem;
+                border: none;
+                font-family: inherit;
+                font-size: inherit;
+                font-weight: bold;
+                border-radius: .25em;
+                text-transform: uppercase;
+                box-shadow: 0 .1em .5em #303030;
+                cursor: pointer;
+                -webkit-appearance: none;
+            }
+            input[type=button]:active {
+                background: #f00;
+            }
+            @keyframes fadein {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            div.dialogouter {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(25, 25, 25, 0.7);
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                animation: fadein 50ms 1 linear;
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            div.dialoginner {
+                margin: auto;
+                padding: 2em .5em;
+                flex: 1 1 100%;
+            }
+            div.dialog {
+                background: #484848;
+                border-radius: .25em;
+                box-shadow: 0 .1em .5em #303030;
+                margin: auto;
+                padding: 1em;
+            }
+            div.dialog.color {
+                padding: .5em 1em;
+            }
+            div.dialog.color div.row {
+                display: flex;
+                padding: .5em 0;
+                border-radius: .25em;
+                box-shadow: 0 .1em .5em #444;
+            }
+            div.dialog.color span {
+                display: block;
+                float: left;
+                width: 100%;
+                height: 5em;
+                background: #000;
+                cursor: pointer;
+            }
+            div.dialog.color.small span {
+                height: 2.5em;
+            }
+            div.dialog.color span:first-child {
+                border-top-left-radius: .25em;
+                border-bottom-left-radius: .25em;
+            }
+            div.dialog.color span:last-child {
+                border-top-right-radius: .25em;
+                border-bottom-right-radius: .25em;
+            }
+            div.dialog.color span:active {
+                border-radius: .25em;
+                padding: .75em .25em .75em .25em;
+                margin: -.75em -.25em -.75em -.25em;
+                box-shadow: 0 .1em .5em #303030;
+                z-index: 1;
+            }
+        </style>
+        <script type="text/javascript">
+            var data = {{DATA}};
+            var options = {{OPTIONS}};
+
+
+            var Dialog = function() {
+                this._container = document.createElement('div');
+                this._container.classList.add('dialogouter');
+                this._container.addEventListener('click', this._clickedOutside.bind(this));
+
+                var inner = document.createElement('div');
+                inner.classList.add('dialoginner');
+                this._container.appendChild(inner);
+
+                this._dialog = document.createElement('div');
+                this._dialog.classList.add('dialog');
+                this._dialog.addEventListener('click', this._clicked.bind(this));
+                inner.appendChild(this._dialog);
+
+                var body = document.querySelector('body');
+                body.classList.add('overlaid');
+                body.appendChild(this._container);
+            }
+
+            Dialog.prototype.constructor = Dialog;
+
+            Dialog.prototype._clickedOutside = function(e) {
+                this.close();
+            };
+
+            Dialog.prototype._clicked = function(e) {
+                e.stopPropagation();
+            };
+
+            Dialog.prototype.close = function() {
+                var body = document.querySelector('body');
+                body.classList.remove('overlaid');
+                body.removeChild(this._container);
+            };
+
+
+            var ColorDialog = function(fullColors, callback) {
+                Dialog.call(this);
+
+                this._callback = callback;
+
+                this._dialog.classList.add('color');
+                if (fullColors) {
+                    this._dialog.classList.add('small');
+                }
+
+                var colors = fullColors ? this._colorsFull : this._colors;
+
+                for (var i = 0; i < colors.length; i++) {
+                    var colorRow = colors[i];
+                    var row = document.createElement('div');
+                    row.classList.add('row');
+                    for (var j = 0; j < colorRow.length; j++) {
+                        var color = colorRow[j];
+                        var item = document.createElement('span');
+                        item.setAttribute('data-value', color);
+                        item.style.background = '#' + color;
+                        item.addEventListener('click', this._itemClicked.bind(this));
+                        item.addEventListener('touchstart', function() {}); // enable :active pseudo-class on iOS
+                        row.appendChild(item);
+                    }
+                    this._dialog.appendChild(row);
+                }
+            };
+
+            ColorDialog.prototype = Object.create(Dialog.prototype);
+
+            ColorDialog.prototype.constructor = ColorDialog;
+
+            ColorDialog.prototype._colorsFull = [
+                ['000000', '555555', 'aaaaaa', 'ffffff'],
+                ['ff0000', 'ff5500', 'ffaa00', 'ffff00', 'aaff00', '55ff00', '00ff00', '00ff55', '00ffaa', '00ffff', '00aaff', '0055ff', '0000ff', '5500ff', 'aa00ff', 'ff00ff', 'ff00aa', 'ff0055'],
+                ['ff5555', 'ffaa55', 'ffff55', 'aaff55', '55ff55', '55ffaa', '55ffff', '55aaff', '5555ff', 'aa55ff', 'ff55ff', 'ff55aa'],
+                ['aa0000', 'aa5500', 'aaaa00', '55aa00', '00aa00', '00aa55', '00aaaa', '0055aa', '0000aa', '5500aa', 'aa00aa', 'aa0055'],
+                ['ffaaaa', 'ffffaa', 'aaffaa', 'aaffff', 'aaaaff', 'ffaaff'],
+                ['aa5555', 'aaaa55', '55aa55', '55aaaa', '5555aa', 'aa55aa'],
+                ['550000', '555500', '005500', '005555', '000055', '550055']
+            ];
+
+            ColorDialog.prototype._colors = [
+                ['000000', 'ffffff']
+            ];
+
+            ColorDialog.prototype._itemClicked = function(e) {
+                var item = e.target;
+                var color = item.getAttribute('data-value');
+                this.close();
+                this._callback(color);
+            }
+
+
+            var Section = function(title) {
+                this._node = document.createElement('div');
+
+                var header = document.createElement('h2');
+                header.innerText = title;
+                this._node.appendChild(header);
+
+                this._list = document.createElement('ul');
+                this._node.appendChild(this._list);
+            };
+
+            Section.prototype.constructor = Section;
+
+            Section.prototype.getNode = function() {
+                return this._node;
+            };
+
+            Section.prototype.addItem = function(item) {
+                var node = item.getNode();
+                this._list.appendChild(node);
+            };
+
+
+            var Item = function(type, title) {
+                this._node = document.createElement('li');
+
+                this._label = document.createElement('label');
+                this._label.classList.add(type);
+                this._label.innerText = title;
+                this._label.addEventListener('touchstart', function() {}); // enable :active pseudo-class on iOS
+                this._node.appendChild(this._label);
+            };
+
+            Item.prototype.constructor = Item;
+
+            Item.prototype.getNode = function() {
+                return this._node;
+            };
+
+
+            var CheckboxItem = function(key, title, value) {
+                Item.call(this, 'checkbox', title);
+
+                if (value == undefined) {
+                    value = false;
+                }
+
+                this._checkbox = document.createElement('input');
+                this._checkbox.type = 'checkbox';
+                this._checkbox.name = key;
+                this._checkbox.checked = value;
+                this._checkbox.addEventListener('change', this._update.bind(this));
+                this._label.appendChild(this._checkbox);
+
+                this._update();
+            };
+
+            CheckboxItem.prototype = Object.create(Item.prototype);
+
+            CheckboxItem.prototype.constructor = CheckboxItem;
+
+            CheckboxItem.prototype._update = function() {
+                if (this._checkbox.checked) {
+                    this._label.classList.add('checked');
+                } else {
+                    this._label.classList.remove('checked');
+                }
+            };
+
+
+            var ColorItem = function(key, title, color, value) {
+                Item.call(this, 'color', title);
+
+                if (value == undefined) {
+                    value = 0;
+                }
+
+                this._color = color;
+
+                this._label.addEventListener('click', this._clicked.bind(this));
+
+                this._preview = document.createElement('span');
+                this._label.appendChild(this._preview);
+
+                this._hidden = document.createElement('input');
+                this._hidden.type = 'hidden';
+                this._hidden.name = key;
+                this._label.appendChild(this._hidden);
+
+                this._value = value;
+                this._update();
+            };
+
+            ColorItem.prototype = Object.create(Item.prototype);
+
+            ColorItem.prototype.constructor = ColorItem;
+
+            ColorItem.prototype._clicked = function(e) {
+                new ColorDialog(this._color, this._callback.bind(this));
+            };
+
+            ColorItem.prototype._callback = function(color) {
+                this._value = parseInt(color, 16);
+                this._update();
+            };
+
+            ColorItem.prototype._getHexColor = function() {
+                var hex = this._value.toString(16);
+                while (hex.length < 6) {
+                    hex = '0' + hex;
+                }
+                return hex;
+            };
+
+            ColorItem.prototype._update = function() {
+                this._hidden.value = this._value;
+                this._preview.style.background = '#' + this._getHexColor();
+            };
+
+
+            var SelectItem = function(key, title, options, value) {
+                Item.call(this, 'select', title);
+
+                this._value = document.createElement('span');
+                this._label.appendChild(this._value);
+
+                this._select = document.createElement('select');
+                this._select.name = key;
+                for (var i = 0; i < options.length; i++) {
+                    var optionData = options[i];
+                    var option = new Option(optionData.text, optionData.value, false, optionData.value === value);
+                    this._select.add(option);
+                }
+                this._select.addEventListener('change', this._update.bind(this));
+                this._label.appendChild(this._select);
+
+                this._update();
+            };
+
+            SelectItem.prototype = Object.create(Item.prototype);
+
+            SelectItem.prototype.constructor = SelectItem;
+
+            SelectItem.prototype._update = function() {
+                if (this._select.selectedIndex != -1) {
+                    this._value.innerText = this._select.options[this._select.selectedIndex].text;
+                } else {
+                    this._value.innerText = '';
+                }
+            };
+
+
+            function createForm() {
+                var fragment = document.createDocumentFragment();
+
+                for (var i = 0; i < options.length; i++) {
+                    var sectionData = options[i];
+                    if (sectionData.visible != undefined && !sectionData.visible) {
+                        continue;
+                    }
+
+                    var section = new Section(sectionData.title);
+                    fragment.appendChild(section.getNode());
+
+                    for (var j = 0; j < sectionData.items.length; j++) {
+                        var itemData = sectionData.items[j];
+                        if (itemData.visible != undefined && !itemData.visible) {
+                            continue;
+                        }
+
+                        var value = data[itemData.key];
+                        if (value == undefined) {
+                            value = itemData.default;
+                        }
+
+                        if (itemData.type == 'checkbox') {
+                            section.addItem(new CheckboxItem(itemData.key, itemData.title, value));
+                        } else if (itemData.type == 'color') {
+                            section.addItem(new ColorItem(itemData.key, itemData.title, itemData.color, value));
+                        } else if (itemData.type == 'select') {
+                            section.addItem(new SelectItem(itemData.key, itemData.title, itemData.options, value));
+                        }
+                    }
+                }
+
+                return fragment;
+            }
+
+
+            function exit() {
+                var encodedData = encodeURIComponent(JSON.stringify(data));
+                console.log('Data:', encodedData);
+                var returnTo = 'pebblejs://close#' + encodedData;
+                location.href = returnTo;
+            }
+
+            function buttonClicked(e) {
+                e.preventDefault();
+                data = {};
+                var form = document.querySelector('form');
+                for (var i = 0; i < form.elements.length; i++) {
+                    var e = form.elements[i];
+                    if (e.getAttribute('type') == 'checkbox') {
+                        data[e.name] = e.checked;
+                    } else {
+                        data[e.name] = parseInt(e.value);
+                    }
+                }
+                exit();
+            }
+
+            function loaded() {
+                var form = document.querySelector('form');
+                var fragment = createForm();
+                form.appendChild(fragment);
+
+                var button = document.querySelector('input[type=button]');
+                button.addEventListener('click', buttonClicked);
+            }
+
+            document.addEventListener('DOMContentLoaded', loaded);
+        </script>
+    </head>
+    <body>
+
+        <h1>Snake</h1>
+
+        <form></form>
+
+        <p>
+            <input type="button" value="Save changes" />
+        </p>
+
+    </body>
+</html>
