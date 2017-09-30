@@ -126,6 +126,8 @@ extern const Character *CHARACTER_CAPITAL_LETTERS[26];
 
 extern const Character CHARACTER_HEART;
 extern const Character CHARACTER_FOOT;
+extern const Character CHARACTER_BATTERY;
+extern const Character CHARACTER_CHARGING;
 
 void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, int16_t min, int16_t max);
 void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max);
