@@ -32,8 +32,14 @@ static void health_handler(HealthEventType event, void *context) {
 }
 
 
+static void battery_handler(BatteryChargeState charge) {
+  s_callback(DATA_TYPE_BATTERY);
+}
+
+
 void data_events_init(DataTypeMask types, DataChanged callback) {
   health_service_events_unsubscribe();
+  battery_state_service_unsubscribe();
 
   s_types = types;
   s_callback = callback;
@@ -41,6 +47,9 @@ void data_events_init(DataTypeMask types, DataChanged callback) {
   if (s_callback != NULL) {
     if (types & DATA_TYPE_STEPS || types & DATA_TYPE_HEART_RATE) {
       health_service_events_subscribe(&health_handler, NULL);
+    }
+    if (types & DATA_TYPE_BATTERY) {
+      battery_state_service_subscribe(&battery_handler);
     }
   }
 }
@@ -79,4 +88,15 @@ bool data_device_has_heart_rate_sensor() {
     #endif
   }
   return false;
+}
+
+
+uint8_t data_get_battery_percent() {
+  BatteryChargeState state = battery_state_service_peek();
+  return state.charge_percent;
+}
+
+bool data_get_battery_charging() {
+  BatteryChargeState state = battery_state_service_peek();
+  return state.is_charging;
 }
