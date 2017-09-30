@@ -68,3 +68,15 @@ int32_t data_get_heart_rate() {
     return -1;
   }
 }
+
+bool data_device_has_heart_rate_sensor() {
+  WatchInfoModel watch = watch_info_get_model();
+  if (watch == WATCH_INFO_MODEL_PEBBLE_2_HR || watch == WATCH_INFO_MODEL_PEBBLE_TIME_2) {
+    return true;
+  } else if (watch == WATCH_INFO_MODEL_UNKNOWN) {
+    #if defined(PBL_PLATFORM_DIORITE) || defined(PBL_PLATFORM_EMERY)
+      return true;
+    #endif
+  }
+  return false;
+}
