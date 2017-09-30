@@ -14,7 +14,7 @@
 #include "../layers/animation.h"
 #include "../lib/settings.h"
 #include "../lib/sizes.h"
-#include "../lib/health.h"
+#include "../lib/data.h"
 
 #include <pebble.h>
 #include <stdbool.h>
@@ -74,8 +74,8 @@ static void update_date_layer(tm *time) {
 }
 
 static void update_content_layer() {
-  ContentLayerItem left = { &CHARACTER_FOOT, health_get_steps() };
-  ContentLayerItem right = { &CHARACTER_HEART, health_get_heart_rate() };
+  ContentLayerItem left = { &CHARACTER_FOOT, data_get_steps() };
+  ContentLayerItem right = { &CHARACTER_HEART, data_get_heart_rate() };
   content_layer_set_data(s_content_layer, left, right);
 }
 
@@ -108,7 +108,7 @@ static void tick_handler(tm *tick_time, TimeUnits units_changed) {
   update_date_layer(tick_time);
 }
 
-static void health_data_changed() {
+static void data_changed(DataTypeMask types) {
   update_content_layer();
 }
 
@@ -120,7 +120,7 @@ static void settings_changed() {
 
 static void date_content_animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
-  health_init(health_data_changed);
+  data_events_init(DATA_TYPE_STEPS | DATA_TYPE_HEART_RATE, data_changed);
 }
 
 static void snake_animation_complete() {
