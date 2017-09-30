@@ -10,86 +10,90 @@ var html = require('html');
 var keys = require('message_keys');
 
 
-var watchInfo = Pebble.getActiveWatchInfo();
+function getOptions() {
+  var watchInfo = Pebble.getActiveWatchInfo();
+  var platform = watchInfo.platform;
 
+  var deviceHasColorScreen = (platform != "aplite" && platform != "diorite");
 
-var options = [
-  {
-    "title": "Appearance",
-    "items": [
-      {
-        "key": keys.GraphicsHighResolution,
-        "type": "checkbox",
-        "default": true,
-        "title": "High resolution graphics",
-        "visible": (watchInfo.platform != "emery")
-      },
-      {
-        "key": keys.ColorBackground,
-        "type": "color",
-        "default": 0x000000,
-        "title": "Background color",
-        "color": (watchInfo.platform != "aplite" && watchInfo.platform != "diorite")
-      },
-      {
-        "key": keys.ColorSnake,
-        "type": "color",
-        "default": 0xffffff,
-        "title": "Time color",
-        "color": (watchInfo.platform != "aplite" && watchInfo.platform != "diorite")
-      },
-      {
-        "key": keys.ColorText,
-        "type": "color",
-        "default": 0xaaaaaa,
-        "title": "Text color",
-        "color": true,
-        "visible": (watchInfo.platform != "aplite" && watchInfo.platform != "diorite")
-      }
-    ]
-  },
-  {
-    "title": "Content",
-    "items": [
-      {
-        "key": keys.DateFormat,
-        "type": "select",
-        "default": 0,
-        "title": "Date format",
-        "options": [
-          {
-            "value": 0,
-            "text": "YYYY-MM-DD"
-          },
-          {
-            "value": 1,
-            "text": "DD.MM.YYYY"
-          },
-          {
-            "value": 2,
-            "text": "DD/MM/YYYY"
-          },
-          {
-            "value": 3,
-            "text": "MM/DD/YYYY"
-          },
-          {
-            "value": 4,
-            "text": "Day DD Mon"
-          },
-          {
-            "value": 5,
-            "text": "Day, DD. Mon"
-          },
-          {
-            "value": 6,
-            "text": "Day Mon DD"
-          }
-        ]
-      }
-    ]
-  }
-];
+  return [
+    {
+      "title": "Appearance",
+      "items": [
+        {
+          "key": keys.GraphicsHighResolution,
+          "type": "checkbox",
+          "default": true,
+          "title": "High resolution graphics",
+          "visible": (platform != "emery")
+        },
+        {
+          "key": keys.ColorBackground,
+          "type": "color",
+          "default": 0x000000,
+          "title": "Background color",
+          "color": deviceHasColorScreen
+        },
+        {
+          "key": keys.ColorSnake,
+          "type": "color",
+          "default": 0xffffff,
+          "title": "Time color",
+          "color": deviceHasColorScreen
+        },
+        {
+          "key": keys.ColorText,
+          "type": "color",
+          "default": 0xaaaaaa,
+          "title": "Text color",
+          "color": true,
+          "visible": deviceHasColorScreen
+        }
+      ]
+    },
+    {
+      "title": "Content",
+      "items": [
+        {
+          "key": keys.DateFormat,
+          "type": "select",
+          "default": 0,
+          "title": "Date format",
+          "options": [
+            {
+              "value": 0,
+              "text": "YYYY-MM-DD"
+            },
+            {
+              "value": 1,
+              "text": "DD.MM.YYYY"
+            },
+            {
+              "value": 2,
+              "text": "DD/MM/YYYY"
+            },
+            {
+              "value": 3,
+              "text": "MM/DD/YYYY"
+            },
+            {
+              "value": 4,
+              "text": "Day DD Mon"
+            },
+            {
+              "value": 5,
+              "text": "Day, DD. Mon"
+            },
+            {
+              "value": 6,
+              "text": "Day Mon DD"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+}
 
 
 function generateUrl() {
@@ -103,7 +107,7 @@ function generateUrl() {
   }
 
   content = content.replace('{{DATA}}', JSON.stringify(data));
-  content = content.replace('{{OPTIONS}}', JSON.stringify(options));
+  content = content.replace('{{OPTIONS}}', JSON.stringify(getOptions()));
 
   var url = 'data:text/html;charset=utf-8,' + encodeURIComponent(content);
 
