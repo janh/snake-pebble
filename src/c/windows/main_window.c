@@ -75,7 +75,17 @@ static void update_date_layer(tm *time) {
 
 static void update_content_layer() {
   ContentLayerItem left = { &CHARACTER_FOOT, data_get_steps() };
-  ContentLayerItem right = { &CHARACTER_HEART, data_get_heart_rate() };
+
+  ContentLayerItem right;
+
+  if (data_device_has_heart_rate_sensor()) {
+    right.icon = &CHARACTER_HEART;
+    right.value = data_get_heart_rate();
+  } else {
+    right.icon = data_get_battery_charging() ? &CHARACTER_CHARGING : &CHARACTER_BATTERY;
+    right.value = data_get_battery_percent();
+  }
+
   content_layer_set_data(s_content_layer, left, right);
 }
 
@@ -120,7 +130,16 @@ static void settings_changed() {
 
 static void date_content_animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
-  data_events_init(DATA_TYPE_STEPS | DATA_TYPE_HEART_RATE, data_changed);
+
+  DataTypeMask data_types = DATA_TYPE_STEPS;
+
+  if (data_device_has_heart_rate_sensor()) {
+    data_types |= DATA_TYPE_HEART_RATE;
+  } else {
+    data_types |= DATA_TYPE_BATTERY;
+  }
+
+  data_events_init(data_types, data_changed);
 }
 
 static void snake_animation_complete() {
