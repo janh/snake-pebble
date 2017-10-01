@@ -76,6 +76,10 @@ static void update_date_layer(tm *time) {
 static ContentLayerItem get_content_layer_item(ContentType type) {
   ContentLayerItem item;
 
+  int32_t heart_rate;
+  uint8_t battery_percent;
+  bool battery_charging;
+
   switch (type) {
 
   case CONTENT_STEPS:
@@ -91,6 +95,19 @@ static ContentLayerItem get_content_layer_item(ContentType type) {
   case CONTENT_BATTERY:
     item.icon = data_get_battery_charging() ? &CHARACTER_CHARGING : &CHARACTER_BATTERY;
     item.value = data_get_battery_percent();
+    break;
+
+  case CONTENT_HEART_RATE_BATTERY:
+    heart_rate = data_get_heart_rate();
+    battery_percent = data_get_battery_percent();
+    battery_charging = data_get_battery_charging();
+    if (battery_charging || battery_percent <= 15 || heart_rate <= 0) {
+      item.icon = battery_charging ? &CHARACTER_CHARGING : &CHARACTER_BATTERY;
+      item.value = battery_percent;
+    } else {
+      item.icon = &CHARACTER_HEART;
+      item.value = heart_rate;
+    }
     break;
 
   }
@@ -145,10 +162,12 @@ static void update_events() {
   if (content_left == CONTENT_STEPS || content_right == CONTENT_STEPS) {
     data_types |= DATA_TYPE_STEPS;
   }
-  if (content_left == CONTENT_HEART_RATE || content_right == CONTENT_HEART_RATE) {
+  if (content_left == CONTENT_HEART_RATE || content_right == CONTENT_HEART_RATE
+      || content_left == CONTENT_HEART_RATE_BATTERY || content_right == CONTENT_HEART_RATE_BATTERY) {
     data_types |= DATA_TYPE_HEART_RATE;
   }
-  if (content_left == CONTENT_BATTERY || content_right == CONTENT_BATTERY) {
+  if (content_left == CONTENT_BATTERY || content_right == CONTENT_BATTERY
+      || content_left == CONTENT_HEART_RATE_BATTERY || content_right == CONTENT_HEART_RATE_BATTERY) {
     data_types |= DATA_TYPE_BATTERY;
   }
 

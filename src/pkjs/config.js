@@ -109,6 +109,10 @@ function getOptions() {
               "text": "Heart rate"
             },
             {
+              "value": 3,
+              "text": "Heart rate / Battery level"
+            },
+            {
               "value": 2,
               "text": "Battery level"
             }
@@ -117,7 +121,7 @@ function getOptions() {
         {
           "key": keys.ContentRight,
           "type": "select",
-          "default": deviceHasHeartRateSensor ? 1 : 2,
+          "default": deviceHasHeartRateSensor ? 3 : 2,
           "title": "Bottom right",
           "options": [
             {
@@ -127,6 +131,10 @@ function getOptions() {
             {
               "value": 1,
               "text": "Heart rate"
+            },
+            {
+              "value": 3,
+              "text": "Heart rate / Battery level"
             },
             {
               "value": 2,
