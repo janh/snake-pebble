@@ -73,19 +73,34 @@ static void update_date_layer(tm *time) {
   date_layer_set_date(s_date_layer, 1900 + time->tm_year, time->tm_mon + 1, time->tm_mday, time->tm_wday);
 }
 
-static void update_content_layer() {
-  ContentLayerItem left = { &CHARACTER_FOOT, data_get_steps() };
+static ContentLayerItem get_content_layer_item(ContentType type) {
+  ContentLayerItem item;
 
-  ContentLayerItem right;
+  switch (type) {
 
-  if (data_device_has_heart_rate_sensor()) {
-    right.icon = &CHARACTER_HEART;
-    right.value = data_get_heart_rate();
-  } else {
-    right.icon = data_get_battery_charging() ? &CHARACTER_CHARGING : &CHARACTER_BATTERY;
-    right.value = data_get_battery_percent();
+  case CONTENT_STEPS:
+    item.icon = &CHARACTER_FOOT;
+    item.value = data_get_steps();
+    break;
+
+  case CONTENT_HEART_RATE:
+    item.icon = &CHARACTER_HEART;
+    item.value = data_get_heart_rate();
+    break;
+
+  case CONTENT_BATTERY:
+    item.icon = data_get_battery_charging() ? &CHARACTER_CHARGING : &CHARACTER_BATTERY;
+    item.value = data_get_battery_percent();
+    break;
+
   }
 
+  return item;
+}
+
+static void update_content_layer() {
+  ContentLayerItem left = get_content_layer_item(settings_get_content_left());
+  ContentLayerItem right = get_content_layer_item(settings_get_content_right());
   content_layer_set_data(s_content_layer, left, right);
 }
 
@@ -122,24 +137,37 @@ static void data_changed(DataTypeMask types) {
   update_content_layer();
 }
 
+static void update_events() {
+  ContentType content_left = settings_get_content_left();
+  ContentType content_right = settings_get_content_right();
+
+  DataTypeMask data_types = 0;
+  if (content_left == CONTENT_STEPS || content_right == CONTENT_STEPS) {
+    data_types |= DATA_TYPE_STEPS;
+  }
+  if (content_left == CONTENT_HEART_RATE || content_right == CONTENT_HEART_RATE) {
+    data_types |= DATA_TYPE_HEART_RATE;
+  }
+  if (content_left == CONTENT_BATTERY || content_right == CONTENT_BATTERY) {
+    data_types |= DATA_TYPE_BATTERY;
+  }
+
+  data_events_init(data_types, data_changed);
+}
+
 static void settings_changed() {
   window_set_background_color(s_main_window, settings_get_color_background());
+
+  update_events();
+  update_content_layer();
+
   Layer *window_layer = window_get_root_layer(s_main_window);
   layer_mark_dirty(window_layer);
 }
 
 static void date_content_animation_complete() {
   tick_timer_service_subscribe(YEAR_UNIT | MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT, tick_handler);
-
-  DataTypeMask data_types = DATA_TYPE_STEPS;
-
-  if (data_device_has_heart_rate_sensor()) {
-    data_types |= DATA_TYPE_HEART_RATE;
-  } else {
-    data_types |= DATA_TYPE_BATTERY;
-  }
-
-  data_events_init(data_types, data_changed);
+  update_events();
 }
 
 static void snake_animation_complete() {

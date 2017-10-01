@@ -24,6 +24,13 @@ typedef enum {
 } DateFormat;
 
 
+typedef enum {
+  CONTENT_STEPS = 0,
+  CONTENT_HEART_RATE = 1,
+  CONTENT_BATTERY = 2,
+} ContentType;
+
+
 typedef void (*SettingsChanged)();
 
 GColor settings_get_color_background();
@@ -31,6 +38,8 @@ GColor settings_get_color_snake();
 GColor settings_get_color_text();
 DateFormat settings_get_date_format();
 bool settings_get_graphics_high_resolution();
+ContentType settings_get_content_left();
+ContentType settings_get_content_right();
 
 void settings_set_callback(SettingsChanged callback);
 void settings_init();

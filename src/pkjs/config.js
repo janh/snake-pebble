@@ -13,8 +13,12 @@ var keys = require('message_keys');
 function getOptions() {
   var watchInfo = Pebble.getActiveWatchInfo();
   var platform = watchInfo.platform;
+  var model = watchInfo.model;
 
   var deviceHasColorScreen = (platform != "aplite" && platform != "diorite");
+
+  var deviceHasHeartRateSensor = (model == "qemu_platform_diorite" || model.substr(0, 11) == "pebble_2_hr"
+                                  || model == "qemu_platform_emery" || model.substr(0, 13) == "pebble_time_2");
 
   return [
     {
@@ -87,6 +91,46 @@ function getOptions() {
             {
               "value": 6,
               "text": "Day Mon DD"
+            }
+          ]
+        },
+        {
+          "key": keys.ContentLeft,
+          "type": "select",
+          "default": 0,
+          "title": "Bottom left",
+          "options": [
+            {
+              "value": 0,
+              "text": "Step count"
+            },
+            {
+              "value": 1,
+              "text": "Heart rate"
+            },
+            {
+              "value": 2,
+              "text": "Battery level"
+            }
+          ]
+        },
+        {
+          "key": keys.ContentRight,
+          "type": "select",
+          "default": deviceHasHeartRateSensor ? 1 : 2,
+          "title": "Bottom right",
+          "options": [
+            {
+              "value": 0,
+              "text": "Step count"
+            },
+            {
+              "value": 1,
+              "text": "Heart rate"
+            },
+            {
+              "value": 2,
+              "text": "Battery level"
             }
           ]
         }

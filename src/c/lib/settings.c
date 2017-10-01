@@ -8,6 +8,8 @@
 
 #include "settings.h"
 
+#include "data.h"
+
 
 static SettingsChanged s_callback;
 
@@ -18,6 +20,9 @@ static int32_t s_color_text;
 static int32_t s_date_format;
 
 static bool s_graphics_high_resolution;
+
+static int32_t s_content_left;
+static int32_t s_content_right;
 
 
 GColor settings_get_color_background() {
@@ -40,6 +45,14 @@ bool settings_get_graphics_high_resolution() {
   return s_graphics_high_resolution;
 }
 
+ContentType settings_get_content_left() {
+  return s_content_left;
+}
+
+ContentType settings_get_content_right() {
+  return s_content_right;
+}
+
 
 static void save() {
   persist_write_int(MESSAGE_KEY_ColorBackground, s_color_background);
@@ -47,6 +60,8 @@ static void save() {
   persist_write_int(MESSAGE_KEY_ColorText, s_color_text);
   persist_write_int(MESSAGE_KEY_DateFormat, s_date_format);
   persist_write_bool(MESSAGE_KEY_GraphicsHighResolution, s_graphics_high_resolution);
+  persist_write_int(MESSAGE_KEY_ContentLeft, s_content_left);
+  persist_write_int(MESSAGE_KEY_ContentRight, s_content_right);
 }
 
 static int read_int(uint32_t key, int32_t fallback) {
@@ -71,6 +86,8 @@ static void load() {
   s_color_text = read_int(MESSAGE_KEY_ColorText, 0xaaaaaa);
   s_date_format = read_int(MESSAGE_KEY_DateFormat, DATE_FORMAT_YYYY_MM_DD_HYPHEN);
   s_graphics_high_resolution = read_bool(MESSAGE_KEY_GraphicsHighResolution, true);
+  s_content_left = read_int(MESSAGE_KEY_ContentLeft, CONTENT_STEPS);
+  s_content_right = read_int(MESSAGE_KEY_ContentRight, data_device_has_heart_rate_sensor() ? CONTENT_HEART_RATE : CONTENT_BATTERY);
 }
 
 
@@ -98,6 +115,16 @@ static void inbox_received_handler(DictionaryIterator *iterator, void *context) 
   Tuple *graphics_high_resolution_tuple = dict_find(iterator, MESSAGE_KEY_GraphicsHighResolution);
   if (graphics_high_resolution_tuple) {
     s_graphics_high_resolution = (graphics_high_resolution_tuple->value->int16 > 0);
+  }
+
+  Tuple *content_left_tuple = dict_find(iterator, MESSAGE_KEY_ContentLeft);
+  if (content_left_tuple) {
+    s_content_left = content_left_tuple->value->int32;
+  }
+
+  Tuple *content_right_tuple = dict_find(iterator, MESSAGE_KEY_ContentRight);
+  if (content_right_tuple) {
+    s_content_right = content_right_tuple->value->int32;
   }
 
   save();
