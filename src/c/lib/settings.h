@@ -29,6 +29,7 @@ typedef enum {
   CONTENT_HEART_RATE = 1,
   CONTENT_BATTERY = 2,
   CONTENT_HEART_RATE_BATTERY = 3,
+  CONTENT_DAY_OF_YEAR = 4,
 } ContentType;
 
 

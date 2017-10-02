@@ -20,6 +20,8 @@ function getOptions() {
   var deviceHasHeartRateSensor = (model == "qemu_platform_diorite" || model.substr(0, 11) == "pebble_2_hr"
                                   || model == "qemu_platform_emery" || model.substr(0, 13) == "pebble_time_2");
 
+  var deviceSupportsHealth = (platform != "aplite");
+
   return [
     {
       "title": "Appearance",
@@ -97,7 +99,7 @@ function getOptions() {
         {
           "key": keys.ContentLeft,
           "type": "select",
-          "default": 0,
+          "default": deviceSupportsHealth ? 0 : 4,
           "title": "Bottom left",
           "options": [
             {
@@ -115,6 +117,10 @@ function getOptions() {
             {
               "value": 2,
               "text": "Battery level"
+            },
+            {
+              "value": 4,
+              "text": "Day of year"
             }
           ]
         },
@@ -139,6 +145,10 @@ function getOptions() {
             {
               "value": 2,
               "text": "Battery level"
+            },
+            {
+              "value": 4,
+              "text": "Day of year"
             }
           ]
         }

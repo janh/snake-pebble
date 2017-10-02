@@ -80,6 +80,9 @@ static ContentLayerItem get_content_layer_item(ContentType type) {
   uint8_t battery_percent;
   bool battery_charging;
 
+  time_t timestamp;
+  tm *timeinfo;
+
   switch (type) {
 
   case CONTENT_STEPS:
@@ -108,6 +111,13 @@ static ContentLayerItem get_content_layer_item(ContentType type) {
       item.icon = &CHARACTER_HEART;
       item.value = heart_rate;
     }
+    break;
+
+  case CONTENT_DAY_OF_YEAR:
+    timestamp = time(NULL) + 2;
+    timeinfo = localtime(&timestamp);
+    item.icon = &CHARACTER_CALENDAR;
+    item.value = timeinfo->tm_yday + 1;
     break;
 
   }
@@ -148,6 +158,13 @@ static void window_load(Window *window) {
 
 static void tick_handler(tm *tick_time, TimeUnits units_changed) {
   update_date_layer(tick_time);
+
+  ContentType content_left = settings_get_content_left();
+  ContentType content_right = settings_get_content_right();
+
+  if (content_left == CONTENT_DAY_OF_YEAR || content_right == CONTENT_DAY_OF_YEAR) {
+    update_content_layer();
+  }
 }
 
 static void data_changed(DataTypeMask types) {

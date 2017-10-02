@@ -86,7 +86,7 @@ static void load() {
   s_color_text = read_int(MESSAGE_KEY_ColorText, 0xaaaaaa);
   s_date_format = read_int(MESSAGE_KEY_DateFormat, DATE_FORMAT_YYYY_MM_DD_HYPHEN);
   s_graphics_high_resolution = read_bool(MESSAGE_KEY_GraphicsHighResolution, true);
-  s_content_left = read_int(MESSAGE_KEY_ContentLeft, CONTENT_STEPS);
+  s_content_left = read_int(MESSAGE_KEY_ContentLeft, PBL_IF_HEALTH_ELSE(CONTENT_STEPS, CONTENT_DAY_OF_YEAR));
   s_content_right = read_int(MESSAGE_KEY_ContentRight, data_device_has_heart_rate_sensor() ? CONTENT_HEART_RATE_BATTERY : CONTENT_BATTERY);
 }
 
