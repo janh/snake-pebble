@@ -19,7 +19,7 @@
 #define CHARACTER_ROW_ITEM_2X(row,i) row & (1 << ((i < 8) ? 7-i : 8+15-i))
 
 
-#define CHARACTER_COUNT 71
+#define CHARACTER_COUNT 72
 #define INDEX_NUMBERS_START 0
 #define INDEX_LETTERS_CAPITAL_START 10
 #define INDEX_LETTERS_START 36
@@ -184,6 +184,7 @@ const Character CHARACTER_HEART = CHARACTER(5, INDEX_ICONS_START + 0);
 const Character CHARACTER_FOOT = CHARACTER(5, INDEX_ICONS_START + 1);
 const Character CHARACTER_BATTERY = CHARACTER(5, INDEX_ICONS_START + 2);
 const Character CHARACTER_CHARGING = CHARACTER(5, INDEX_ICONS_START + 3);
+const Character CHARACTER_CALENDAR = CHARACTER(5, INDEX_ICONS_START + 4);
 
 
 static void load_resource(uint32_t id, uint8_t *buffer, size_t length) {
