@@ -208,7 +208,7 @@ static void graphics_draw_scaled_rect(GContext *ctx, GPoint pos, GPoint coords) 
   graphics_fill_rect(ctx, rect, 0, GCornerNone);
 }
 
-void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, int16_t min, int16_t max) {
+static void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter data, int16_t min, int16_t max) {
   if (!s_loaded) {
     load_character_data();
   }
@@ -305,18 +305,6 @@ void graphics_draw_character_array_right(GContext *ctx, GPoint pos, ExtendedChar
     const Character *character_next = (i - 1 > 0) ? data[i-2].character : NULL;
     pos.x -= graphics_get_character_spacing(character_next, item.character);
   }
-}
-
-int16_t graphics_get_character_array_width(ExtendedCharacter *data, size_t length) {
-  int16_t width = 0;
-  const Character *character = NULL;
-  const Character *character_prev = NULL;
-  for (size_t i = 0; i < length; i++) {
-    character_prev = character;
-    character = data[i].character;
-    width += graphics_get_character_spacing(character_prev, character) + character->width;
-  }
-  return width;
 }
 
 size_t graphics_get_character_array_from_text(ExtendedCharacter *buffer, size_t length, const char *text) {
