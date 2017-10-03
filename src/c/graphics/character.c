@@ -202,9 +202,8 @@ static void load_character_data() {
 }
 
 
-static void graphics_draw_scaled_rect(GContext *ctx, GPoint pos, GPoint coords) {
-  GRect rect = GRect(SIZE_SCALE_FACTOR * (pos.x + coords.x), SIZE_SCALE_FACTOR * (pos.y + coords.y),
-                     SIZE_SCALE_FACTOR, SIZE_SCALE_FACTOR);
+static void graphics_draw_scaled_rect(GContext *ctx, GPoint pos) {
+  GRect rect = GRect(pos.x, pos.y, SIZE_SCALE_FACTOR, SIZE_SCALE_FACTOR);
   graphics_fill_rect(ctx, rect, 0, GCornerNone);
 }
 
@@ -220,43 +219,55 @@ static void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter
   graphics_context_set_stroke_color(ctx, settings_get_color_text());
 
   const Character *character = data.character;
-  Diacritic diacritic = data.diacritic;
-  int diacritics_line = (character->a->r[0] == 0) ? 2 : 0;
 
-  for (int j = 0; j < 11; j++) {
-    if (j >= min && j < max) {
-      GPoint coords = GPoint(0, j);
-
-      if (j == diacritics_line && diacritic != DIACRITIC_NONE) {
-        if (diacritic == DIACRITIC_DIAERESIS_UMLAUT) {
-          int inset = (character->width - 1) / 2 - 1;
-          coords.x = 0 + inset;
-          graphics_draw_scaled_rect(ctx, pos, coords);
-          coords.x = character->width - 1 - inset;
-          graphics_draw_scaled_rect(ctx, pos, coords);
-        }
-      } else if (j > 0) {
-        if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
-          for (int k = 0; k < 2; k++) {
-            CharacterRow2X row = character->b->r[SIZE_SCALE_FACTOR * (j-1) + k];
-            for (uint16_t i = 0; i < SIZE_SCALE_FACTOR * character->width; i++) {
-              if (CHARACTER_ROW_ITEM_2X(row, i)) {
-                GPoint point = GPoint(SIZE_SCALE_FACTOR * pos.x + i, SIZE_SCALE_FACTOR * (pos.y + coords.y) + k);
-                graphics_draw_pixel(ctx, point);
-              }
-            }
-          }
-        } else {
-          CharacterRow row = character->a->r[j-1];
-          for (uint8_t i = 0; i < character->width; i++) {
-            if (CHARACTER_ROW_ITEM(row, i)) {
-              coords.x = i;
-              graphics_draw_scaled_rect(ctx, pos, coords);
-            }
+  // draw character
+  if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
+    for (int16_t j = 0; j < 22; j++) {
+      if (j >= 2 && j >= 2*min && j < 2*max) {
+        CharacterRow2X row = character->b->r[j-2];
+        for (int16_t i = 0; i < 2 * character->width; i++) {
+          if (CHARACTER_ROW_ITEM_2X(row, i)) {
+            GPoint point = GPoint(pos.x + i, pos.y + j);
+            graphics_draw_pixel(ctx, point);
           }
         }
       }
+    }
+  } else {
+    for (int j = 0; j < 11; j++) {
+      if (j >= 1 && j >= min && j < max) {
+        CharacterRow row = character->a->r[j-1];
+        for (uint8_t i = 0; i < character->width; i++) {
+          if (CHARACTER_ROW_ITEM(row, i)) {
+            GPoint point = GPoint(pos.x + SIZE_SCALE_FACTOR * i, pos.y + SIZE_SCALE_FACTOR * j);
+            graphics_draw_scaled_rect(ctx, point);
+          }
+        }
+      }
+    }
+  }
 
+  // draw diacritic
+  Diacritic diacritic = data.diacritic;
+  int diacritics_line = (character->a->r[0] == 0) ? 2 : 0;
+  if (diacritics_line >= min && diacritics_line < max && diacritic != DIACRITIC_NONE) {
+    if (diacritic == DIACRITIC_DIAERESIS_UMLAUT) {
+      int16_t width = SIZE_SCALE_FACTOR * character->width;
+      GPoint point = GPoint(pos.x, pos.y + SIZE_SCALE_FACTOR * diacritics_line);
+
+      graphics_context_set_fill_color(ctx, settings_get_color_background());
+      graphics_fill_rect(ctx, GRect(point.x, point.y, width, SIZE_SCALE_FACTOR), 0, GCornerNone);
+      graphics_context_set_fill_color(ctx, settings_get_color_text());
+
+      int16_t inset = (width - SIZE_SCALE_FACTOR * 3) / 2;
+      if (!settings_get_graphics_high_resolution() || SIZE_SCALE_FACTOR != 2) {
+        inset = (inset % 2 == 0) ? inset : inset - 1;
+      }
+
+      point.x = pos.x + inset;
+      graphics_draw_scaled_rect(ctx, point);
+      point.x = pos.x + width - SIZE_SCALE_FACTOR - inset;
+      graphics_draw_scaled_rect(ctx, point);
     }
   }
 }
@@ -278,18 +289,20 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
     }
 
     if (count <= 1) {
-      return 1;
+      return 1 * SIZE_SCALE_FACTOR;
     }
   }
 
-  return 2;
+  return 2 * SIZE_SCALE_FACTOR;
 }
 
 void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max) {
+  pos.x *= SIZE_SCALE_FACTOR;
+  pos.y *= SIZE_SCALE_FACTOR;
   for (size_t i = 0; i < length; i++) {
     ExtendedCharacter item = data[i];
     graphics_draw_character(ctx, pos, item, min, max);
-    pos.x += item.character->width;
+    pos.x += SIZE_SCALE_FACTOR * item.character->width;
 
     const Character *character_next = (i + 1 < length) ? data[i+1].character : NULL;
     pos.x += graphics_get_character_spacing(item.character, character_next);
@@ -297,9 +310,11 @@ void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter 
 }
 
 void graphics_draw_character_array_right(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max) {
+  pos.x *= SIZE_SCALE_FACTOR;
+  pos.y *= SIZE_SCALE_FACTOR;
   for (size_t i = length; i > 0; i--) {
     ExtendedCharacter item = data[i-1];
-    pos.x -= item.character->width;
+    pos.x -= SIZE_SCALE_FACTOR * item.character->width;
     graphics_draw_character(ctx, pos, item, min, max);
 
     const Character *character_next = (i - 1 > 0) ? data[i-2].character : NULL;
