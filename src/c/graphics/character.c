@@ -278,19 +278,74 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
   }
 
   if (!left->fixed_spacing && !right->fixed_spacing) {
-    uint8_t count = 0;
+    int16_t min = SIZE_SCALE_FACTOR;
 
-    for (size_t i = 0; i < 10; i++) {
-      CharacterRow row_left = left->a->r[i];
-      CharacterRow row_right = right->a->r[i];
-      if (CHARACTER_ROW_ITEM(row_left, left->width-1) && CHARACTER_ROW_ITEM(row_right, 0)) {
-        count++;
+    int16_t dist_left, dist_right, dist, dist_prev, dist_tmp;
+
+    if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
+      for (size_t i = 0; i < 20; i++) {
+        CharacterRow2X row_left = left->b->r[i];
+        CharacterRow2X row_right = right->b->r[i];
+
+        dist_left = 2*left->width;
+        for (int j = 0; j < 2*left->width; j++) {
+          if (CHARACTER_ROW_ITEM_2X(row_left, 2*left->width-1-j)) {
+            dist_left = j;
+            break;
+          }
+        }
+
+        dist_right = 2*right->width;
+        for (int j = 0; j < 2*right->width; j++) {
+          if (CHARACTER_ROW_ITEM_2X(row_right, j)) {
+            dist_right = j;
+            break;
+          }
+        }
+
+        // reduce small spikes with a height of a single row
+        dist_prev = dist;
+        dist = dist_left + dist_right;
+        if (i > 0) {
+          if (dist == dist_prev) {
+            dist_tmp = dist;
+          } else {
+            dist_tmp = ((dist < dist_prev) ? dist : dist_prev) + 1;
+          }
+          if (dist_tmp < min) {
+            min = dist_tmp;
+          }
+        }
+      }
+    } else {
+      for (size_t i = 0; i < 10; i++) {
+        CharacterRow row_left = left->a->r[i];
+        CharacterRow row_right = right->a->r[i];
+
+        dist_left = left->width;
+        for (int j = 0; j < left->width; j++) {
+          if (CHARACTER_ROW_ITEM(row_left, left->width-1-j)) {
+            dist_left = SIZE_SCALE_FACTOR * j;
+            break;
+          }
+        }
+
+        dist_right = right->width;
+        for (int j = 0; j < right->width; j++) {
+          if (CHARACTER_ROW_ITEM(row_right, j)) {
+            dist_right = SIZE_SCALE_FACTOR * j;
+            break;
+          }
+        }
+
+        dist = dist_left + dist_right;
+        if (dist < min) {
+          min = dist;
+        }
       }
     }
 
-    if (count <= 1) {
-      return 1 * SIZE_SCALE_FACTOR;
-    }
+    return 2 * SIZE_SCALE_FACTOR - min;
   }
 
   return 2 * SIZE_SCALE_FACTOR;
