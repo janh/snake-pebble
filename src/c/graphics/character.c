@@ -277,17 +277,22 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
     return 0;
   }
 
+  int16_t dist_left, dist_right, dist;
+
   if (!left->fixed_spacing && !right->fixed_spacing) {
-    int16_t min = SIZE_SCALE_FACTOR;
-
-    int16_t dist_left, dist_right, dist, dist_prev, dist_tmp;
-
     if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
+
+      int16_t min = 2 * (left->width + right->width);
+      int16_t dists[20];
+      int16_t dists_left[20];
+      int16_t dists_right[20];
+
+      // calculate individual distances and minimum distance
       for (size_t i = 0; i < 20; i++) {
         CharacterRow2X row_left = left->b->r[i];
         CharacterRow2X row_right = right->b->r[i];
 
-        dist_left = 2*left->width;
+        dist_left = -1;
         for (int j = 0; j < 2*left->width; j++) {
           if (CHARACTER_ROW_ITEM_2X(row_left, 2*left->width-1-j)) {
             dist_left = j;
@@ -295,7 +300,7 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
           }
         }
 
-        dist_right = 2*right->width;
+        dist_right = -1;
         for (int j = 0; j < 2*right->width; j++) {
           if (CHARACTER_ROW_ITEM_2X(row_right, j)) {
             dist_right = j;
@@ -303,21 +308,66 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
           }
         }
 
-        // reduce small spikes with a height of a single row
-        dist_prev = dist;
-        dist = dist_left + dist_right;
-        if (i > 0) {
-          if (dist == dist_prev) {
-            dist_tmp = dist;
-          } else {
-            dist_tmp = ((dist < dist_prev) ? dist : dist_prev) + 1;
+        if (dist_left >= 0 && dist_right >= 0) {
+          dist = dist_left + dist_right;
+          if (dist < min) {
+            min = dist;
           }
-          if (dist_tmp < min) {
-            min = dist_tmp;
+        } else {
+          dist = -1;
+        }
+
+        dists[i] = dist;
+        dists_left[i] = dist_left;
+        dists_right[i] = dist_right;
+      }
+
+      int16_t sum = 0;
+      int16_t count = 0;
+
+      // calculate sum of distances and count for rows where normalized distance is at most 3
+      for (size_t i = 0; i < 20; i++) {
+        dist = dists[i];
+        if (dist >= 0 && dist - min <= 3) {
+          sum += dist;
+          count++;
+        }
+      }
+
+      // calculate spacing from sum and count
+      if (count > 0) {
+        sum /= count;
+        if (count <= 2) {
+          sum += 1;
+        }
+      }
+      int16_t space = (sum <= 2) ? 4 - sum : 2;
+
+      // ensure there is enough distance in the end, also on adjacent lines
+      for (size_t i = 0; i < 20; i++) {
+        if (dists[i] >= 0 && dists[i] + space < 3) {
+          space++;
+        }
+        if (i > 0) {
+          if (dists_left[i-1] >= 0 && dists_right[i] >= 0) {
+            if (dists_left[i-1] + dists_right[i] + space < 3) {
+              space++;
+            }
+          }
+          if (dists_left[i] >= 0 && dists_right[i-1] >= 0) {
+            if (dists_left[i] + dists_right[i-1] + space < 3) {
+              space++;
+            }
           }
         }
       }
+
+      return space;
+
     } else {
+
+      int16_t min = SIZE_SCALE_FACTOR;
+
       for (size_t i = 0; i < 10; i++) {
         CharacterRow row_left = left->a->r[i];
         CharacterRow row_right = right->a->r[i];
@@ -343,9 +393,10 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
           min = dist;
         }
       }
-    }
 
-    return 2 * SIZE_SCALE_FACTOR - min;
+      return 2 * SIZE_SCALE_FACTOR - min;
+
+    }
   }
 
   return 2 * SIZE_SCALE_FACTOR;
