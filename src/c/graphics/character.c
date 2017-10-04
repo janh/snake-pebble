@@ -13,7 +13,7 @@
 #include "../lib/sizes.h"
 
 
-#define CHARACTER(length,fixed_spacing,index) {length, fixed_spacing, &s_character_data[index], &s_character_data_2x[index]}
+#define CHARACTER(length,length_2x,fixed_spacing,index) {length, length_2x, fixed_spacing, &s_character_data[index], &s_character_data_2x[index]}
 
 #define CHARACTER_ROW_ITEM(row,i) row & (1 << (7 - (i)))
 #define CHARACTER_ROW_ITEM_2X(row,i) row & (1 << ((i < 8) ? 7-(i) : 8+15-(i)))
@@ -32,16 +32,16 @@ static CharacterData s_character_data[CHARACTER_COUNT];
 static CharacterData2X s_character_data_2x[CHARACTER_COUNT];
 
 
-const Character CHARACTER_0 = CHARACTER(5, true, INDEX_NUMBERS_START + 0);
-const Character CHARACTER_1 = CHARACTER(5, true, INDEX_NUMBERS_START + 1);
-const Character CHARACTER_2 = CHARACTER(5, true, INDEX_NUMBERS_START + 2);
-const Character CHARACTER_3 = CHARACTER(5, true, INDEX_NUMBERS_START + 3);
-const Character CHARACTER_4 = CHARACTER(5, true, INDEX_NUMBERS_START + 4);
-const Character CHARACTER_5 = CHARACTER(5, true, INDEX_NUMBERS_START + 5);
-const Character CHARACTER_6 = CHARACTER(5, true, INDEX_NUMBERS_START + 6);
-const Character CHARACTER_7 = CHARACTER(5, true, INDEX_NUMBERS_START + 7);
-const Character CHARACTER_8 = CHARACTER(5, true, INDEX_NUMBERS_START + 8);
-const Character CHARACTER_9 = CHARACTER(5, true, INDEX_NUMBERS_START + 9);
+const Character CHARACTER_0 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 0);
+const Character CHARACTER_1 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 1);
+const Character CHARACTER_2 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 2);
+const Character CHARACTER_3 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 3);
+const Character CHARACTER_4 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 4);
+const Character CHARACTER_5 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 5);
+const Character CHARACTER_6 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 6);
+const Character CHARACTER_7 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 7);
+const Character CHARACTER_8 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 8);
+const Character CHARACTER_9 = CHARACTER(5, 10, true, INDEX_NUMBERS_START + 9);
 
 const Character *CHARACTER_NUMBERS[10] = {&CHARACTER_0,
                                           &CHARACTER_1,
@@ -55,47 +55,47 @@ const Character *CHARACTER_NUMBERS[10] = {&CHARACTER_0,
                                           &CHARACTER_9};
 
 
-const Character CHARACTER_HYPHEN = CHARACTER(3, true, INDEX_PUNCTUATION_START + 0);
+const Character CHARACTER_HYPHEN = CHARACTER(3, 6, true, INDEX_PUNCTUATION_START + 0);
 
-const Character CHARACTER_DOT = CHARACTER(3, true, INDEX_PUNCTUATION_START + 1);
-const Character CHARACTER_DOT_NARROW = CHARACTER(1, true, INDEX_PUNCTUATION_START + 1);
-const Character CHARACTER_DOT_WIDE = CHARACTER(5, true, INDEX_PUNCTUATION_START + 1);
+const Character CHARACTER_DOT = CHARACTER(3, 6, true, INDEX_PUNCTUATION_START + 1);
+const Character CHARACTER_DOT_NARROW = CHARACTER(1, 2, true, INDEX_PUNCTUATION_START + 1);
+const Character CHARACTER_DOT_WIDE = CHARACTER(5, 10, true, INDEX_PUNCTUATION_START + 1);
 
-const Character CHARACTER_COMMA_NARROW = CHARACTER(1, true, INDEX_PUNCTUATION_START + 2);
+const Character CHARACTER_COMMA_NARROW = CHARACTER(1, 2, true, INDEX_PUNCTUATION_START + 2);
 
-const Character CHARACTER_SLASH = CHARACTER(3, true, INDEX_PUNCTUATION_START + 3);
+const Character CHARACTER_SLASH = CHARACTER(3, 6, true, INDEX_PUNCTUATION_START + 3);
 
-const Character CHARACTER_SPACE = CHARACTER(3, true, INDEX_PUNCTUATION_START + 4);
-const Character CHARACTER_SPACE_NARROW = CHARACTER(2, true, INDEX_PUNCTUATION_START + 4);
-const Character CHARACTER_SPACE_WIDE = CHARACTER(5, true, INDEX_PUNCTUATION_START + 4);
+const Character CHARACTER_SPACE = CHARACTER(3, 6, true, INDEX_PUNCTUATION_START + 4);
+const Character CHARACTER_SPACE_NARROW = CHARACTER(2, 4, true, INDEX_PUNCTUATION_START + 4);
+const Character CHARACTER_SPACE_WIDE = CHARACTER(5, 10, true, INDEX_PUNCTUATION_START + 4);
 
 
-const Character CHARACTER_A = CHARACTER(4, false, INDEX_LETTERS_START + 0);
-const Character CHARACTER_B = CHARACTER(4, false, INDEX_LETTERS_START + 1);
-const Character CHARACTER_C = CHARACTER(4, false, INDEX_LETTERS_START + 2);
-const Character CHARACTER_D = CHARACTER(4, false, INDEX_LETTERS_START + 3);
-const Character CHARACTER_E = CHARACTER(4, false, INDEX_LETTERS_START + 4);
-const Character CHARACTER_F = CHARACTER(4, false, INDEX_LETTERS_START + 5);
-const Character CHARACTER_G = CHARACTER(4, false, INDEX_LETTERS_START + 6);
-const Character CHARACTER_H = CHARACTER(4, false, INDEX_LETTERS_START + 7);
-const Character CHARACTER_I = CHARACTER(1, false, INDEX_LETTERS_START + 8);
-const Character CHARACTER_J = CHARACTER(2, false, INDEX_LETTERS_START + 9);
-const Character CHARACTER_K = CHARACTER(4, false, INDEX_LETTERS_START + 10);
-const Character CHARACTER_L = CHARACTER(2, false, INDEX_LETTERS_START + 11);
-const Character CHARACTER_M = CHARACTER(5, false, INDEX_LETTERS_START + 12);
-const Character CHARACTER_N = CHARACTER(4, false, INDEX_LETTERS_START + 13);
-const Character CHARACTER_O = CHARACTER(4, false, INDEX_LETTERS_START + 14);
-const Character CHARACTER_P = CHARACTER(4, false, INDEX_LETTERS_START + 15);
-const Character CHARACTER_Q = CHARACTER(4, false, INDEX_LETTERS_START + 16);
-const Character CHARACTER_R = CHARACTER(4, false, INDEX_LETTERS_START + 17);
-const Character CHARACTER_S = CHARACTER(4, false, INDEX_LETTERS_START + 18);
-const Character CHARACTER_T = CHARACTER(4, false, INDEX_LETTERS_START + 19);
-const Character CHARACTER_U = CHARACTER(4, false, INDEX_LETTERS_START + 20);
-const Character CHARACTER_V = CHARACTER(5, false, INDEX_LETTERS_START + 21);
-const Character CHARACTER_W = CHARACTER(5, false, INDEX_LETTERS_START + 22);
-const Character CHARACTER_X = CHARACTER(5, false, INDEX_LETTERS_START + 23);
-const Character CHARACTER_Y = CHARACTER(4, false, INDEX_LETTERS_START + 24);
-const Character CHARACTER_Z = CHARACTER(4, false, INDEX_LETTERS_START + 25);
+const Character CHARACTER_A = CHARACTER(4, 8, false, INDEX_LETTERS_START + 0);
+const Character CHARACTER_B = CHARACTER(4, 8, false, INDEX_LETTERS_START + 1);
+const Character CHARACTER_C = CHARACTER(4, 8, false, INDEX_LETTERS_START + 2);
+const Character CHARACTER_D = CHARACTER(4, 8, false, INDEX_LETTERS_START + 3);
+const Character CHARACTER_E = CHARACTER(4, 8, false, INDEX_LETTERS_START + 4);
+const Character CHARACTER_F = CHARACTER(4, 8, false, INDEX_LETTERS_START + 5);
+const Character CHARACTER_G = CHARACTER(4, 8, false, INDEX_LETTERS_START + 6);
+const Character CHARACTER_H = CHARACTER(4, 8, false, INDEX_LETTERS_START + 7);
+const Character CHARACTER_I = CHARACTER(1, 2, false, INDEX_LETTERS_START + 8);
+const Character CHARACTER_J = CHARACTER(2, 4, false, INDEX_LETTERS_START + 9);
+const Character CHARACTER_K = CHARACTER(4, 8, false, INDEX_LETTERS_START + 10);
+const Character CHARACTER_L = CHARACTER(2, 4, false, INDEX_LETTERS_START + 11);
+const Character CHARACTER_M = CHARACTER(5, 10, false, INDEX_LETTERS_START + 12);
+const Character CHARACTER_N = CHARACTER(4, 8, false, INDEX_LETTERS_START + 13);
+const Character CHARACTER_O = CHARACTER(4, 8, false, INDEX_LETTERS_START + 14);
+const Character CHARACTER_P = CHARACTER(4, 8, false, INDEX_LETTERS_START + 15);
+const Character CHARACTER_Q = CHARACTER(4, 8, false, INDEX_LETTERS_START + 16);
+const Character CHARACTER_R = CHARACTER(4, 8, false, INDEX_LETTERS_START + 17);
+const Character CHARACTER_S = CHARACTER(4, 8, false, INDEX_LETTERS_START + 18);
+const Character CHARACTER_T = CHARACTER(4, 8, false, INDEX_LETTERS_START + 19);
+const Character CHARACTER_U = CHARACTER(4, 8, false, INDEX_LETTERS_START + 20);
+const Character CHARACTER_V = CHARACTER(5, 10, false, INDEX_LETTERS_START + 21);
+const Character CHARACTER_W = CHARACTER(5, 10, false, INDEX_LETTERS_START + 22);
+const Character CHARACTER_X = CHARACTER(5, 10, false, INDEX_LETTERS_START + 23);
+const Character CHARACTER_Y = CHARACTER(4, 8, false, INDEX_LETTERS_START + 24);
+const Character CHARACTER_Z = CHARACTER(4, 8, false, INDEX_LETTERS_START + 25);
 
 const Character *CHARACTER_LETTERS[26] = {&CHARACTER_A,
                                           &CHARACTER_B,
@@ -125,32 +125,32 @@ const Character *CHARACTER_LETTERS[26] = {&CHARACTER_A,
                                           &CHARACTER_Z};
 
 
-const Character CHARACTER_CAPITAL_A = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 0);
-const Character CHARACTER_CAPITAL_B = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 1);
-const Character CHARACTER_CAPITAL_C = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 2);
-const Character CHARACTER_CAPITAL_D = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 3);
-const Character CHARACTER_CAPITAL_E = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 4);
-const Character CHARACTER_CAPITAL_F = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 5);
-const Character CHARACTER_CAPITAL_G = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 6);
-const Character CHARACTER_CAPITAL_H = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 7);
-const Character CHARACTER_CAPITAL_I = CHARACTER(3, false, INDEX_LETTERS_CAPITAL_START + 8);
-const Character CHARACTER_CAPITAL_J = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 9);
-const Character CHARACTER_CAPITAL_K = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 10);
-const Character CHARACTER_CAPITAL_L = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 11);
-const Character CHARACTER_CAPITAL_M = CHARACTER(7, false, INDEX_LETTERS_CAPITAL_START + 12);
-const Character CHARACTER_CAPITAL_N = CHARACTER(6, false, INDEX_LETTERS_CAPITAL_START + 13);
-const Character CHARACTER_CAPITAL_O = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 14);
-const Character CHARACTER_CAPITAL_P = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 15);
-const Character CHARACTER_CAPITAL_Q = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 16);
-const Character CHARACTER_CAPITAL_R = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 17);
-const Character CHARACTER_CAPITAL_S = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 18);
-const Character CHARACTER_CAPITAL_T = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 19);
-const Character CHARACTER_CAPITAL_U = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 20);
-const Character CHARACTER_CAPITAL_V = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 21);
-const Character CHARACTER_CAPITAL_W = CHARACTER(7, false, INDEX_LETTERS_CAPITAL_START + 22);
-const Character CHARACTER_CAPITAL_X = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 23);
-const Character CHARACTER_CAPITAL_Y = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 24);
-const Character CHARACTER_CAPITAL_Z = CHARACTER(5, false, INDEX_LETTERS_CAPITAL_START + 25);
+const Character CHARACTER_CAPITAL_A = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 0);
+const Character CHARACTER_CAPITAL_B = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 1);
+const Character CHARACTER_CAPITAL_C = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 2);
+const Character CHARACTER_CAPITAL_D = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 3);
+const Character CHARACTER_CAPITAL_E = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 4);
+const Character CHARACTER_CAPITAL_F = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 5);
+const Character CHARACTER_CAPITAL_G = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 6);
+const Character CHARACTER_CAPITAL_H = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 7);
+const Character CHARACTER_CAPITAL_I = CHARACTER(3, 6, false, INDEX_LETTERS_CAPITAL_START + 8);
+const Character CHARACTER_CAPITAL_J = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 9);
+const Character CHARACTER_CAPITAL_K = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 10);
+const Character CHARACTER_CAPITAL_L = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 11);
+const Character CHARACTER_CAPITAL_M = CHARACTER(7, 14, false, INDEX_LETTERS_CAPITAL_START + 12);
+const Character CHARACTER_CAPITAL_N = CHARACTER(6, 12, false, INDEX_LETTERS_CAPITAL_START + 13);
+const Character CHARACTER_CAPITAL_O = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 14);
+const Character CHARACTER_CAPITAL_P = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 15);
+const Character CHARACTER_CAPITAL_Q = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 16);
+const Character CHARACTER_CAPITAL_R = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 17);
+const Character CHARACTER_CAPITAL_S = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 18);
+const Character CHARACTER_CAPITAL_T = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 19);
+const Character CHARACTER_CAPITAL_U = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 20);
+const Character CHARACTER_CAPITAL_V = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 21);
+const Character CHARACTER_CAPITAL_W = CHARACTER(7, 14, false, INDEX_LETTERS_CAPITAL_START + 22);
+const Character CHARACTER_CAPITAL_X = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 23);
+const Character CHARACTER_CAPITAL_Y = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 24);
+const Character CHARACTER_CAPITAL_Z = CHARACTER(5, 10, false, INDEX_LETTERS_CAPITAL_START + 25);
 
 const Character *CHARACTER_CAPITAL_LETTERS[26] = {&CHARACTER_CAPITAL_A,
                                                   &CHARACTER_CAPITAL_B,
@@ -180,11 +180,11 @@ const Character *CHARACTER_CAPITAL_LETTERS[26] = {&CHARACTER_CAPITAL_A,
                                                   &CHARACTER_CAPITAL_Z};
 
 
-const Character CHARACTER_HEART = CHARACTER(5, true, INDEX_ICONS_START + 0);
-const Character CHARACTER_FOOT = CHARACTER(5, true, INDEX_ICONS_START + 1);
-const Character CHARACTER_BATTERY = CHARACTER(5, true, INDEX_ICONS_START + 2);
-const Character CHARACTER_CHARGING = CHARACTER(5, true, INDEX_ICONS_START + 3);
-const Character CHARACTER_CALENDAR = CHARACTER(5, true, INDEX_ICONS_START + 4);
+const Character CHARACTER_HEART = CHARACTER(5, 10, true, INDEX_ICONS_START + 0);
+const Character CHARACTER_FOOT = CHARACTER(5, 10, true, INDEX_ICONS_START + 1);
+const Character CHARACTER_BATTERY = CHARACTER(5, 10, true, INDEX_ICONS_START + 2);
+const Character CHARACTER_CHARGING = CHARACTER(5, 10, true, INDEX_ICONS_START + 3);
+const Character CHARACTER_CALENDAR = CHARACTER(5, 10, true, INDEX_ICONS_START + 4);
 
 
 static void load_resource(uint32_t id, uint8_t *buffer, size_t length) {
@@ -220,12 +220,14 @@ static void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter
 
   const Character *character = data.character;
 
+  bool high_resolution_2x = (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2);
+
   // draw character
-  if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
+  if (high_resolution_2x) {
     for (int16_t j = 0; j < 22; j++) {
       if (j >= 2 && j >= 2*min && j < 2*max) {
         CharacterRow2X row = character->b->r[j-2];
-        for (int16_t i = 0; i < 2 * character->width; i++) {
+        for (int16_t i = 0; i < character->width_2x; i++) {
           if (CHARACTER_ROW_ITEM_2X(row, i)) {
             GPoint point = GPoint(pos.x + i, pos.y + j);
             graphics_draw_pixel(ctx, point);
@@ -252,7 +254,7 @@ static void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter
   int diacritics_line = (character->a->r[0] == 0) ? 2 : 0;
   if (diacritics_line >= min && diacritics_line < max && diacritic != DIACRITIC_NONE) {
     if (diacritic == DIACRITIC_DIAERESIS_UMLAUT) {
-      int16_t width = SIZE_SCALE_FACTOR * character->width;
+      int16_t width = high_resolution_2x ? character->width_2x : SIZE_SCALE_FACTOR * character->width;
       GPoint point = GPoint(pos.x, pos.y + SIZE_SCALE_FACTOR * diacritics_line);
 
       graphics_context_set_fill_color(ctx, settings_get_color_background());
@@ -260,7 +262,7 @@ static void graphics_draw_character(GContext *ctx, GPoint pos, ExtendedCharacter
       graphics_context_set_fill_color(ctx, settings_get_color_text());
 
       int16_t inset = (width - SIZE_SCALE_FACTOR * 3) / 2;
-      if (!settings_get_graphics_high_resolution() || SIZE_SCALE_FACTOR != 2) {
+      if (!high_resolution_2x) {
         inset = (inset % 2 == 0) ? inset : inset - 1;
       }
 
@@ -282,7 +284,7 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
   if (!left->fixed_spacing && !right->fixed_spacing) {
     if (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2) {
 
-      int16_t min = 2 * (left->width + right->width);
+      int16_t min = left->width_2x + right->width_2x;
       int16_t dists[20];
       int16_t dists_left[20];
       int16_t dists_right[20];
@@ -293,15 +295,15 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
         CharacterRow2X row_right = right->b->r[i];
 
         dist_left = -1;
-        for (int j = 0; j < 2*left->width; j++) {
-          if (CHARACTER_ROW_ITEM_2X(row_left, 2*left->width-1-j)) {
+        for (int j = 0; j < left->width_2x; j++) {
+          if (CHARACTER_ROW_ITEM_2X(row_left, left->width_2x-1-j)) {
             dist_left = j;
             break;
           }
         }
 
         dist_right = -1;
-        for (int j = 0; j < 2*right->width; j++) {
+        for (int j = 0; j < right->width_2x; j++) {
           if (CHARACTER_ROW_ITEM_2X(row_right, j)) {
             dist_right = j;
             break;
@@ -403,12 +405,15 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
 }
 
 void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max) {
+  bool high_resolution_2x = (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2);
+
   pos.x *= SIZE_SCALE_FACTOR;
   pos.y *= SIZE_SCALE_FACTOR;
+
   for (size_t i = 0; i < length; i++) {
     ExtendedCharacter item = data[i];
     graphics_draw_character(ctx, pos, item, min, max);
-    pos.x += SIZE_SCALE_FACTOR * item.character->width;
+    pos.x += high_resolution_2x ? item.character->width_2x : SIZE_SCALE_FACTOR * item.character->width;
 
     const Character *character_next = (i + 1 < length) ? data[i+1].character : NULL;
     pos.x += graphics_get_character_spacing(item.character, character_next);
@@ -416,11 +421,14 @@ void graphics_draw_character_array(GContext *ctx, GPoint pos, ExtendedCharacter 
 }
 
 void graphics_draw_character_array_right(GContext *ctx, GPoint pos, ExtendedCharacter *data, size_t length, int16_t min, int16_t max) {
+  bool high_resolution_2x = (settings_get_graphics_high_resolution() && SIZE_SCALE_FACTOR == 2);
+
   pos.x *= SIZE_SCALE_FACTOR;
   pos.y *= SIZE_SCALE_FACTOR;
+
   for (size_t i = length; i > 0; i--) {
     ExtendedCharacter item = data[i-1];
-    pos.x -= SIZE_SCALE_FACTOR * item.character->width;
+    pos.x -= high_resolution_2x ? item.character->width_2x : SIZE_SCALE_FACTOR * item.character->width;
     graphics_draw_character(ctx, pos, item, min, max);
 
     const Character *character_next = (i - 1 > 0) ? data[i-2].character : NULL;

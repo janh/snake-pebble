@@ -24,6 +24,7 @@ typedef struct CharacterData2X {
 
 typedef struct Character {
   uint8_t width;
+  uint8_t width_2x;
   bool fixed_spacing;
   CharacterData *a;
   CharacterData2X *b;
