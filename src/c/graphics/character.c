@@ -324,25 +324,48 @@ static int16_t graphics_get_character_spacing(const Character *left, const Chara
         dists_right[i] = dist_right;
       }
 
+      int16_t dist_last = -1;
       int16_t sum = 0;
       int16_t count = 0;
+      int16_t count_0 = 0;
+      int16_t count_0_max = 0;
+      int16_t count_4plus = 0;
 
-      // calculate sum of distances and count for rows where normalized distance is at most 3
+      // calculate sum of distances and count for rows with normalized distance <= 3,
+      // as well as consecutive number of 0 and total number of rows with distance > 3
       for (size_t i = 0; i < 20; i++) {
+        dist_last = dist;
         dist = dists[i];
         if (dist >= 0 && dist - min <= 3) {
           sum += dist;
           count++;
         }
-      }
-
-      // calculate spacing from sum and count
-      if (count > 0) {
-        sum /= count;
-        if (count <= 2) {
-          sum += 1;
+        if (dist - min == 0) {
+          if (dist_last == 0) {
+            count_0++;
+          } else {
+            count_0 = 1;
+          }
+          if (count_0 > count_0_max) {
+            count_0_max = count_0;
+          }
+        }
+        if (dist - min > 3) {
+          count_4plus++;
         }
       }
+
+      // rounded down average of low distances
+      if (count > 0) {
+        sum /= count;
+      }
+
+      // heuristic to balance out cases with large differences in distances
+      if (sum == min && count_0_max <= 2 && count_4plus > 2) {
+        sum += 1;
+      }
+
+      // set space with lower limit
       int16_t space = (sum <= 2) ? 4 - sum : 2;
 
       // ensure there is enough distance in the end, also on adjacent lines
