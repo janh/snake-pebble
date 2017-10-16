@@ -543,6 +543,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             }
 
             function loaded() {
+                var title = document.querySelector('h1');
+                title.innerText = options.title;
+
                 var form = document.querySelector('form');
                 var fragment = createForm();
                 form.appendChild(fragment);
@@ -556,7 +559,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     </head>
     <body>
 
-        <h1>Snake</h1>
+        <h1></h1>
 
         <form></form>
 

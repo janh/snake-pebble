@@ -22,139 +22,142 @@ function getOptions() {
 
   var deviceSupportsHealth = (platform != "aplite");
 
-  return [
-    {
-      "title": "Appearance",
-      "items": [
-        {
-          "key": keys.GraphicsHighResolution,
-          "type": "checkbox",
-          "default": true,
-          "title": "High resolution graphics",
-          "visible": (platform != "emery")
-        },
-        {
-          "key": keys.ColorBackground,
-          "type": "color",
-          "default": 0x000000,
-          "title": "Background color",
-          "color": deviceHasColorScreen
-        },
-        {
-          "key": keys.ColorSnake,
-          "type": "color",
-          "default": 0xffffff,
-          "title": "Time color",
-          "color": deviceHasColorScreen
-        },
-        {
-          "key": keys.ColorText,
-          "type": "color",
-          "default": 0xaaaaaa,
-          "title": "Text color",
-          "color": true,
-          "visible": deviceHasColorScreen
-        }
-      ]
-    },
-    {
-      "title": "Content",
-      "items": [
-        {
-          "key": keys.DateFormat,
-          "type": "select",
-          "default": 0,
-          "title": "Date format",
-          "options": [
-            {
-              "value": 0,
-              "text": "YYYY-MM-DD"
-            },
-            {
-              "value": 1,
-              "text": "DD.MM.YYYY"
-            },
-            {
-              "value": 2,
-              "text": "DD/MM/YYYY"
-            },
-            {
-              "value": 3,
-              "text": "MM/DD/YYYY"
-            },
-            {
-              "value": 4,
-              "text": "Day DD Mon"
-            },
-            {
-              "value": 5,
-              "text": "Day, DD. Mon"
-            },
-            {
-              "value": 6,
-              "text": "Day Mon DD"
-            }
-          ]
-        },
-        {
-          "key": keys.ContentLeft,
-          "type": "select",
-          "default": deviceSupportsHealth ? 0 : 4,
-          "title": "Bottom left",
-          "options": [
-            {
-              "value": 0,
-              "text": "Step count"
-            },
-            {
-              "value": 1,
-              "text": "Heart rate"
-            },
-            {
-              "value": 3,
-              "text": "Heart rate / Battery level"
-            },
-            {
-              "value": 2,
-              "text": "Battery level"
-            },
-            {
-              "value": 4,
-              "text": "Day of year"
-            }
-          ]
-        },
-        {
-          "key": keys.ContentRight,
-          "type": "select",
-          "default": deviceHasHeartRateSensor ? 3 : 2,
-          "title": "Bottom right",
-          "options": [
-            {
-              "value": 0,
-              "text": "Step count"
-            },
-            {
-              "value": 1,
-              "text": "Heart rate"
-            },
-            {
-              "value": 3,
-              "text": "Heart rate / Battery level"
-            },
-            {
-              "value": 2,
-              "text": "Battery level"
-            },
-            {
-              "value": 4,
-              "text": "Day of year"
-            }
-          ]
-        }
-      ]
-    }
-  ];
+  return {
+    "title": "Snake",
+    "sections": [
+      {
+        "title": "Appearance",
+        "items": [
+          {
+            "key": keys.GraphicsHighResolution,
+            "type": "checkbox",
+            "default": true,
+            "title": "High resolution graphics",
+            "visible": (platform != "emery")
+          },
+          {
+            "key": keys.ColorBackground,
+            "type": "color",
+            "default": 0x000000,
+            "title": "Background color",
+            "color": deviceHasColorScreen
+          },
+          {
+            "key": keys.ColorSnake,
+            "type": "color",
+            "default": 0xffffff,
+            "title": "Time color",
+            "color": deviceHasColorScreen
+          },
+          {
+            "key": keys.ColorText,
+            "type": "color",
+            "default": 0xaaaaaa,
+            "title": "Text color",
+            "color": true,
+            "visible": deviceHasColorScreen
+          }
+        ]
+      },
+      {
+        "title": "Content",
+        "items": [
+          {
+            "key": keys.DateFormat,
+            "type": "select",
+            "default": 0,
+            "title": "Date format",
+            "options": [
+              {
+                "value": 0,
+                "text": "YYYY-MM-DD"
+              },
+              {
+                "value": 1,
+                "text": "DD.MM.YYYY"
+              },
+              {
+                "value": 2,
+                "text": "DD/MM/YYYY"
+              },
+              {
+                "value": 3,
+                "text": "MM/DD/YYYY"
+              },
+              {
+                "value": 4,
+                "text": "Day DD Mon"
+              },
+              {
+                "value": 5,
+                "text": "Day, DD. Mon"
+              },
+              {
+                "value": 6,
+                "text": "Day Mon DD"
+              }
+            ]
+          },
+          {
+            "key": keys.ContentLeft,
+            "type": "select",
+            "default": deviceSupportsHealth ? 0 : 4,
+            "title": "Bottom left",
+            "options": [
+              {
+                "value": 0,
+                "text": "Step count"
+              },
+              {
+                "value": 1,
+                "text": "Heart rate"
+              },
+              {
+                "value": 3,
+                "text": "Heart rate / Battery level"
+              },
+              {
+                "value": 2,
+                "text": "Battery level"
+              },
+              {
+                "value": 4,
+                "text": "Day of year"
+              }
+            ]
+          },
+          {
+            "key": keys.ContentRight,
+            "type": "select",
+            "default": deviceHasHeartRateSensor ? 3 : 2,
+            "title": "Bottom right",
+            "options": [
+              {
+                "value": 0,
+                "text": "Step count"
+              },
+              {
+                "value": 1,
+                "text": "Heart rate"
+              },
+              {
+                "value": 3,
+                "text": "Heart rate / Battery level"
+              },
+              {
+                "value": 2,
+                "text": "Battery level"
+              },
+              {
+                "value": 4,
+                "text": "Day of year"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
 }
 
 
