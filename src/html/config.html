@@ -552,6 +552,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
                 var button = document.querySelector('input[type=button]');
                 button.addEventListener('click', buttonClicked);
+                button.addEventListener('touchstart', function() {}); // enable :active pseudo-class on iOS
             }
 
             document.addEventListener('DOMContentLoaded', loaded);
