@@ -69,13 +69,15 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             }
             li {
                 list-style-type: none;
+            }
+            form li {
                 background: linear-gradient(90deg, #484848 .6rem, #666 .6rem, #666 calc(100% - .6rem), #484848 calc(100% - .6rem));
                 padding-top: 1px;
             }
-            li:first-child {
+            form li:first-child {
                 padding-top: 0;
             }
-            li label {
+            form li label {
                 display: block;
                 text-decoration: none;
                 padding: .6rem .8rem;
@@ -83,10 +85,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 min-height: 1.5em;
                 cursor: pointer;
             }
-            li label:active {
+            form li label:active {
                 background: #595959;
             }
-            label.checkbox:before {
+            form label.checkbox:before {
                 content: " ";
                 text-align: center;
                 display: block;
@@ -100,32 +102,32 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 border-radius: .25rem;
                 border: .1rem solid #888;
             }
-            label.checkbox.checked:before {
+            form label.checkbox.checked:before {
                 content: "✓";
                 background: #ff4500;
                 border-color: #ff4500;
             }
-            label.checkbox input {
+            form label.checkbox input {
                 display: none;
             }
-            label.color span {
+            form label.color span {
                 float: right;
                 width: 2.4rem;
                 height: 1.2rem;
                 border-radius: .6rem;
                 background: #000;
             }
-            label.select {
+            form label.select {
                 position: relative;
             }
-            label.select span {
+            form label.select span {
                 float: right;
             }
-            label.select span:after {
+            form label.select span:after {
                 content: " ▾";
                 color: #ff4500;
             }
-            label.select select {
+            form label.select select {
                 position: absolute;
                 display: block;
                 left: 0;
@@ -139,7 +141,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 padding: 0;
                 cursor: pointer;
             }
-            label.select select option {
+            form label.select select option {
                 background: #fff;
                 color: #000;
             }
@@ -198,6 +200,21 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 box-shadow: 0 .1em .5em #303030;
                 margin: auto;
                 padding: 1em;
+            }
+            div.dialog h2 {
+                margin: -1rem -1rem 1.3rem -1rem;
+                border-top-left-radius: .25rem;
+                border-top-right-radius: .25rem;
+            }
+            div.dialog li {
+                margin: .65em 0;
+            }
+            div.dialog input[type=button] {
+                background: #595959;
+                box-shadow: 0 .1em .5em #444444;
+            }
+            div.dialog input[type=button]:active {
+                background: #666;
             }
             div.dialog.color {
                 padding: .5em 1em;
@@ -328,6 +345,43 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 var color = item.getAttribute('data-value');
                 this.close();
                 this._callback(color);
+            }
+
+
+            var ConflictDialog = function(conflicts) {
+                Dialog.call(this);
+
+                var title = document.createElement('h2');
+                title.innerText = 'Invalid configuration';
+                this._dialog.appendChild(title);
+
+                var list = document.createElement('ul');
+                this._dialog.appendChild(list);
+
+                for (var i = 0; i < conflicts.length; i++) {
+                    var conflictData = conflicts[i];
+                    var item = document.createElement('li');
+                    item.innerText = conflictData;
+                    list.appendChild(item);
+                }
+
+                var buttonContainer = document.createElement('p');
+                this._dialog.appendChild(buttonContainer);
+
+                var button = document.createElement('input');
+                button.type = 'button';
+                button.value = 'OK';
+                button.addEventListener('click', this._buttonClicked.bind(this));
+                button.addEventListener('touchstart', function() {}); // enable :active pseudo-class on iOS
+                buttonContainer.appendChild(button);
+            };
+
+            ConflictDialog.prototype = Object.create(Dialog.prototype);
+
+            ConflictDialog.prototype.constructor = ConflictDialog;
+
+            ConflictDialog.prototype._buttonClicked = function(e) {
+                this.close();
             }
 
 
@@ -486,8 +540,8 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             function createForm() {
                 var fragment = document.createDocumentFragment();
 
-                for (var i = 0; i < options.length; i++) {
-                    var sectionData = options[i];
+                for (var i = 0; i < options.sections.length; i++) {
+                    var sectionData = options.sections[i];
                     if (sectionData.visible != undefined && !sectionData.visible) {
                         continue;
                     }
@@ -527,8 +581,30 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 location.href = returnTo;
             }
 
+            function checkData() {
+                var conflicts = [];
+
+                for (var i = 0; i < options.constraints.length; i++) {
+                    var constraint = options.constraints[i];
+                    if (constraint.type == 'notequal') {
+                        outer:
+                        for (var j = 0; j < constraint.data.length; j++) {
+                            for (var k = j+1; k < constraint.data.length; k++) {
+                                if (data[constraint.data[j]] == data[constraint.data[k]]) {
+                                    conflicts.push(constraint.message);
+                                    break outer;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return conflicts;
+            }
+
             function buttonClicked(e) {
                 e.preventDefault();
+
                 data = {};
                 var form = document.querySelector('form');
                 for (var i = 0; i < form.elements.length; i++) {
@@ -539,7 +615,14 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                         data[e.name] = parseInt(e.value);
                     }
                 }
-                exit();
+
+                var conflicts = checkData();
+
+                if (conflicts.length == 0) {
+                    exit();
+                } else {
+                    new ConflictDialog(conflicts);
+                }
             }
 
             function loaded() {

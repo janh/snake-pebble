@@ -156,6 +156,24 @@ function getOptions() {
           }
         ]
       }
+    ],
+    "constraints": [
+      {
+        "type": "notequal",
+        "message": "You need to choose different colors for the background and the time.",
+        "data": [
+          keys.ColorBackground,
+          keys.ColorSnake
+        ]
+      },
+      {
+        "type": "notequal",
+        "message": "The bottom left content and bottom right content cannot be the same.",
+        "data": [
+          keys.ContentLeft,
+          keys.ContentRight
+        ]
+      }
     ]
   };
 }
