@@ -7,6 +7,7 @@
  */
 
 #include "data.h"
+#include "demo.h"
 
 #include <pebble.h>
 
@@ -61,21 +62,29 @@ static bool health_metric_available(HealthMetric metric, time_t time_start, time
 }
 
 int32_t data_get_steps() {
-  if (health_metric_available(HealthMetricStepCount, time_start_of_today(), time(NULL))) {
-    HealthValue value = health_service_sum_today(HealthMetricStepCount);
-    return (value > 0) ? value : 0;
-  } else {
-    return -1;
-  }
+  # if DEMO_MODE
+    return 10300;
+  # else
+    if (health_metric_available(HealthMetricStepCount, time_start_of_today(), time(NULL))) {
+      HealthValue value = health_service_sum_today(HealthMetricStepCount);
+      return (value > 0) ? value : 0;
+    } else {
+      return -1;
+    }
+  # endif
 }
 
 int32_t data_get_heart_rate() {
-  if (health_metric_available(HealthMetricHeartRateBPM, time(NULL), time(NULL))) {
-    HealthValue value = health_service_peek_current_value(HealthMetricHeartRateBPM);
-    return (value > 0) ? value : 0;
-  } else {
-    return -1;
-  }
+  # if DEMO_MODE
+    return 64;
+  # else
+    if (health_metric_available(HealthMetricHeartRateBPM, time(NULL), time(NULL))) {
+      HealthValue value = health_service_peek_current_value(HealthMetricHeartRateBPM);
+      return (value > 0) ? value : 0;
+    } else {
+      return -1;
+    }
+  # endif
 }
 
 bool data_device_has_heart_rate_sensor() {
@@ -92,11 +101,19 @@ bool data_device_has_heart_rate_sensor() {
 
 
 uint8_t data_get_battery_percent() {
-  BatteryChargeState state = battery_state_service_peek();
-  return state.charge_percent;
+  # if DEMO_MODE
+    return 80;
+  # else
+    BatteryChargeState state = battery_state_service_peek();
+    return state.charge_percent;
+  # endif
 }
 
 bool data_get_battery_charging() {
-  BatteryChargeState state = battery_state_service_peek();
-  return state.is_charging;
+  # if DEMO_MODE
+    return false;
+  # else
+    BatteryChargeState state = battery_state_service_peek();
+    return state.is_charging;
+  # endif
 }

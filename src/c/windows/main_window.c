@@ -15,6 +15,7 @@
 #include "../lib/settings.h"
 #include "../lib/sizes.h"
 #include "../lib/data.h"
+#include "../lib/demo.h"
 
 #include <pebble.h>
 #include <stdbool.h>
@@ -69,8 +70,13 @@ static int format_hour(int hour) {
 }
 
 static void update_date_layer(tm *time) {
-  snake_layer_set_time(s_snake_layer, format_hour(time->tm_hour), time->tm_min);
-  date_layer_set_date(s_date_layer, 1900 + time->tm_year, time->tm_mon + 1, time->tm_mday, time->tm_wday);
+  # if DEMO_MODE
+    snake_layer_set_time(s_snake_layer, 9, 35);
+    date_layer_set_date(s_date_layer, 2016, 10, 23, 0);
+  # else
+    snake_layer_set_time(s_snake_layer, format_hour(time->tm_hour), time->tm_min);
+    date_layer_set_date(s_date_layer, 1900 + time->tm_year, time->tm_mon + 1, time->tm_mday, time->tm_wday);
+  # endif
 }
 
 static ContentLayerItem get_content_layer_item(ContentType type) {
@@ -114,10 +120,15 @@ static ContentLayerItem get_content_layer_item(ContentType type) {
     break;
 
   case CONTENT_DAY_OF_YEAR:
-    timestamp = time(NULL) + 2;
-    timeinfo = localtime(&timestamp);
-    item.icon = &CHARACTER_CALENDAR;
-    item.value = timeinfo->tm_yday + 1;
+    # if DEMO_MODE
+      item.icon = &CHARACTER_CALENDAR;
+      item.value = 297;
+    # else
+      timestamp = time(NULL) + 2;
+      timeinfo = localtime(&timestamp);
+      item.icon = &CHARACTER_CALENDAR;
+      item.value = timeinfo->tm_yday + 1;
+    # endif
     break;
 
   }

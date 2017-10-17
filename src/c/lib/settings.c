@@ -9,6 +9,7 @@
 #include "settings.h"
 
 #include "data.h"
+#include "demo.h"
 
 
 static SettingsChanged s_callback;
@@ -42,7 +43,11 @@ DateFormat settings_get_date_format() {
 }
 
 bool settings_get_graphics_high_resolution() {
-  return s_graphics_high_resolution;
+  # if DEMO_MODE
+    return DEMO_MODE_HIGHRES;
+  # else
+    return s_graphics_high_resolution;
+  # endif
 }
 
 ContentType settings_get_content_left() {
@@ -65,11 +70,15 @@ static void save() {
 }
 
 static int read_int(uint32_t key, int32_t fallback) {
-  if (persist_exists(key)) {
-    return persist_read_int(key);
-  } else {
+  # if DEMO_MODE
     return fallback;
-  }
+  # else
+    if (persist_exists(key)) {
+      return persist_read_int(key);
+    } else {
+      return fallback;
+    }
+  # endif
 }
 
 static int read_bool(uint32_t key, bool fallback) {
